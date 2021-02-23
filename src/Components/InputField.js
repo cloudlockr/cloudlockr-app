@@ -1,15 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, TextInput, Image } from 'react-native'
 import { useTheme } from '@/Theme'
+import SetField from '@/Store/Fields/SetField'
+import { useDispatch } from 'react-redux'
 
 const InputField = (props) => {
   const { Layout, Gutters, Common, Fonts } = useTheme()
+  const dispatch = useDispatch()
 
-  height = parseInt(props.height)
-  placeholder = props.placeholder
-  iconSrc = props.iconSrc
+  const height = 50
+  const placeholder = props.placeholder
+  const iconSrc = props.iconSrc
+  const fieldId = props.fieldId
+  const hideInput = props.hideInput !== undefined ? props.hideInput : false
+  const callback = props.callback
 
-  const [value, onChangeText] = React.useState(placeholder)
+  // Store field value in Redux store so it can be accessed by other components by fieldId
+  const setField = (id, value) => {
+    dispatch(SetField.action({ id: id, value: value }))
+  }
+
+  const [value, onChangeText] = useState(placeholder);
 
   return (
     <View style={[Layout.row, Layout.alignItemsCenter, Common.textInput]}>
@@ -18,9 +29,16 @@ const InputField = (props) => {
       </View>
       <View style={[Layout.fill, Gutters.smallLPadding]} >
         <TextInput
-            onChangeText={text => onChangeText(text)}
+            onChangeText={text => {
+              onChangeText(text);
+              setField(fieldId, value);
+              if (callback !== undefined) callback();
+            }}
             value={value}
+            onFocus= {() => onChangeText('')}
             selectTextOnFocus
+            returnKeyType={'done'}
+            secureTextEntry={hideInput && value !== placeholder}
             style={[Fonts.textRegular, {height: height}]}
         />
       </View>

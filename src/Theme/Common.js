@@ -12,7 +12,6 @@ import buttonStyles from './components/Buttons'
  */
 export default function ({ Colors, ...args }) {
   return {
-    button: buttonStyles({ Colors, ...args }),
     ...StyleSheet.create({
       backgroundPrimary: {
         backgroundColor: Colors.primary,
@@ -33,6 +32,9 @@ export default function ({ Colors, ...args }) {
         shadowColor: 'black',
         shadowRadius: 4,
         borderRadius: 8,
+      },
+      rounded: {
+        borderRadius: 8
       }
     }),
   }

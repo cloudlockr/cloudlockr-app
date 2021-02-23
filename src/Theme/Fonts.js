@@ -20,6 +20,12 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontSize: FontSize.regular,
       color: Colors.text,
     },
+    textRegularBoldPrimary: {
+      fontFamily: FontFamily.primary,
+      fontSize: FontSize.regular,
+      color: Colors.primary,
+      fontWeight: 'bold',
+    },
     textLarge: {
       fontFamily: FontFamily.primary,
       fontSize: FontSize.large,

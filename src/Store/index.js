@@ -15,11 +15,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import startup from './Startup'
 import user from './User'
 import theme from './Theme'
+import fields from './Fields'
 
 const reducers = combineReducers({
   startup,
   user,
   theme,
+  fields
 })
 
 const persistConfig = {
