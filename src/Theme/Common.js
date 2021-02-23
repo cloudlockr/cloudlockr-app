@@ -1,0 +1,39 @@
+/**
+ * This file defines the base application styles.
+ *
+ * Use it to define generic component styles (e.g. the default text styles, default button styles...).
+ */
+import { StyleSheet } from 'react-native'
+import buttonStyles from './components/Buttons'
+/**
+ *
+ * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
+ * @return {*}
+ */
+export default function ({ Colors, ...args }) {
+  return {
+    button: buttonStyles({ Colors, ...args }),
+    ...StyleSheet.create({
+      backgroundPrimary: {
+        backgroundColor: Colors.primary,
+      },
+      backgroundSecondary: {
+        backgroundColor: Colors.secondary,
+      },
+      backgroundReset: {
+        backgroundColor: Colors.transparent,
+      },
+      textInput: {
+        backgroundColor: Colors.darkGrey,
+        color: Colors.text,
+        borderRadius: 8,
+      },
+      roundBox: {
+        elevation: 10,
+        shadowColor: 'black',
+        shadowRadius: 4,
+        borderRadius: 8,
+      }
+    }),
+  }
+}
