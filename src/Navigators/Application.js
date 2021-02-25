@@ -7,10 +7,12 @@ import { navigationRef } from '@/Navigators/Root'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { useTheme } from '@/Theme'
 import { AppearanceProvider } from 'react-native-appearance'
+import { TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
 
 const Stack = createStackNavigator()
 
 let LoginNavigator
+let DashboardNavigator
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -22,6 +24,7 @@ const ApplicationNavigator = () => {
   useEffect(() => {
     if (LoginNavigator == null && !applicationIsLoading) {
       LoginNavigator = require('@/Navigators/Login').default
+      DashboardNavigator = require('@/Navigators/Dashboard').default
       setIsApplicationLoaded(true)
     }
   }, [applicationIsLoading])
@@ -31,9 +34,47 @@ const ApplicationNavigator = () => {
     () => () => {
       setIsApplicationLoaded(false)
       LoginNavigator = null
+      DashboardNavigator = null
     },
     [],
   )
+
+  const customTransition1 = {
+    gestureDirection: 'horizontal',
+    transitionSpec: {
+      open: TransitionSpecs.TransitionIOSSpec,
+      close: TransitionSpecs.TransitionIOSSpec,
+    },
+    headerStyleInterpolator: HeaderStyleInterpolators.forFade,
+    cardStyleInterpolator: ({ current, next, layouts }) => {
+      return {
+        cardStyle: {
+          transform: [
+            {
+              translateX: current.progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [layouts.screen.width, 0],
+              }),
+            },
+            {
+              scale: next
+                ? next.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 0.9],
+                  })
+                : 1,
+            },
+          ],
+        },
+        overlayStyle: {
+          opacity: current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 0.5],
+          }),
+        },
+      };
+    },
+  }
 
   return (
     <AppearanceProvider>
@@ -48,6 +89,14 @@ const ApplicationNavigator = () => {
                 component={LoginNavigator}
                 options={{
                   animationEnabled: false,
+                }}
+              />
+            )}
+            {isApplicationLoaded && DashboardNavigator != null && (<Stack.Screen
+                name="Dashboard"
+                component={DashboardNavigator}
+                options={{
+                  ...customTransition1,
                 }}
               />
             )}

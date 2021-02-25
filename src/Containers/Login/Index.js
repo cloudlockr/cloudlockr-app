@@ -40,7 +40,7 @@ const LoginContainer = () => {
                     <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} callback={forceUpdate} />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                    <Button title='log in' color={Colors.secondaryGreen} destParams={{}} newViewId={undefined} setEnabled={loginButtonEnabled} />
+                    <Button title='log in' color={Colors.secondaryGreen} destParams={{}} newViewId={"Dashboard"} setEnabled={loginButtonEnabled} />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
                     <HorizontalLine />
