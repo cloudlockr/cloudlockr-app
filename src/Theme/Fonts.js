@@ -45,9 +45,9 @@ export default function ({ FontSize, Colors, FontFamily }) {
     },
     titleLarge: {
       fontFamily: FontFamily.primary,
-      fontSize: FontSize.large * 2,
-      fontWeight: 'bold',
-      color: Colors.text,
+      fontSize: FontSize.large,
+      fontWeight: '300',
+      color: Colors.primary,
     },
     textCenter: {
       textAlign: 'center',

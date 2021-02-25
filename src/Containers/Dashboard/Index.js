@@ -4,6 +4,7 @@ import {
     View,
     BackHandler
 } from 'react-native'
+import { DashboardHeader } from '@/Components'
 
 
 const DashboardContainer = () => {
@@ -17,7 +18,9 @@ const DashboardContainer = () => {
       }, [])
 
     return (
-        <View />
+        <View style={[Layout.fill, Common.backgroundPrimary]}>
+            <DashboardHeader title='MyLockr' />
+        </View>
     )
 }
 
