@@ -20,6 +20,18 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontSize: FontSize.regular,
       color: Colors.text,
     },
+    listDetails: {
+      fontFamily: FontFamily.primary,
+      fontSize: 14,
+      fontWeight: '300',
+      color: Colors.text,
+    },
+    listFileName: {
+      fontFamily: FontFamily.primary,
+      fontSize: 25,
+      fontWeight: '400',
+      color: Colors.text,
+    },
     textRegularBoldPrimary: {
       fontFamily: FontFamily.primary,
       fontSize: FontSize.regular,

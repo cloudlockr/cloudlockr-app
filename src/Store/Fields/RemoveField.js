@@ -4,8 +4,12 @@ export default {
   initialState: {},
   action: createAction('fields/removeField'),
   reducers(state, { payload }) {
-    if (state.fields.hasKey(payload.id)) {
-      delete this.state.fields[payload.id];
+    // Remove the object field if it currently being stored
+    for (var key in Object.keys(state.fields)) {
+      if (key === payload.id) {
+        delete state.fields[payload.id];
+        break;
+      }
     }
   },
 }

@@ -5,19 +5,19 @@ import SetField from '@/Store/Fields/SetField'
 import { useDispatch } from 'react-redux'
 
 const InputField = (props) => {
-  const { Layout, Gutters, Common, Fonts } = useTheme()
-  const dispatch = useDispatch()
+  const { Layout, Gutters, Common, Fonts } = useTheme();
+  const dispatch = useDispatch();
 
-  const height = 50
-  const placeholder = props.placeholder
-  const iconSrc = props.iconSrc
-  const fieldId = props.fieldId
-  const hideInput = props.hideInput !== undefined ? props.hideInput : false
-  const callback = props.callback
+  const height = 50;
+  const placeholder = props.placeholder;
+  const iconSrc = props.iconSrc;
+  const fieldId = props.fieldId;
+  const hideInput = props.hideInput !== undefined ? props.hideInput : false;
+  const callback = props.callback;
 
   // Store field value in Redux store so it can be accessed by other components by fieldId
   const setField = (id, value) => {
-    dispatch(SetField.action({ id: id, value: value }))
+    dispatch(SetField.action({ id: id, value: value }));
   }
 
   const [value, onChangeText] = useState(placeholder);
@@ -46,4 +46,4 @@ const InputField = (props) => {
   )
 }
 
-export default InputField
+export default InputField;

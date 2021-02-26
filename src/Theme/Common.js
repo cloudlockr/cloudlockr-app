@@ -16,6 +16,12 @@ export default function ({ Colors, ...args }) {
       backgroundPrimary: {
         backgroundColor: Colors.primary,
       },
+      backgroundLightGrey: {
+        backgroundColor: Colors.lightGrey,
+      },
+      backgroundWhite: {
+        backgroundColor: Colors.white,
+      },
       backgroundSecondary: {
         backgroundColor: Colors.secondary,
       },

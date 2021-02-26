@@ -1,10 +1,11 @@
 import { useTheme } from '@/Theme'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     View,
 } from 'react-native'
 import { Brand, InputField, HorizontalLine, Button } from '@/Components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import RemoveField from '@/Store/Fields/RemoveField'
 
 // Forces a view update (which allows for the login button visibility to be updated)
 function useForceUpdate(){
@@ -13,19 +14,25 @@ function useForceUpdate(){
 }
 
 const LoginContainer = () => {
-    const { Common, Gutters, Layout, Images, Colors } = useTheme()
-
-    const forceUpdate = useForceUpdate()
+    const { Common, Gutters, Layout, Images, Colors } = useTheme();
+    const dispatch = useDispatch();
+    const forceUpdate = useForceUpdate();
 
     // Enable the login button only after each of the fields have been entered
-    var loginButtonEnabled
-    var fields = useSelector((state) => state.fields).fields
+    var loginButtonEnabled;
+    var fields = useSelector((state) => state.fields).fields;
     if (fields['1'] !== undefined && fields['2'] !== undefined) {
-        loginButtonEnabled = true
+        loginButtonEnabled = true;
     }
     else {
-        loginButtonEnabled = false
+        loginButtonEnabled = false;
     }
+
+    // Remove any stored credential data when the view loads from the store
+    useEffect(() => {
+        dispatch(RemoveField.action({ id: '1' }));
+        dispatch(RemoveField.action({ id: '2' }));
+    }, [])
 
     return (
         <View style={[Layout.fill, Layout.colCenter, Gutters.largeAPadding, Common.backgroundSecondary]}>
@@ -53,4 +60,4 @@ const LoginContainer = () => {
     )
 }
 
-export default LoginContainer
+export default LoginContainer;
