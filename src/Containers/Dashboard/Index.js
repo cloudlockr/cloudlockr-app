@@ -8,19 +8,10 @@ import { DashboardHeader, FileList, DownloadDetail, UploadDetail } from '@/Compo
 import { useSelector } from 'react-redux'
 import RBSheet from 'react-native-raw-bottom-sheet'
 
-// Forces a view update (which allows for the downloadClicked state to be updated)
-function useForceUpdate(){
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue(value => value + 1); // update the state to force render
-}
-
 const DashboardContainer = () => {
     const { Common, Layout, Colors } = useTheme();
-    const refRBSheet = useRef();
-    const forceUpdate = useForceUpdate();
-
-    // Update downloadClicked with state data
-    var downloadClicked = useSelector((state) => state.dashboard).downloadClicked;
+    const uploadRBSheet = useRef();
+    const downloadRBSheet = useRef();
 
     // Prevent user from going back to login view via back button press
     useEffect(() => {
@@ -30,20 +21,25 @@ const DashboardContainer = () => {
     }, []);
 
     // Update callback function
-    const updateCallback = () => {
-        forceUpdate();
-        refRBSheet.current.open();
+    const downloadCallback = () => {
+        // TODO: Will have to add logic to interface with service to send bluetooth message to generate HEX code
+        downloadRBSheet.current.open();
+    }
+    const uploadCallback = () => {
+        // TODO: Will have to add logic to interface with service to send bluetooth message to generate HEX code
+        uploadRBSheet.current.open();
     }
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
-            <DashboardHeader updateCallback={updateCallback} />
-            <FileList updateCallback={updateCallback} />
+            <DashboardHeader uploadCallback={uploadCallback} />
+            <FileList downloadCallback={downloadCallback} />
 
             <RBSheet
-                ref={refRBSheet}
+                ref={downloadRBSheet}
                 closeOnDragDown={true}
                 closeOnPressMask={true}
+                height={340}
                 customStyles={{
                 wrapper: {
                     backgroundColor: 'rgba(0, 0, 0, 0.3)',
@@ -56,8 +52,27 @@ const DashboardContainer = () => {
                 }
                 }}
             >
-                {downloadClicked ? <DownloadDetail /> : <UploadDetail />}
-          </RBSheet>
+                <DownloadDetail />
+            </RBSheet>
+            <RBSheet
+                ref={uploadRBSheet}
+                closeOnDragDown={true}
+                closeOnPressMask={true}
+                height={450}
+                customStyles={{
+                wrapper: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                },
+                container: {
+                    backgroundColor: Colors.secondaryGreen,
+                },
+                draggableIcon: {
+                    backgroundColor: Colors.primary,
+                }
+                }}
+            >
+                <UploadDetail />
+            </RBSheet>
         </View>
     )
 }

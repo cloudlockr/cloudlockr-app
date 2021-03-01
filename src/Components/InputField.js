@@ -8,8 +8,9 @@ const InputField = (props) => {
   const { Layout, Gutters, Common, Fonts } = useTheme();
   const dispatch = useDispatch();
 
-  const height = 50;
+  const height = props.height !== undefined ? props.height : 50;
   const placeholder = props.placeholder;
+  const textInputStyle = props.useLightInput !== undefined && props.useLightInput ? Common.textInputLight : Common.textInputDark;
   const iconSrc = props.iconSrc;
   const fieldId = props.fieldId;
   const hideInput = props.hideInput !== undefined ? props.hideInput : false;
@@ -23,10 +24,12 @@ const InputField = (props) => {
   const [value, onChangeText] = useState(placeholder);
 
   return (
-    <View style={[Layout.row, Layout.alignItemsCenter, Common.textInput]}>
-      <View style={[Gutters.tinyxlLMargin]}>
-        <Image style={{height: height - 18, width: height - 18}} source={iconSrc} resizeMode={'contain'} />
-      </View>
+    <View style={[Layout.row, Layout.alignItemsCenter, textInputStyle]}>
+      {iconSrc !== undefined && 
+        <View style={[Gutters.tinyxlLMargin]}>
+          <Image style={{height: height - 18, width: height - 18}} source={iconSrc} resizeMode={'contain'} />
+        </View>
+      }
       <View style={[Layout.fill, Gutters.smallLPadding]} >
         <TextInput
             onChangeText={text => {
@@ -39,7 +42,7 @@ const InputField = (props) => {
             selectTextOnFocus
             returnKeyType={'done'}
             secureTextEntry={hideInput && value !== placeholder}
-            style={[Fonts.textRegular, {height: height}]}
+            style={[Fonts.inputField, {height: height}]}
         />
       </View>
     </View>

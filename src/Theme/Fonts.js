@@ -32,6 +32,17 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontWeight: '400',
       color: Colors.text,
     },
+    detailFileName: {
+      fontFamily: FontFamily.primary,
+      fontSize: 25,
+      fontWeight: '500',
+      color: Colors.primary,
+    },
+    inputField: {
+      fontFamily: FontFamily.primary,
+      fontSize: 16,
+      fontWeight: '400',
+    },
     textRegularBoldPrimary: {
       fontFamily: FontFamily.primary,
       fontSize: FontSize.regular,

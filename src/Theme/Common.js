@@ -28,8 +28,13 @@ export default function ({ Colors, ...args }) {
       backgroundReset: {
         backgroundColor: Colors.transparent,
       },
-      textInput: {
+      textInputDark: {
         backgroundColor: Colors.darkGrey,
+        color: Colors.text,
+        borderRadius: 8,
+      },
+      textInputLight: {
+        backgroundColor: Colors.primary,
         color: Colors.text,
         borderRadius: 8,
       },

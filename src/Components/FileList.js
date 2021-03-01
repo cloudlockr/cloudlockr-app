@@ -3,7 +3,6 @@ import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicat
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
 import SetDownloadInfo from '@/Store/Dashboard/SetDownloadInfo'
-import SetDownloadClicked from '@/Store/Dashboard/SetDownloadClicked'
 
 const FAKE_DATA = [
     {
@@ -29,7 +28,7 @@ const FileList = (props) => {
   const [refreshing, setRefreshing] = useState(true);
   const [dataSource, setDataSource] = useState([]);
 
-  const updateCallback = props.updateCallback;
+  const downloadCallback = props.downloadCallback;
 
   useEffect(() => {
     getData();
@@ -61,8 +60,7 @@ const FileList = (props) => {
         item={item}
         onPress={() => {
           dispatch(SetDownloadInfo.action(item));
-          dispatch(SetDownloadClicked.action(true));
-          updateCallback();
+          downloadCallback();
         }}
         style={[{backgroundColor: Colors.secondaryGreen}]}
       />

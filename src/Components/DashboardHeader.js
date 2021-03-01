@@ -2,17 +2,14 @@ import React from 'react'
 import { View, TouchableOpacity, Text, Image } from 'react-native'
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
-import SetDownloadClicked from '@/Store/Dashboard/SetDownloadClicked'
 
 const DashboardHeader = (props) => {
   const { Layout, Common, Fonts, Images, Gutters } = useTheme();
   const dispatch = useDispatch();
 
   // Callback action functions
-  const updateCallback = props.updateCallback;
   const uploadCallback = () => {
-    dispatch(SetDownloadClicked.action(false));
-    updateCallback();
+    props.uploadCallback();
   }
   const settingsCallback = () => {
     // TODO: change view using navigation

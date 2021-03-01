@@ -1,17 +1,29 @@
 import React from 'react';
 import {
     Text,
+    View
 } from 'react-native'
 import { useSelector } from 'react-redux'
+import { InputField, Button } from '@/Components'
 import { useTheme } from '@/Theme'
 
-const DownloadDetail = (props) => {
-    const { Layout, Common, Fonts, Images, Gutters } = useTheme();
+const DownloadDetail = () => {
+    const { Layout, Common, Fonts, Images, Gutters, Colors } = useTheme();
 
     var downloadInfo = useSelector((state) => state.dashboard).downloadInfo;
 
     return (
-        <Text>Some Download Modal Content {downloadInfo.id}</Text>
+        <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexlHPadding]} >
+            <Text style={[Fonts.detailFileName, Gutters.regularxlVPadding]}>access {downloadInfo.fileName}</Text>
+            <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 190}]}>
+                <InputField placeholder={"device password"} fieldId={3} useLightInput={true} />
+                <InputField placeholder={"displayed device access code"} fieldId={3} useLightInput={true} />
+                <View style={[Layout.row, Layout.alignItemsCenter]}>
+                    <Button title={"download"} color={Colors.secondary} style={[Gutters.regularRPadding, {flex: 2}]} />
+                    <Button title={"delete"} color={Colors.red} style={{flex: 1}} />
+                </View>
+            </View>
+        </View>
     );
 }
 

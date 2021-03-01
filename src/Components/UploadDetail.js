@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import { useTheme } from '@/Theme'
 
-const UploadDetail = (props) => {
+const UploadDetail = () => {
     const { Layout, Common, Fonts, Images, Gutters } = useTheme();
 
     return (
