@@ -39,6 +39,11 @@ export default function ({ Colors, ...args }) {
         shadowRadius: 4,
         borderRadius: 8,
       },
+      fullShadow: {
+        elevation: 10,
+        shadowColor: 'black',
+        shadowRadius: 4,
+      },
       rounded: {
         borderRadius: 8
       }

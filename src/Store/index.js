@@ -16,12 +16,14 @@ import startup from './Startup'
 import user from './User'
 import theme from './Theme'
 import fields from './Fields'
+import dashboard from './Dashboard'
 
 const reducers = combineReducers({
   startup,
   user,
   theme,
-  fields
+  fields,
+  dashboard
 })
 
 const persistConfig = {

@@ -1,15 +1,25 @@
 import React from 'react'
 import { View, TouchableOpacity, Text, Image } from 'react-native'
 import { useTheme } from '@/Theme'
+import { useDispatch } from 'react-redux'
+import SetDownloadClicked from '@/Store/Dashboard/SetDownloadClicked'
 
 const DashboardHeader = (props) => {
   const { Layout, Common, Fonts, Images, Gutters } = useTheme();
+  const dispatch = useDispatch();
 
-  const uploadCallback = props.uploadCallback;
-  const settingsCallback = props.settingsCallback;
+  // Callback action functions
+  const updateCallback = props.updateCallback;
+  const uploadCallback = () => {
+    dispatch(SetDownloadClicked.action(false));
+    updateCallback();
+  }
+  const settingsCallback = () => {
+    // TODO: change view using navigation
+  }
 
   return (
-    <View style={[Layout.row, Layout.rowHCenter, Common.backgroundSecondary, Layout.justifyContentBetween, {height: 65}]}>
+    <View style={[Layout.row, Layout.rowHCenter, Common.backgroundSecondary, Layout.justifyContentBetween, Common.fullShadow, {height: 65}]}>
         <View style={[Gutters.largeLPadding]}>
             <Text style={[Fonts.titleLarge, Fonts.textCenter]}>MyLockr</Text>
         </View>
@@ -23,7 +33,7 @@ const DashboardHeader = (props) => {
             </TouchableOpacity>
         </View>
     </View>
-  )
+  );
 }
 
 export default DashboardHeader;

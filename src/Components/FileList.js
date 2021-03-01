@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
+import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator, Button } from 'react-native'
 import { useTheme } from '@/Theme'
+import { useDispatch } from 'react-redux'
+import SetDownloadInfo from '@/Store/Dashboard/SetDownloadInfo'
+import SetDownloadClicked from '@/Store/Dashboard/SetDownloadClicked'
 
 const FAKE_DATA = [
     {
@@ -20,11 +23,13 @@ const FAKE_DATA = [
     },
   ];
 
-const FileList = () => {
-  const { Layout, Gutters, Colors, Fonts, Common } = useTheme()
-
+const FileList = (props) => {
+  const { Layout, Gutters, Colors, Fonts, Common } = useTheme();
+  const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(true);
   const [dataSource, setDataSource] = useState([]);
+
+  const updateCallback = props.updateCallback;
 
   useEffect(() => {
     getData();
@@ -54,32 +59,33 @@ const FileList = () => {
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => {
+          dispatch(SetDownloadInfo.action(item));
+          dispatch(SetDownloadClicked.action(true));
+          updateCallback();
+        }}
         style={[{backgroundColor: Colors.secondaryGreen}]}
       />
     );
   };
 
-  const [selectedId, setSelectedId] = useState(null);
-
   return (
-        <View style={[Layout.fill, Common.backgroundWhite]}>
-            {refreshing ? <ActivityIndicator /> : null}
-            <FlatList
-                data={dataSource}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                extraData={selectedId}
-                enableEmptySections={true}
-                refreshControl={
-                  <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={getData}
-                  />
-                }
-            />
-        </View>
+    <View style={[Layout.fill, Common.backgroundWhite]}>
+        {refreshing ? <ActivityIndicator /> : null}
+        <FlatList
+            data={dataSource}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            enableEmptySections={true}
+            refreshControl={
+              <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={getData}
+              />
+            }
+        />
+      </View>
   )
 }
 
-export default FileList
+export default FileList;
