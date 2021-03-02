@@ -58,7 +58,7 @@ const DashboardContainer = () => {
                 ref={uploadRBSheet}
                 closeOnDragDown={true}
                 closeOnPressMask={true}
-                height={450}
+                height={470}
                 customStyles={{
                 wrapper: {
                     backgroundColor: 'rgba(0, 0, 0, 0.3)',

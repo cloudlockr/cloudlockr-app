@@ -4,8 +4,9 @@ import { useTheme } from '@/Theme'
 import { navigate } from '@/Navigators/Root'
 
 const Button = (props) => {
-  const { Layout, Common, Fonts } = useTheme();
+  const { Layout, Common, Fonts, Colors, Gutters } = useTheme();
 
+  const useInputFieldStyle = props.useInputFieldStyle;
   const title = props.title;
   const color = props.color;
   const destParams = props.destParams;
@@ -14,18 +15,30 @@ const Button = (props) => {
   const setEnabled = props.setEnabled !== undefined ? props.setEnabled : true;
 
   const changeView = (newViewId, destParams) => {
-    navigate(newViewId, destParams);
+    if (newViewId !== undefined)
+      navigate(newViewId, destParams);
   }
 
   return (
-    <View style={[Layout.fill, style]}>
-      <TouchableOpacity
-        style={[Layout.center, Common.rounded, {backgroundColor: color, height: 50, opacity: setEnabled ? 1 : 0.7}]}
-        onPress={() => changeView(newViewId, destParams)}
-        disabled={!setEnabled}
-      >
-        <Text style={[Fonts.textRegularBoldPrimary, Fonts.textCenter]}>{title}</Text>
-      </TouchableOpacity>
+    <View style={[style, Layout.fullSize]}>
+      {!useInputFieldStyle &&
+        <TouchableOpacity
+          style={[Layout.center, Common.rounded, {backgroundColor: color, height: 50, opacity: setEnabled ? 1 : 0.7}]}
+          onPress={() => changeView(newViewId, destParams)}
+          disabled={!setEnabled}
+        >
+          <Text style={[Fonts.textRegularBoldPrimary, Fonts.textCenter]}>{title}</Text>
+        </TouchableOpacity>
+      }
+      {useInputFieldStyle &&
+        <TouchableOpacity
+          style={[Gutters.regularLPadding, Layout.row, Layout.alignItemsCenter, Common.rounded, {backgroundColor: Colors.primary, height: 50, opacity: setEnabled ? 1 : 0.7}]}
+          onPress={() => changeView(newViewId, destParams)}
+          disabled={!setEnabled}
+        >
+          <Text style={[Fonts.inputField]}>{title}</Text>
+        </TouchableOpacity>
+      }
     </View>
   )
 }
