@@ -17,7 +17,7 @@ const UploadDetail = () => {
                 <View style={[Layout.row, Layout.alignItemsCenter]}>
                     <Button title={"select file"} useInputFieldStyle={true} style={Layout.fill} />
                 </View>
-                <InputField placeholder={"device password"} fieldId={5} useLightInput={true} />
+                <InputField placeholder={"device password"} hideInput={true} fieldId={5} useLightInput={true} />
                 <InputField placeholder={"displayed device access code"} fieldId={6} useLightInput={true} />
                 <View style={[Layout.row, Layout.alignItemsCenter]}>
                     <Button title={"upload file"} color={Colors.secondary} style={Layout.fill} />

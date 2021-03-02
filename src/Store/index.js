@@ -13,15 +13,11 @@ import {
 import { configureStore } from '@reduxjs/toolkit'
 
 import startup from './Startup'
-import user from './User'
-import theme from './Theme'
 import fields from './Fields'
 import dashboard from './Dashboard'
 
 const reducers = combineReducers({
   startup,
-  user,
-  theme,
   fields,
   dashboard
 })
@@ -29,7 +25,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['theme'],
+  whitelist: [],
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)

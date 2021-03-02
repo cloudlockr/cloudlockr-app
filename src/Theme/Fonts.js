@@ -32,6 +32,12 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontWeight: '400',
       color: Colors.text,
     },
+    listFileNameLighter: {
+      fontFamily: FontFamily.primary,
+      fontSize: 25,
+      fontWeight: '300',
+      color: Colors.text,
+    },
     detailFileName: {
       fontFamily: FontFamily.primary,
       fontSize: 25,
@@ -42,6 +48,18 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontFamily: FontFamily.primary,
       fontSize: 16,
       fontWeight: '400',
+    },
+    detailBold: {
+      fontFamily: FontFamily.primary,
+      fontSize: 20,
+      fontWeight: '400',
+      color: Colors.text,
+    },
+    detail: {
+      fontFamily: FontFamily.primary,
+      fontSize: 20,
+      fontWeight: '300',
+      color: Colors.text,
     },
     textRegularBoldPrimary: {
       fontFamily: FontFamily.primary,

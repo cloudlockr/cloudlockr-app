@@ -16,7 +16,7 @@ const DownloadDetail = () => {
         <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexlHPadding]} >
             <Text style={[Fonts.detailFileName, Gutters.regularxlVPadding]}>access {downloadInfo.fileName}</Text>
             <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 190}]}>
-                <InputField placeholder={"device password"} fieldId={3} useLightInput={true} />
+                <InputField placeholder={"device password"} hideInput={true} fieldId={3} useLightInput={true} />
                 <InputField placeholder={"displayed device access code"} fieldId={4} useLightInput={true} />
                 <View style={[Layout.row, Layout.alignItemsCenter]}>
                     <Button title={"download"} color={Colors.secondary} style={[Gutters.regularRPadding, {flex: 2}]} />

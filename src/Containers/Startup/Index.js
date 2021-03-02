@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, View, Text } from 'react-native'
+import { View } from 'react-native'
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
 import InitStartup from '@/Store/Startup/Init'
-import { useTranslation } from 'react-i18next'
 import { Brand } from '@/Components'
 
 const IndexStartupContainer = () => {
-  const { Layout, Gutters, Fonts } = useTheme()
-
-  const { t } = useTranslation()
+  const { Layout } = useTheme()
 
   const dispatch = useDispatch()
 
