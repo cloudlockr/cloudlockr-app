@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { DashboardContainer } from '@/Containers'
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
 // @refresh reset
 const LoginNavigator = () => {
@@ -13,4 +13,4 @@ const LoginNavigator = () => {
   )
 }
 
-export default LoginNavigator
+export default LoginNavigator;

@@ -2,6 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, Text, Image } from 'react-native'
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
+import { navigate } from '@/Navigators/Root'
 
 const DashboardHeader = (props) => {
   const { Layout, Common, Fonts, Images, Gutters } = useTheme();
@@ -12,7 +13,7 @@ const DashboardHeader = (props) => {
     props.uploadCallback();
   }
   const settingsCallback = () => {
-    // TODO: change view using navigation
+    navigate("Settings", {});
   }
 
   return (
