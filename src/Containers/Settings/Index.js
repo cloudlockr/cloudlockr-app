@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 import { BasicHeader, Button, HorizontalLine } from '@/Components'
 import SetIntention from '@/Store/Intention/SetIntention'
+import RemoveField from '@/Store/Fields/RemoveField'
 import { navigate } from '@/Navigators/Root'
 import { useDispatch } from 'react-redux'
 
@@ -14,12 +15,19 @@ const SettingsContainer = () => {
     const dispatch = useDispatch();
 
     const devicePasswordCallback = () => {
-        dispatch(SetIntention.action({ id: "SettingsDeviceConnection", value: 1 }));
+        dispatch(SetIntention.action({ id: "settingsDeviceConnection", value: 1 }));
         navigate("SettingsDeviceConnection", {});
     }
     const deviceWifiCallback = () => {
-        dispatch(SetIntention.action({ id: "SettingsDeviceConnection", value: 2 }));
+        dispatch(SetIntention.action({ id: "settingsDeviceConnection", value: 2 }));
         navigate("SettingsDeviceConnection", {});
+    }
+    const logOutCallback = () => {
+        // Ensure login credentials are cleared
+        dispatch(RemoveField.action({ id: '1' }));
+        dispatch(RemoveField.action({ id: '2' }));
+        
+        navigate("Main", {});
     }
 
     return (
@@ -47,7 +55,7 @@ const SettingsContainer = () => {
                         <HorizontalLine />
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
-                        <Button title={"log out"} color={Colors.secondary} style={Layout.fill} />
+                        <Button title={"log out"} clickCallback={logOutCallback} color={Colors.secondary} style={Layout.fill} />
                     </View>
                 </View>
             </View>

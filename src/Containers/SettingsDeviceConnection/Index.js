@@ -5,9 +5,25 @@ import {
     Text
 } from 'react-native'
 import { BasicHeader, Button } from '@/Components'
+import { useSelector } from 'react-redux'
+import { navigate } from '@/Navigators/Root'
 
 const SettingsContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
+
+    const intentionId = useSelector((state) => state.intention).intention.settingsDeviceConnection;
+
+    const continueCallback = () => {
+        if (intentionId === 1) {
+            // TODO: navigate to device password settings
+        }
+        else if (intentionId === 2) {
+            // TODO: navigate to wifi settings
+        }
+        else {
+            throw "Unknown intentionId!"
+        }
+    }
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
@@ -23,7 +39,7 @@ const SettingsContainer = () => {
                     </View>
                 </View>
                 <View style={[Layout.row, Layout.alignItemsCenter, Gutters.largexxlBPadding]}>
-                    <Button title={"contiune"} color={Colors.secondaryGreen} style={Layout.fill} />
+                    <Button title={"contiune"} clickCallback={continueCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                 </View>
             </View>
         </View>

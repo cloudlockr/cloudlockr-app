@@ -5,7 +5,6 @@ import {
     BackHandler
 } from 'react-native'
 import { DashboardHeader, FileList, DownloadDetail, UploadDetail } from '@/Components'
-import { useSelector } from 'react-redux'
 import RBSheet from 'react-native-raw-bottom-sheet'
 
 const DashboardContainer = () => {
