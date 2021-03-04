@@ -49,6 +49,12 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontSize: 16,
       fontWeight: '400',
     },
+    detailExtraBold: {
+      fontFamily: FontFamily.primary,
+      fontSize: 20,
+      fontWeight: '500',
+      color: Colors.text,
+    },
     detailBold: {
       fontFamily: FontFamily.primary,
       fontSize: 20,

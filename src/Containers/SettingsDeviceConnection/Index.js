@@ -8,20 +8,20 @@ import { BasicHeader, Button } from '@/Components'
 import { useSelector } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 
-const SettingsContainer = () => {
+const SettingsDeviceConnectionContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
 
     const intentionId = useSelector((state) => state.intention).intention.settingsDeviceConnection;
 
     const continueCallback = () => {
         if (intentionId === 1) {
-            // TODO: navigate to device password settings
+            navigate("SettingsDevicePassword", {});
         }
         else if (intentionId === 2) {
-            // TODO: navigate to wifi settings
+            // TODO: navigate to wifi settings when implemented
         }
         else {
-            throw "Unknown intentionId!"
+            throw "Unknown intentionId!";
         }
     }
 
@@ -46,4 +46,4 @@ const SettingsContainer = () => {
     )
 }
 
-export default SettingsContainer;
+export default SettingsDeviceConnectionContainer;

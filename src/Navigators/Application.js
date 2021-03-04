@@ -15,6 +15,7 @@ let LoginNavigator
 let DashboardNavigator
 let SettingsNavigator
 let SettingsDeviceConnectionNavigator
+let SettingsDevicePasswordNavigator
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -29,6 +30,7 @@ const ApplicationNavigator = () => {
       DashboardNavigator = require('@/Navigators/Dashboard').default
       SettingsNavigator = require('@/Navigators/Settings').default
       SettingsDeviceConnectionNavigator = require('@/Navigators/SettingsDeviceConnection').default
+      SettingsDevicePasswordNavigator = require('@/Navigators/SettingsDevicePassword').default
       setIsApplicationLoaded(true)
     }
   }, [applicationIsLoading])
@@ -41,6 +43,7 @@ const ApplicationNavigator = () => {
       DashboardNavigator = null
       SettingsNavigator = null
       SettingsDeviceConnectionNavigator = null
+      SettingsDevicePasswordNavigator = null
     },
     [],
   )
@@ -117,6 +120,14 @@ const ApplicationNavigator = () => {
             {isApplicationLoaded && SettingsDeviceConnectionNavigator != null && (<Stack.Screen
                 name="SettingsDeviceConnection"
                 component={SettingsDeviceConnectionNavigator}
+                options={{
+                  ...customTransition1,
+                }}
+              />
+            )}
+            {isApplicationLoaded && SettingsDevicePasswordNavigator != null && (<Stack.Screen
+                name="SettingsDevicePassword"
+                component={SettingsDevicePasswordNavigator}
                 options={{
                   ...customTransition1,
                 }}
