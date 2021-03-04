@@ -9,14 +9,16 @@ const Button = (props) => {
   const useInputFieldStyle = props.useInputFieldStyle;
   const title = props.title;
   const color = props.color;
-  const destParams = props.destParams;
   const newViewId = props.newViewId;
   const style = props.style;
   const setEnabled = props.setEnabled !== undefined ? props.setEnabled : true;
+  const clickCallback = props.clickCallback
 
-  const changeView = (newViewId, destParams) => {
-    if (newViewId !== undefined)
-      navigate(newViewId, destParams);
+  const clickCallbackAction = () => {
+    if (clickCallback !== undefined)
+      clickCallback();
+    else if (newViewId !== undefined)
+      navigate(newViewId, {});
   }
 
   return (
@@ -24,7 +26,7 @@ const Button = (props) => {
       {!useInputFieldStyle &&
         <TouchableOpacity
           style={[Layout.center, Common.rounded, {backgroundColor: color, height: 50, opacity: setEnabled ? 1 : 0.7}]}
-          onPress={() => changeView(newViewId, destParams)}
+          onPress={() => clickCallbackAction()}
           disabled={!setEnabled}
         >
           <Text style={[Fonts.textRegularBoldPrimary, Fonts.textCenter]}>{title}</Text>
@@ -33,7 +35,7 @@ const Button = (props) => {
       {useInputFieldStyle &&
         <TouchableOpacity
           style={[Gutters.regularLPadding, Layout.row, Layout.alignItemsCenter, Common.rounded, {backgroundColor: Colors.primary, height: 50, opacity: setEnabled ? 1 : 0.7}]}
-          onPress={() => changeView(newViewId, destParams)}
+          onPress={() => clickCallbackAction()}
           disabled={!setEnabled}
         >
           <Text style={[Fonts.inputField]}>{title}</Text>

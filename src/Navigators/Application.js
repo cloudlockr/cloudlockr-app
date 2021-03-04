@@ -14,6 +14,7 @@ const Stack = createStackNavigator()
 let LoginNavigator
 let DashboardNavigator
 let SettingsNavigator
+let SettingsDeviceConnectionNavigator
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -27,6 +28,7 @@ const ApplicationNavigator = () => {
       LoginNavigator = require('@/Navigators/Login').default
       DashboardNavigator = require('@/Navigators/Dashboard').default
       SettingsNavigator = require('@/Navigators/Settings').default
+      SettingsDeviceConnectionNavigator = require('@/Navigators/SettingsDeviceConnection').default
       setIsApplicationLoaded(true)
     }
   }, [applicationIsLoading])
@@ -38,6 +40,7 @@ const ApplicationNavigator = () => {
       LoginNavigator = null
       DashboardNavigator = null
       SettingsNavigator = null
+      SettingsDeviceConnectionNavigator = null
     },
     [],
   )
@@ -106,6 +109,14 @@ const ApplicationNavigator = () => {
             {isApplicationLoaded && SettingsNavigator != null && (<Stack.Screen
                 name="Settings"
                 component={SettingsNavigator}
+                options={{
+                  ...customTransition1,
+                }}
+              />
+            )}
+            {isApplicationLoaded && SettingsDeviceConnectionNavigator != null && (<Stack.Screen
+                name="SettingsDeviceConnection"
+                component={SettingsDeviceConnectionNavigator}
                 options={{
                   ...customTransition1,
                 }}

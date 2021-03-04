@@ -15,11 +15,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import startup from './Startup'
 import fields from './Fields'
 import dashboard from './Dashboard'
+import intention from './Intention'
 
 const reducers = combineReducers({
   startup,
   fields,
-  dashboard
+  dashboard,
+  intention
 })
 
 const persistConfig = {

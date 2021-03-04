@@ -5,9 +5,22 @@ import {
     Text
 } from 'react-native'
 import { BasicHeader, Button, HorizontalLine } from '@/Components'
+import SetIntention from '@/Store/Intention/SetIntention'
+import { navigate } from '@/Navigators/Root'
+import { useDispatch } from 'react-redux'
 
 const SettingsContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
+    const dispatch = useDispatch();
+
+    const devicePasswordCallback = () => {
+        dispatch(SetIntention.action({ id: "SettingsDeviceConnection", value: 1 }));
+        navigate("SettingsDeviceConnection", {});
+    }
+    const deviceWifiCallback = () => {
+        dispatch(SetIntention.action({ id: "SettingsDeviceConnection", value: 2 }));
+        navigate("SettingsDeviceConnection", {});
+    }
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
@@ -25,10 +38,10 @@ const SettingsContainer = () => {
                 </View>
                 <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 220}]}>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
-                        <Button title={"device password"} color={Colors.secondaryGreen} style={Layout.fill} />
+                        <Button title={"device password"} clickCallback={devicePasswordCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
-                        <Button title={"device wifi settings"} color={Colors.secondaryGreen} style={Layout.fill} />
+                        <Button title={"device wifi settings"} clickCallback={deviceWifiCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
                         <HorizontalLine />
