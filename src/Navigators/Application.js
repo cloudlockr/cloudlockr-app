@@ -16,6 +16,7 @@ let DashboardNavigator
 let SettingsNavigator
 let SettingsDeviceConnectionNavigator
 let SettingsDevicePasswordNavigator
+let RegistrationNavigator
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -31,6 +32,7 @@ const ApplicationNavigator = () => {
       SettingsNavigator = require('@/Navigators/Settings').default
       SettingsDeviceConnectionNavigator = require('@/Navigators/SettingsDeviceConnection').default
       SettingsDevicePasswordNavigator = require('@/Navigators/SettingsDevicePassword').default
+      RegistrationNavigator = require('@/Navigators/Registration').default
       setIsApplicationLoaded(true)
     }
   }, [applicationIsLoading])
@@ -44,6 +46,7 @@ const ApplicationNavigator = () => {
       SettingsNavigator = null
       SettingsDeviceConnectionNavigator = null
       SettingsDevicePasswordNavigator = null
+      RegistrationNavigator = null
     },
     [],
   )
@@ -85,6 +88,43 @@ const ApplicationNavigator = () => {
     },
   }
 
+  const customTransition2 = {
+    gestureDirection: 'vertical',
+    transitionSpec: {
+      open: TransitionSpecs.TransitionIOSSpec,
+      close: TransitionSpecs.TransitionIOSSpec,
+    },
+    headerStyleInterpolator: HeaderStyleInterpolators.forFade,
+    cardStyleInterpolator: ({ current, next, layouts }) => {
+      return {
+        cardStyle: {
+          transform: [
+            {
+              translateY: current.progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [layouts.screen.height, 0],
+              }),
+            },
+            {
+              scale: next
+                ? next.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 0.9],
+                  })
+                : 1,
+            },
+          ],
+        },
+        overlayStyle: {
+          opacity: current.progress.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 0.5],
+          }),
+        },
+      };
+    },
+  }
+
   return (
     <AppearanceProvider>
       <SafeAreaView style={[Layout.fill, { backgroundColor: colors.card }]}>
@@ -92,8 +132,7 @@ const ApplicationNavigator = () => {
           <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
           <Stack.Navigator headerMode={'none'}>
             <Stack.Screen name="Startup" component={IndexStartupContainer} />
-            {isApplicationLoaded && LoginNavigator != null && (
-              <Stack.Screen
+            {isApplicationLoaded && LoginNavigator != null && (<Stack.Screen
                 name="Main"
                 component={LoginNavigator}
                 options={{
@@ -130,6 +169,14 @@ const ApplicationNavigator = () => {
                 component={SettingsDevicePasswordNavigator}
                 options={{
                   ...customTransition1,
+                }}
+              />
+            )}
+            {isApplicationLoaded && RegistrationNavigator != null && (<Stack.Screen
+                name="Registration"
+                component={RegistrationNavigator}
+                options={{
+                  ...customTransition2,
                 }}
               />
             )}

@@ -8,7 +8,7 @@ import { BasicHeader, Button, HorizontalLine } from '@/Components'
 import SetIntention from '@/Store/Intention/SetIntention'
 import RemoveField from '@/Store/Fields/RemoveField'
 import { navigate } from '@/Navigators/Root'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 const SettingsContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
@@ -30,6 +30,8 @@ const SettingsContainer = () => {
         navigate("Main", {});
     }
 
+    var userEmail = useSelector((state) => state.fields).fields['1'];
+
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
             <BasicHeader title={"MySettings"} previousView={"Dashboard"} />
@@ -37,7 +39,7 @@ const SettingsContainer = () => {
                 <View style={[Gutters.largexxlBMargin, Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 150}]}>
                     <View style={[Layout.column, Layout.alignItemsCenter]}>
                         <Text style={Fonts.listFileName}>hello,</Text>
-                        <Text style={Fonts.listFileNameLighter}>frantzen.zane@gmail.com</Text>
+                        <Text style={Fonts.listFileNameLighter}>{userEmail}</Text>
                     </View>
                     <View style={[Layout.column, Layout.alignItemsCenter]}>
                         <Text style={Fonts.detailBold}>CloudLockr Device Status:</Text>

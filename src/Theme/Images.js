@@ -11,5 +11,6 @@ export default function () {
     settingsIcon: require('@/Assets/Images/settings-icon.png'),
     uploadIcon: require('@/Assets/Images/upload-icon.png'),
     leftArrowIcon: require('@/Assets/Images/left-arrow-icon.png'),
+    xIcon: require('@/Assets/Images/x-icon.png'),
   }
 }
