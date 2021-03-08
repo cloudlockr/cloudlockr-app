@@ -5,7 +5,6 @@ import {
     Text
 } from 'react-native'
 import { BasicHeader, Button, InputField } from '@/Components'
-import { useSelector } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 
 const SettingsDevicePasswordContainer = () => {
@@ -14,6 +13,7 @@ const SettingsDevicePasswordContainer = () => {
     const confirmCallback = () => {
         // TODO: complex logic interaction
         // TODO: navigate to confirmation view once complete
+        // TODO: Add alert making sure the user accepts the risks with changing the password // alert("stuff here");
     }
 
     // TODO: add logic to only enable once fields are filled in (see login implementation)

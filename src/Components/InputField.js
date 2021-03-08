@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, Image } from 'react-native'
+import { View, TextInput, Image, Keyboard } from 'react-native'
 import { useTheme } from '@/Theme'
 import SetField from '@/Store/Fields/SetField'
 import { useDispatch } from 'react-redux'
@@ -15,29 +15,53 @@ const InputField = (props) => {
   const iconSrc = props.iconSrc;
   const fieldId = props.fieldId;
   const hideInput = props.hideInput !== undefined ? props.hideInput : false;
-  const callback = props.callback;
+  const finishEditingCallback = props.finishEditingCallback;
+  const enabled = props.enabled !== undefined ? props.enabled : true;
 
   // Store field value in Redux store so it can be accessed by other components by fieldId
   const finishEditing = () => {
+    // Remove the keyboard listener
+    Keyboard.removeAllListeners("keyboardDidHide");
+    
+    // Check / set if the finished has already been processed
+    if (isFinished)
+      return;
+
+    setFinished(true);
+    
+    // Store the field data in the Redux store
     dispatch(SetField.action({ id: fieldId, value: value }));
 
     // Perform custom callback (if given)
-    if (callback !== undefined) 
-      callback();
+    if (finishEditingCallback !== undefined) {
+      finishEditingCallback();
+    }
   }
 
   const editField = (newValue) => {
+    // Create a listener if the first edit on the text field
+    if (!isEdited) {
+      Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
+    }
+    
     onChangeText(newValue);
-    onEdit(true);
+    setEdited(true);
+    setFinished(false);
   }
 
   const resetField = () => {
     onChangeText(placeholder);
-    onEdit(false);
+    setEdited(false);
+    setFinished(false);
   }
 
+  const _keyboardDidHide = () => {
+    finishEditing();
+  };
+
   const [value, onChangeText] = useState(placeholder);
-  const [isEdited, onEdit] = useState(false)
+  const [isEdited, setEdited] = useState(false)
+  const [isFinished, setFinished] = useState(false);
 
   // Reset field values when view is unloaded
   useFocusEffect(
@@ -67,6 +91,7 @@ const InputField = (props) => {
             onChangeText={text => editField(text)}
             onEndEditing={() => finishEditing()}
             value={value}
+            editable={enabled}
             selectTextOnFocus
             returnKeyType={'done'}
             secureTextEntry={hideInput && isEdited}

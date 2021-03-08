@@ -19,6 +19,9 @@ export default function ({ Colors, ...args }) {
       backgroundLightGrey: {
         backgroundColor: Colors.lightGrey,
       },
+      backgroundDarkGrey: {
+        backgroundColor: Colors.darkGrey,
+      },
       backgroundWhite: {
         backgroundColor: Colors.white,
       },

@@ -28,8 +28,10 @@ const FAKE_DATA = [
 
 const WifiList = (props) => {
   const { Layout, Gutters, Colors, Fonts, Common } = useTheme();
+
   const [refreshing, setRefreshing] = useState(true);
   const [dataSource, setDataSource] = useState([]);
+  const [selectedName, setSelectedName] = useState('');
 
   const clickCallback = props.clickCallback;
 
@@ -46,7 +48,7 @@ const WifiList = (props) => {
   };
 
   const Item = ({ item, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={[Gutters.largeHPadding, Gutters.regularVPadding, Gutters.tinyxlBMargin, Common.backgroundLightGrey]}>
+    <TouchableOpacity onPress={onPress} style={[[Gutters.largeHPadding, Gutters.regularVPadding, Gutters.tinyxlBMargin], selectedName == item.name ? [Common.backgroundDarkGrey] : [Common.backgroundLightGrey]]}>
         <View style={[Layout.row, Layout.rowHCenter, Layout.justifyContentBetween]}>
           <Text style={Fonts.listFileName}>{item.name}</Text>
         </View>
@@ -59,8 +61,8 @@ const WifiList = (props) => {
         item={item}
         onPress={() => {
           clickCallback(item.name);
+          setSelectedName(item.name);
         }}
-        style={[{backgroundColor: Colors.secondaryGreen}]}
       />
     );
   };
@@ -71,7 +73,7 @@ const WifiList = (props) => {
         <FlatList
             data={dataSource}
             renderItem={renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.name}
             enableEmptySections={true}
             refreshControl={
               <RefreshControl

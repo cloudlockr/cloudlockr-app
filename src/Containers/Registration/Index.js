@@ -24,20 +24,9 @@ const RegisterContainer = () => {
     const dispatch = useDispatch();
     const forceUpdate = useForceUpdate();
 
-    // Enable the login button only after each of the fields have been entered
-    var registerButtonEnabled;
-    var fields = useSelector((state) => state.fields).fields;
-    if (fields['1'] !== undefined && fields['2'] !== undefined) {
-        registerButtonEnabled = true;
-    }
-    else {
-        registerButtonEnabled = false;
-    }
-
-    const backClick = () => {
-        Keyboard.dismiss();
-        navigate("Main", {});
-    }
+    const [emailEntered, setEmailEntered] = useState(false);
+    const [passwordEntered, setPasswordEntered] = useState(false);
+    const [registerButtonEnabled, setRegisterButtonEnabled] = useState(false); 
 
     // Remove any stored credential data when the view loads from the store
     useFocusEffect(
@@ -45,11 +34,36 @@ const RegisterContainer = () => {
             dispatch(RemoveField.action({ id: '1' }));
             dispatch(RemoveField.action({ id: '2' }));
 
+            setEmailEntered(false);
+            setPasswordEntered(false);
+            setRegisterButtonEnabled(false);
+
             return () => {
                 // Nothing to do when screen is unfocused
             };
         }, [])
     );
+
+    const backClick = () => {
+        Keyboard.dismiss();
+        navigate("Main", {});
+    }
+
+    const emailCallback = () => {
+        setEmailEntered(true);
+
+        if (passwordEntered) {
+            setRegisterButtonEnabled(true);
+        }   
+    }
+    
+    const passwordCallback = () => {
+        setPasswordEntered(true);
+
+        if (emailEntered) {
+            setRegisterButtonEnabled(true);
+        }
+    }
 
     return (
         <View style={[Layout.fill, Layout.colCenter, Gutters.largeAPadding, Common.backgroundSecondary]}>
@@ -64,10 +78,10 @@ const RegisterContainer = () => {
                             <Text style={[Fonts.listFileNameLighter, Fonts.textCenter]}>enter your details</Text>
                         </View>
                     <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                        <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' callback={forceUpdate} />
+                        <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' finishEditingCallback={emailCallback} />
                     </View>
                     <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                        <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} callback={forceUpdate} />
+                        <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} finishEditingCallback={passwordCallback} />
                     </View>
                     <View style={[Layout.rowCenter]}>
                         <Button title='register' color={Colors.secondaryGreen} destParams={{}} newViewId={"Dashboard"} setEnabled={registerButtonEnabled} />
