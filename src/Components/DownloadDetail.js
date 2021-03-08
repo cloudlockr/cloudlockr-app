@@ -27,4 +27,4 @@ const DownloadDetail = () => {
     );
 }
 
-module.exports = DownloadDetail;
+export default DownloadDetail;

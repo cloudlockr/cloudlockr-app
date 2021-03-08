@@ -27,4 +27,4 @@ const UploadDetail = () => {
     );
 }
 
-module.exports = UploadDetail;
+export default UploadDetail;

@@ -21,7 +21,7 @@ const SettingsDevicePasswordContainer = () => {
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
-            <BasicHeader title={"MyDevice"} previousView={"SettingsDeviceConnection"} />
+            <BasicHeader title={"MyDevice — Password"} previousView={"SettingsDeviceConnection"} />
             <View style={[Layout.column, Layout.center, Gutters.largexlHPadding, Layout.fill, Layout.justifyContentBetween]} >
                 <View style={[Gutters.largexxlTMargin, Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 220}]}>
                     <View style={[Layout.column, Layout.alignItemsCenter]}>

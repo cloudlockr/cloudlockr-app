@@ -19,7 +19,6 @@ const InputField = (props) => {
 
   // Store field value in Redux store so it can be accessed by other components by fieldId
   const finishEditing = () => {
-    console.log('fieldId: ' + fieldId + '    value: ' + value);
     dispatch(SetField.action({ id: fieldId, value: value }));
 
     // Perform custom callback (if given)

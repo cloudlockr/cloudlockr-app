@@ -18,7 +18,7 @@ const SettingsDeviceConnectionContainer = () => {
             navigate("SettingsDevicePassword", {});
         }
         else if (intentionId === 2) {
-            // TODO: navigate to wifi settings when implemented
+            navigate("SettingsDeviceWifi", {});
         }
         else {
             throw "Unknown intentionId!";

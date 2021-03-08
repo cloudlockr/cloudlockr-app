@@ -25,6 +25,9 @@ export default function ({ Colors, ...args }) {
       backgroundSecondary: {
         backgroundColor: Colors.secondary,
       },
+      backgroundSecondaryGreen: {
+        backgroundColor: Colors.secondaryGreen,
+      },
       backgroundReset: {
         backgroundColor: Colors.transparent,
       },
