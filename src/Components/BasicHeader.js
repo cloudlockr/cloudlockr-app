@@ -13,10 +13,10 @@ const BasicHeader = (props) => {
     <View style={[Layout.row, Layout.rowHCenter, Common.backgroundSecondary, Common.fullShadow, {height: 65}]}>
         <View style={[Gutters.regularLPadding]}>
             <TouchableOpacity onPress={() => navigate(previousView, {})}>
-                <Image style={{height: 32, width: 32}} source={Images.leftArrowIcon} resizeMode={'contain'} />
+                <Image style={{height: 28, width: 28}} source={Images.leftArrowIcon} resizeMode={'contain'} />
             </TouchableOpacity>
         </View>
-        <View style={[Gutters.regularLPadding]}>
+        <View style={[Gutters.regularLPadding, Layout.rowHCenter, {paddingBottom: 2}]}>
             <Text style={[Fonts.titleLarge, Fonts.textCenter]}>{title}</Text>
         </View>
     </View>

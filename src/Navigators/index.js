@@ -6,3 +6,4 @@ export { default as SettingsDeviceConnectionNavigator } from './SettingsDeviceCo
 export { default as SettingsDevicePasswordNavigator } from './SettingsDevicePassword'
 export { default as SettingsDeviceWifiNavigator } from './SettingsDeviceWifi'
 export { default as RegistrationNavigator } from './Registration'
+export { default as SettingsConfirmationNavigator } from './SettingsConfirmation'

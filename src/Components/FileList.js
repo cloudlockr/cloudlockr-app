@@ -75,6 +75,7 @@ const FileList = (props) => {
             renderItem={renderItem}
             keyExtractor={item => item.id}
             enableEmptySections={true}
+            persistentScrollbar={true}
             refreshControl={
               <RefreshControl
                   refreshing={refreshing}

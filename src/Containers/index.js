@@ -6,3 +6,4 @@ export { default as SettingsDeviceConnectionContainer } from './SettingsDeviceCo
 export { default as SettingsDevicePasswordContainer } from './SettingsDevicePassword/Index'
 export { default as RegistrationContainer } from './Registration/Index'
 export { default as SettingsDeviceWifiContainer } from './SettingsDeviceWifi/Index'
+export { default as SettingsConfirmationContainer } from './SettingsConfirmation/Index'

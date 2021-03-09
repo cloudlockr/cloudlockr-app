@@ -11,8 +11,9 @@ const SettingsDeviceWifiContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
 
     const confirmCallback = () => {
-        // TODO: complex logic interaction
-        // TODO: navigate to confirmation view once complete
+        // TODO: complex logic interaction via service layer
+        // TODO: show an activity indicator while the complex logic is running
+        navigate("SettingsConfirmation", {});
     }
 
     const networkClickCallback = (clickedNetworkName) => {

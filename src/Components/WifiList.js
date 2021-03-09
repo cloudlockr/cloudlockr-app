@@ -75,6 +75,7 @@ const WifiList = (props) => {
             renderItem={renderItem}
             keyExtractor={item => item.name}
             enableEmptySections={true}
+            persistentScrollbar={true}
             refreshControl={
               <RefreshControl
                   refreshing={refreshing}

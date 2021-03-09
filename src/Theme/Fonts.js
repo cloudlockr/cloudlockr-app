@@ -104,7 +104,7 @@ export default function ({ FontSize, Colors, FontFamily }) {
     },
     titleLarge: {
       fontFamily: FontFamily.primary,
-      fontSize: FontSize.large * 0.95,
+      fontSize: FontSize.large * 0.90,
       fontWeight: '300',
       color: Colors.primary,
     },

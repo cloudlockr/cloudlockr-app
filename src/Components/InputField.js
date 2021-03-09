@@ -28,13 +28,19 @@ const InputField = (props) => {
       return;
 
     setFinished(true);
-    
-    // Store the field data in the Redux store
-    dispatch(SetField.action({ id: fieldId, value: value }));
 
-    // Perform custom callback (if given)
-    if (finishEditingCallback !== undefined) {
-      finishEditingCallback();
+    if (value !== "") {
+      // Store the field data in the Redux store
+      dispatch(SetField.action({ id: fieldId, value: value }));
+
+      // Perform custom callback (if given)
+      if (finishEditingCallback !== undefined) {
+        finishEditingCallback();
+      } 
+    } else {
+      // Restore the placeholders if no data was entered
+      onChangeText(placeholder);
+      setEdited(false);
     }
   }
 

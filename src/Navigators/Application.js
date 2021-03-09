@@ -17,6 +17,7 @@ let SettingsNavigator
 let SettingsDeviceConnectionNavigator
 let SettingsDevicePasswordNavigator
 let SettingsDeviceWifiNavigator
+let SettingsConfirmationNavigator
 let RegistrationNavigator
 
 // @refresh reset
@@ -35,6 +36,7 @@ const ApplicationNavigator = () => {
       SettingsDevicePasswordNavigator = require('@/Navigators/SettingsDevicePassword').default
       RegistrationNavigator = require('@/Navigators/Registration').default
       SettingsDeviceWifiNavigator = require('@/Navigators/SettingsDeviceWifi').default
+      SettingsConfirmationNavigator = require('@/Navigators/SettingsConfirmation').default
       setIsApplicationLoaded(true)
     }
   }, [applicationIsLoading])
@@ -50,6 +52,7 @@ const ApplicationNavigator = () => {
       SettingsDevicePasswordNavigator = null
       RegistrationNavigator = null
       SettingsDeviceWifiNavigator = null
+      SettingsConfirmationNavigator = null
     },
     [],
   )
@@ -178,6 +181,14 @@ const ApplicationNavigator = () => {
             {isApplicationLoaded && SettingsDeviceWifiNavigator != null && (<Stack.Screen
                 name="SettingsDeviceWifi"
                 component={SettingsDeviceWifiNavigator}
+                options={{
+                  ...customTransition1,
+                }}
+              />
+            )}
+            {isApplicationLoaded && SettingsConfirmationNavigator != null && (<Stack.Screen
+                name="SettingsConfirmation"
+                component={SettingsConfirmationNavigator}
                 options={{
                   ...customTransition1,
                 }}

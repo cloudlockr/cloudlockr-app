@@ -1,8 +1,9 @@
 import { useTheme } from '@/Theme'
-import React from 'react'
+import React, { useState } from 'react'
 import {
     View,
-    Text
+    Text,
+    Alert
 } from 'react-native'
 import { BasicHeader, Button, InputField } from '@/Components'
 import { navigate } from '@/Navigators/Root'
@@ -11,13 +12,42 @@ const SettingsDevicePasswordContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
 
     const confirmCallback = () => {
-        // TODO: complex logic interaction
-        // TODO: navigate to confirmation view once complete
-        // TODO: Add alert making sure the user accepts the risks with changing the password // alert("stuff here");
+        // Show confirmation alert to ensure the user does not accidentally change password
+        Alert.alert(
+            "PASSWORD CHANGE WARNING",
+            "Changing your device password will make all previosuly stored data forever inaccessible. This process is irreversable.",
+            [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "Accept & Continue", onPress: performPasswordChange }
+            ],
+            { cancelable: true }
+          );
     }
 
-    // TODO: add logic to only enable once fields are filled in (see login implementation)
-    var confirmEnabled = false;
+    const performPasswordChange = () => {
+        // TODO: complex logic interaction via service layer
+        // TODO: show an activity indicator while the complex logic is running
+        navigate("SettingsConfirmation", {});
+    }
+
+    const [passwordEntered, setPasswordEntered] = useState(false);
+    const [accessCodeEntered, setAccessCodeEntered] = useState(false);
+    const [buttonEnabled, setButtonEnabled] = useState(false); 
+
+    const passwordCallback = () => {
+        setPasswordEntered(true);
+        if (accessCodeEntered)
+            setButtonEnabled(true);
+    }
+    
+    const accessCodeCallback = () => {
+        setAccessCodeEntered(true);
+        if (passwordEntered)
+            setButtonEnabled(true);
+    }
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
@@ -28,8 +58,8 @@ const SettingsDevicePasswordContainer = () => {
                         <Text style={[Fonts.listFileName, Fonts.textCenter]}>enter your new device master password</Text>
                     </View>
                     <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 120}]}>
-                        <InputField placeholder={"new device master password"} hideInput={true} fieldId={3} />
-                        <InputField placeholder={"displayed device access code"} fieldId={4} />
+                        <InputField placeholder={"new device master password"} hideInput={true} fieldId={3} finishEditingCallback={passwordCallback} />
+                        <InputField placeholder={"displayed device access code"} fieldId={4} finishEditingCallback={accessCodeCallback} />
                     </View>
                 </View>
                 <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexxlBPadding]}>
@@ -38,7 +68,7 @@ const SettingsDevicePasswordContainer = () => {
                         <Text style={[Fonts.detail, Fonts.textCenter]}>changing your device password will make all previosuly stored data forever inaccessible!</Text>
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
-                        <Button title={"confirm configuration"} clickCallback={confirmCallback} setEnabled={confirmEnabled} color={Colors.red} style={Layout.fill} />
+                        <Button title={"confirm configuration"} clickCallback={confirmCallback} setEnabled={buttonEnabled} color={Colors.red} style={Layout.fill} />
                     </View>
                 </View>
             </View>
