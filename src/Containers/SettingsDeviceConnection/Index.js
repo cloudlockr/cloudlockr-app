@@ -39,7 +39,7 @@ const SettingsDeviceConnectionContainer = () => {
                     </View>
                 </View>
                 <View style={[Layout.row, Layout.alignItemsCenter, Gutters.largexxlBPadding]}>
-                    <Button title={"contiune"} clickCallback={continueCallback} color={Colors.secondaryGreen} style={Layout.fill} />
+                    <Button title={"continue"} clickCallback={continueCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                 </View>
             </View>
         </View>

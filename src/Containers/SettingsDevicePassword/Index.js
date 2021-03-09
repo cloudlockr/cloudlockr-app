@@ -15,7 +15,7 @@ const SettingsDevicePasswordContainer = () => {
         // Show confirmation alert to ensure the user does not accidentally change password
         Alert.alert(
             "PASSWORD CHANGE WARNING",
-            "Changing your device password will make all previosuly stored data forever inaccessible. This process is irreversable.",
+            "Changing your device password will make all previously stored data inaccessible (unless the password is reverted at a future date to the old value)",
             [
               {
                 text: "Cancel",
@@ -65,7 +65,7 @@ const SettingsDevicePasswordContainer = () => {
                 <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexxlBPadding]}>
                     <View style={[Layout.column, Layout.alignItemsCenter, Gutters.regularxlBPadding]}>
                         <Text style={[Fonts.detailExtraBold, Fonts.textCenter]}>WARNING!</Text>
-                        <Text style={[Fonts.detail, Fonts.textCenter]}>changing your device password will make all previosuly stored data forever inaccessible!</Text>
+                        <Text style={[Fonts.detail, Fonts.textCenter]}>changing your device password will make all previously stored data inaccessible!</Text>
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
                         <Button title={"confirm configuration"} clickCallback={confirmCallback} setEnabled={buttonEnabled} color={Colors.red} style={Layout.fill} />
