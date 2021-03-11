@@ -5,9 +5,10 @@ import {
 } from 'react-native'
 import { InputField, Button } from '@/Components'
 import { useTheme } from '@/Theme'
+import { SelectFileService } from '@/Services/FileSystem'
 
 const UploadDetail = () => {
-    const { Layout, Common, Fonts, Images, Gutters, Colors } = useTheme();
+    const { Layout, Fonts, Gutters, Colors } = useTheme();
 
     const [nameEntered, setNameEntered] = useState(false);
     const [fileSelected, setFileSelected] = useState(false);
@@ -23,16 +24,18 @@ const UploadDetail = () => {
             setButtonEnabled(true);
     }
 
-    const fileSelectorCallback = (fileName) => {
-        // TODO: Remove else case once file selector is properly implemented
-        if (fileName !== undefined)
-            setFileSelectorTitle(fileName);
-        else
-            setFileSelectorTitle("testFile.pdf");
+    const fileSelectorCallback = async () => {
+        // Select a file from the file system
+        var fileMetadata = await SelectFileService();
 
-        setFileSelected(true);
-        if (nameEntered && passwordEntered && accessCodeEntered)
-            setButtonEnabled(true);
+        // Update the UI if a file has been successfully selected
+        if (fileMetadata !== undefined) {
+            setFileSelectorTitle(fileMetadata.name);
+            setFileSelected(true);
+            
+            if (nameEntered && passwordEntered && accessCodeEntered)
+                setButtonEnabled(true);
+        }
     }
 
     const passwordCallback = () => {
