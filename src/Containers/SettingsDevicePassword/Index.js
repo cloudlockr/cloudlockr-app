@@ -7,9 +7,17 @@ import {
 } from 'react-native'
 import { BasicHeader, Button, InputField } from '@/Components'
 import { navigate } from '@/Navigators/Root'
+import { SetPasswordService } from '@/Services/Device'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const SettingsDevicePasswordContainer = () => {
     const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
+
+    const [password, setPassword] = useState('');
+    const [accessCode, setAccessCode] = useState('');
+    const [buttonEnabled, setButtonEnabled] = useState(false); 
+    const [spinnerVisible, setSpinnerVisible] = useState(false);
+    const [spinnerMessage, setSpinnerMessage] = useState('processing...');
 
     const confirmCallback = () => {
         // Show confirmation alert to ensure the user does not accidentally change password
@@ -27,30 +35,47 @@ const SettingsDevicePasswordContainer = () => {
           );
     }
 
-    const performPasswordChange = () => {
-        // TODO: complex logic interaction via service layer
-        // TODO: show an activity indicator while the complex logic is running
-        navigate("SettingsConfirmation", {});
+    const performPasswordChange = async () => {
+        setSpinnerVisible(true);
+        const changeResult = await SetPasswordService(password, accessCode);
+        setSpinnerVisible(false);
+
+        if (changeResult[0]) {
+            navigate("SettingsConfirmation", {});
+        } else {
+            errorAlert(changeResult[1]);
+        }
     }
 
-    const [passwordEntered, setPasswordEntered] = useState(false);
-    const [accessCodeEntered, setAccessCodeEntered] = useState(false);
-    const [buttonEnabled, setButtonEnabled] = useState(false); 
+    const errorAlert = (message) => {
+        Alert.alert(
+            "Error Occured While Updating",
+            message + ". Please try again later and/or resolve the error.",
+            [
+                {
+                text: "Cancel",
+                style: "cancel"
+                }
+            ],
+            { cancelable: true }
+        );
+    }
 
-    const passwordCallback = () => {
-        setPasswordEntered(true);
-        if (accessCodeEntered)
+    const passwordCallback = (enteredPassword) => {
+        setPassword(enteredPassword);
+        if (accessCode !== '')
             setButtonEnabled(true);
     }
     
-    const accessCodeCallback = () => {
-        setAccessCodeEntered(true);
-        if (passwordEntered)
+    const accessCodeCallback = (enteredCode) => {
+        setAccessCode(enteredCode);
+        if (password !== '')
             setButtonEnabled(true);
     }
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
+            <Spinner visible={spinnerVisible} textContent={spinnerMessage} textStyle={{color: Colors.white}} />
             <BasicHeader title={"MyDevice — Password"} previousView={"SettingsDeviceConnection"} />
             <View style={[Layout.column, Layout.center, Gutters.largexlHPadding, Layout.fill, Layout.justifyContentBetween]} >
                 <View style={[Gutters.largexxlTMargin, Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 220}]}>
@@ -58,8 +83,8 @@ const SettingsDevicePasswordContainer = () => {
                         <Text style={[Fonts.listFileName, Fonts.textCenter]}>enter your new device master password</Text>
                     </View>
                     <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 120}]}>
-                        <InputField placeholder={"new device master password"} hideInput={true} fieldId={3} finishEditingCallback={passwordCallback} />
-                        <InputField placeholder={"displayed device access code"} fieldId={4} finishEditingCallback={accessCodeCallback} />
+                        <InputField placeholder={"new device master password"} hideInput finishEditingCallback={passwordCallback} returnValue persist={false} />
+                        <InputField placeholder={"displayed device access code"} finishEditingCallback={accessCodeCallback} returnValue persist={false} />
                     </View>
                 </View>
                 <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexxlBPadding]}>
