@@ -1,3 +1,5 @@
+import api, { handleError } from '@/Services'
+
 export default async (authToken) => {
     // TODO: Need to uncomment API request once API is ready. The uncommented code should be removed when properly implemented
     // if (!authToken) {

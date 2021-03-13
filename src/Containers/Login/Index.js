@@ -87,7 +87,7 @@ const LoginContainer = () => {
                     <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' finishEditingCallback={emailCallback} returnValue={true} />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                    <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} finishEditingCallback={passwordCallback} returnValue={true} />
+                    <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} finishEditingCallback={passwordCallback} returnValue={true} persist={false} />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
                     <Button title='log in' color={Colors.secondaryGreen} clickCallback={loginCallback} setEnabled={loginButtonEnabled} />
