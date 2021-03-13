@@ -17,6 +17,7 @@ const InputField = (props) => {
   const hideInput = props.hideInput !== undefined ? props.hideInput : false;
   const finishEditingCallback = props.finishEditingCallback;
   const enabled = props.enabled !== undefined ? props.enabled : true;
+  const returnValue = props.returnValue !== undefined ? props.returnValue : false;
 
   // Store field value in Redux store so it can be accessed by other components by fieldId
   const finishEditing = () => {
@@ -35,7 +36,10 @@ const InputField = (props) => {
 
       // Perform custom callback (if given)
       if (finishEditingCallback !== undefined) {
-        finishEditingCallback();
+        if (returnValue)
+          finishEditingCallback(value);
+        else
+          finishEditingCallback();
       } 
     } else {
       // Restore the placeholders if no data was entered
