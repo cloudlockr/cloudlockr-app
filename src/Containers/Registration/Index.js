@@ -6,27 +6,24 @@ import {
     Image,
     TouchableOpacity,
     Keyboard,
+    Alert,
 } from 'react-native'
 import { InputField, Button } from '@/Components'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import RemoveField from '@/Store/Fields/RemoveField'
 import { navigate } from '@/Navigators/Root'
-import { useFocusEffect } from '@react-navigation/native';
-
-// Forces a view update (which allows for the login button visibility to be updated)
-function useForceUpdate(){
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue(value => value + 1); // update the state to force render
-}
+import { useFocusEffect } from '@react-navigation/native'
+import { PostRegistrationService } from '@/Services/Server'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 const RegisterContainer = () => {
     const { Common, Gutters, Layout, Images, Colors, Fonts } = useTheme();
     const dispatch = useDispatch();
-    const forceUpdate = useForceUpdate();
 
-    const [emailEntered, setEmailEntered] = useState(false);
-    const [passwordEntered, setPasswordEntered] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [registerButtonEnabled, setRegisterButtonEnabled] = useState(false); 
+    const [spinnerVisible, setSpinnerVisible] = useState(false);
 
     // Remove any stored credential data when the view loads from the store
     useFocusEffect(
@@ -34,8 +31,9 @@ const RegisterContainer = () => {
             dispatch(RemoveField.action({ id: '1' }));
             dispatch(RemoveField.action({ id: '2' }));
 
-            setEmailEntered(false);
-            setPasswordEntered(false);
+            setEmail('');
+            setPassword('');
+            setSpinnerVisible(false);
             setRegisterButtonEnabled(false);
 
             return () => {
@@ -49,24 +47,47 @@ const RegisterContainer = () => {
         navigate("Main", {});
     }
 
-    const emailCallback = () => {
-        setEmailEntered(true);
-
-        if (passwordEntered) {
+    const emailCallback = (enteredEmail) => {
+        setEmail(enteredEmail);
+        if (password !== "")
             setRegisterButtonEnabled(true);
-        }   
     }
     
-    const passwordCallback = () => {
-        setPasswordEntered(true);
-
-        if (emailEntered) {
+    const passwordCallback = (enteredPassword) => {
+        setPassword(enteredPassword);
+        if (email !== "")
             setRegisterButtonEnabled(true);
+    }
+
+    const registerCallback = async () => {
+        setSpinnerVisible(true);
+        const registerResult = await PostRegistrationService(email, password);
+        setSpinnerVisible(false);
+        
+        if (registerResult[0]) {
+            navigate("Dashboard", {});
+        } else {
+            registerErrorAlert(registerResult[1]);
         }
+    }
+
+    const registerErrorAlert = (message) => {
+        Alert.alert(
+            "Registration Error",
+            message,
+            [
+                {
+                text: "Cancel",
+                style: "cancel"
+                }
+            ],
+            { cancelable: true }
+        );
     }
 
     return (
         <View style={[Layout.fill, Layout.colCenter, Gutters.largeAPadding, Common.backgroundSecondary]}>
+            <Spinner visible={spinnerVisible} />
             <View style={[Common.backgroundPrimary, Common.roundBox, Gutters.regularxlHPadding]}> 
                 <View style={[Gutters.regularxlTPadding, {height: 30, width: 30}]}>
                     <TouchableOpacity onPress={backClick}>
@@ -78,13 +99,13 @@ const RegisterContainer = () => {
                             <Text style={[Fonts.listFileNameLighter, Fonts.textCenter]}>enter your details</Text>
                         </View>
                     <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                        <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' finishEditingCallback={emailCallback} />
+                        <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' finishEditingCallback={emailCallback} returnValue={true} />
                     </View>
                     <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                        <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} finishEditingCallback={passwordCallback} />
+                        <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} finishEditingCallback={passwordCallback} returnValue={true} />
                     </View>
                     <View style={[Layout.rowCenter]}>
-                        <Button title='register' color={Colors.secondaryGreen} destParams={{}} newViewId={"Dashboard"} setEnabled={registerButtonEnabled} />
+                        <Button title='register' color={Colors.secondaryGreen} clickCallback={registerCallback} setEnabled={registerButtonEnabled} />
                     </View>
                 </View>
             </View>

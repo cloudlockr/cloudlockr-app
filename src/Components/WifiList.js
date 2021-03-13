@@ -1,30 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
 import { useTheme } from '@/Theme'
-
-const FAKE_DATA = [
-    {
-      name: 'Network1'
-    },
-    {
-      name: 'Network2'
-    },
-    {
-      name: 'Network3'
-    }, 
-    {
-      name: 'Network4'
-    },
-    {
-      name: 'Network5'
-    },
-    {
-      name: 'Network6'
-    },
-    {
-      name: 'Network7'
-    },
-  ];
+import { GetWifiNetworksService } from '@/Services/Device'
 
 const WifiList = (props) => {
   const { Layout, Gutters, Colors, Fonts, Common } = useTheme();
@@ -40,11 +17,11 @@ const WifiList = (props) => {
   }, []);
 
   const getData = async () => {
-    // TODO: Change this to collect data from the service layer (which will then make requests)
     setRefreshing(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const returnedNetworks = await GetWifiNetworksService();
     setRefreshing(false);
-    setDataSource(FAKE_DATA);
+
+    setDataSource(returnedNetworks);
   };
 
   const Item = ({ item, onPress }) => (
