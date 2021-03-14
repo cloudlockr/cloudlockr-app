@@ -7,3 +7,4 @@ export { default as SettingsDevicePasswordContainer } from './SettingsDevicePass
 export { default as RegistrationContainer } from './Registration/Index'
 export { default as SettingsDeviceWifiContainer } from './SettingsDeviceWifi/Index'
 export { default as SettingsConfirmationContainer } from './SettingsConfirmation/Index'
+export { default as UploadDownloadProgressContainer } from './UploadDownloadProgress/Index'

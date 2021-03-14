@@ -19,6 +19,7 @@ let SettingsDevicePasswordNavigator
 let SettingsDeviceWifiNavigator
 let SettingsConfirmationNavigator
 let RegistrationNavigator
+let UploadDownloadProgressNavigator
 
 // @refresh reset
 const ApplicationNavigator = () => {
@@ -37,6 +38,7 @@ const ApplicationNavigator = () => {
       RegistrationNavigator = require('@/Navigators/Registration').default
       SettingsDeviceWifiNavigator = require('@/Navigators/SettingsDeviceWifi').default
       SettingsConfirmationNavigator = require('@/Navigators/SettingsConfirmation').default
+      UploadDownloadProgressNavigator = require('@/Navigators/UploadDownloadProgress').default
       setIsApplicationLoaded(true)
     }
   }, [applicationIsLoading])
@@ -53,6 +55,7 @@ const ApplicationNavigator = () => {
       RegistrationNavigator = null
       SettingsDeviceWifiNavigator = null
       SettingsConfirmationNavigator = null
+      UploadDownloadProgressNavigator = null
     },
     [],
   )
@@ -189,6 +192,14 @@ const ApplicationNavigator = () => {
             {isApplicationLoaded && SettingsConfirmationNavigator != null && (<Stack.Screen
                 name="SettingsConfirmation"
                 component={SettingsConfirmationNavigator}
+                options={{
+                  ...customTransition1,
+                }}
+              />
+            )}
+            {isApplicationLoaded && UploadDownloadProgressNavigator != null && (<Stack.Screen
+                name="UploadDownloadProgress"
+                component={UploadDownloadProgressNavigator}
                 options={{
                   ...customTransition1,
                 }}

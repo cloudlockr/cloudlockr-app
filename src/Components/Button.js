@@ -12,7 +12,7 @@ const Button = (props) => {
   const newViewId = props.newViewId;
   const style = props.style;
   const setEnabled = props.setEnabled !== undefined ? props.setEnabled : true;
-  const clickCallback = props.clickCallback
+  const clickCallback = props.clickCallback;
 
   const clickCallbackAction = () => {
     if (clickCallback !== undefined)

@@ -7,3 +7,4 @@ export { default as SettingsDevicePasswordNavigator } from './SettingsDevicePass
 export { default as SettingsDeviceWifiNavigator } from './SettingsDeviceWifi'
 export { default as RegistrationNavigator } from './Registration'
 export { default as SettingsConfirmationNavigator } from './SettingsConfirmation'
+export { default as UploadDownloadProgressNavigator } from './UploadDownloadProgress'
