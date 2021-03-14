@@ -5,7 +5,8 @@ import {
     Alert,
     BackHandler
 } from 'react-native'
-import { DashboardHeader, FileList, DownloadDetail, UploadDetail } from '@/Components'
+import { DashboardHeader, FileList } from '@/Components'
+import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
 import { DeleteUserFileService } from '@/Services/Server'
 import { navigate } from '@/Navigators/Root'
