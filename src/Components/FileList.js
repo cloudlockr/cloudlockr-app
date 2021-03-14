@@ -3,30 +3,16 @@ import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicat
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
 import SetDownloadInfo from '@/Store/Dashboard/SetDownloadInfo'
-
-const FAKE_DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      fileName: 'secret1.pdf',
-      uploadDate: 'Jan 28, 2021'
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      fileName: 'secret2.pdf',
-      uploadDate: 'Jan 28, 2021'
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      fileName: 'secret3.pdf',
-      uploadDate: 'Jan 28, 2021'
-    },
-  ];
+import { GetUserFilesService } from '@/Services/Server'
 
 const FileList = (props) => {
   const { Layout, Gutters, Colors, Fonts, Common } = useTheme();
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(true);
   const [dataSource, setDataSource] = useState([]);
+
+  // TODO: get auth token from the store (once it is implemented)
+  const authToken = '123456';
 
   const downloadCallback = props.downloadCallback;
 
@@ -35,11 +21,11 @@ const FileList = (props) => {
   }, []);
 
   const getData = async () => {
-    // TODO: Change this to collect data from the service layer (which will then make requests)
     setRefreshing(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const requestedFiles = await GetUserFilesService(authToken);
     setRefreshing(false);
-    setDataSource(FAKE_DATA);
+
+    setDataSource(requestedFiles);
   };
 
   const Item = ({ item, onPress }) => (
