@@ -9,6 +9,8 @@ import { DashboardHeader, FileList } from '@/Components'
 import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
 import { DeleteUserFileService } from '@/Services/Server'
+import SetIntention from '@/Store/Intention/SetIntention'
+import { useDispatch } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -17,6 +19,7 @@ const DashboardContainer = () => {
     const { Common, Layout, Colors } = useTheme();
     const uploadRBSheet = useRef();
     const downloadRBSheet = useRef();
+    const dispatch = useDispatch();
 
     const [spinnerVisible, setSpinnerVisible] = useState(false);
     const [spinnerMessage, setSpinnerMessage] = useState('');
@@ -69,10 +72,12 @@ const DashboardContainer = () => {
             // Show the result
             requestAlert(requestResult[0], requestResult[1]);
         } else {
+            dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
+
             setSpinnerVisible(false);
             downloadRBSheet.current.close();
             uploadRBSheet.current.close();
-            navigate('UploadDownloadProgress', { isDownloading: (requestName === 'download') });
+            navigate('UploadDownloadProgress', {});
         }
     }
 
