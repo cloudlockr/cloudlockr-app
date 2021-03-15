@@ -16,12 +16,14 @@ import startup from './Startup'
 import fields from './Fields'
 import dashboard from './Dashboard'
 import intention from './Intention'
+import uploadDownloadProgress from './UploadDownloadProgress'
 
 const reducers = combineReducers({
   startup,
   fields,
   dashboard,
-  intention
+  intention,
+  uploadDownloadProgress
 })
 
 const persistConfig = {
