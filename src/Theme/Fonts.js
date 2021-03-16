@@ -50,6 +50,18 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontWeight: '500',
       color: Colors.text,
     },
+    smallerDetailLessBoldWhite: {
+      fontFamily: FontFamily.primary,
+      fontSize: 18,
+      fontWeight: '400',
+      color: Colors.primary,
+    },
+    titleExtraDarkWhite: {
+      fontFamily: FontFamily.primary,
+      fontSize: 25,
+      fontWeight: '700',
+      color: Colors.primary,
+    },
     inputField: {
       fontFamily: FontFamily.primary,
       fontSize: 16,
@@ -83,6 +95,12 @@ export default function ({ FontSize, Colors, FontFamily }) {
       fontFamily: FontFamily.primary,
       fontSize: FontSize.regular,
       color: Colors.primary,
+      fontWeight: 'bold',
+    },
+    textRegularBold: {
+      fontFamily: FontFamily.primary,
+      fontSize: FontSize.regular,
+      color: Colors.text,
       fontWeight: 'bold',
     },
     textLarge: {

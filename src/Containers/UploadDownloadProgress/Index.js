@@ -1,25 +1,89 @@
 import { useTheme } from '@/Theme'
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import {
     View,
-    Text
+    Text,
+    Image
 } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Spinner from 'react-native-spinkit'
+import { Button } from '@/Components'
+import ProgressBar from 'react-native-progress/Bar'
+import { UploadService, DownloadService } from '@/Services/FileTransfer'
+import { useFocusEffect } from '@react-navigation/native'
+import { navigate } from '@/Navigators/Root'
 
-const UploadDownloadProgressContainer = (props) => {
-    const { Common, Layout, Colors, Gutters, Fonts } = useTheme();
+const useForceUpdate = () => {
+    const [, updateState] = useState();
+    return useCallback(() => updateState({}), []);
+}
 
-    const isDownloading = props.isDownloading;
+const UploadDownloadProgressContainer = () => {
+    const { Common, Layout, Colors, Gutters, Fonts, Images } = useTheme();
+    const forceUpdate = useForceUpdate();
+    const dispatch = useDispatch();
 
-    // TODO: retrieve the download information (id, name, fileName if new upload) from the Redux store 
+    const isDownloading = useSelector((state) => state.intention).intention.UploadDownloadProgress_isDownloading;
+    const downloadInfo = isDownloading ? useSelector((state) => state.dashboard).downloadInfo : undefined;
+    const fileName = isDownloading ? downloadInfo.fileName : useSelector((state) => state.fields).fields['3'];
+    const fileUri = isDownloading ? undefined : useSelector((state) => state.fields).fields['4'];
+    const fileId = isDownloading ? downloadInfo.id : undefined;
 
-    // TODO: on load, must call the service to start the upload process. Update the state to display that message on the progress indivator. Once the main upload/download 
-    //       process begin, start a background timer to call the recalculate service and get the new estimated time and status message from the react store
+    const doneCallback = () => {
+        navigate('Dashboard', {});
+    }
+
+    //
+    // Status checking
+    //
+
+    const status = useSelector((state) => state.uploadDownloadProgress);
+
+    const doneEnabled = status.progress === 1;
+    var bgUpdater;
+
+    const updateChecker = () => {
+        // Obtain the current status by forcing DOM update to read Redux
+        if (!doneEnabled)
+            forceUpdate();
+    }
+
+    // Start upload / download process when view loads
+    useFocusEffect(
+        React.useCallback(() => {
+            // Start background timer to async update status and progress
+            bgUpdater = setInterval(updateChecker, 500);
+            
+            if (isDownloading) {
+                // Start download process in the background
+                DownloadService(dispatch, fileId, fileName);
+            } else {
+                // Start upload process in the background
+                UploadService(dispatch, fileUri, fileName);
+            }
+
+            return () => {
+                // Clean up timer when changing views
+                clearInterval(bgUpdater);
+            };
+        }, [])
+    );
 
     return (
-        <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
-            <View style={[Layout.column, Layout.center, Gutters.largexlHPadding, Layout.fill]} >
-                <Text> {isDownloading} </Text>
+        <View style={[Layout.fill, Common.backgroundSecondaryGreen, Layout.column, Gutters.largexlHPadding, Gutters.largexxxlVPadding, Layout.justifyContentBetween]}>
+            <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 250}]}>
+                {!doneEnabled ? <Spinner isVisible size={150} type={'Bounce'} color={Colors.primary}/> : <Image source={Images.checkIcon} style={{height: 150, width: 150}} />}
+                <View style={[Layout.column, Layout.alignItemsCenter]}>
+                    <Text style={[Fonts.titleExtraDarkWhite, Gutters.tinyBPadding]}>{isDownloading ? 'downloading' : 'uploading'} {fileName}</Text>
+                    <Text style={Fonts.smallerDetailLessBoldWhite}>{status.statusMessage}</Text>
+                </View>
+            </View>
+            <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 60}]}>
+                <ProgressBar indeterminate={status.indeterminate} progress={status.progress} color={Colors.secondary} unfilledColor={Colors.primary} width={300} height={25} borderRadius={8} useNativeDriver />
+                <Text style={Fonts.smallerDetailLessBoldWhite}>est. time remaining: {status.timeRemainingMsg}</Text>
+            </View>
+            <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 50}]}>
+                <Button title={"done"} clickCallback={doneCallback} setEnabled={doneEnabled} useLightStyle style={Layout.fill} />
             </View>
         </View>
     )
