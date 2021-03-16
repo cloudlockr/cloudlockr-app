@@ -3,12 +3,15 @@ import {
     Text,
     View
 } from 'react-native'
+import { useDispatch } from 'react-redux'
+import SetField from '@/Store/Fields/SetField'
 import { InputField, Button } from '@/Components'
 import { useTheme } from '@/Theme'
 import { SelectFileService } from '@/Services/FileSystem'
 
 const UploadDetail = (props) => {
     const { Layout, Fonts, Gutters, Colors } = useTheme();
+    const dispatch = useDispatch();
 
     const [nameEntered, setNameEntered] = useState(false);
     const [fileSelected, setFileSelected] = useState(false);
@@ -32,6 +35,8 @@ const UploadDetail = (props) => {
 
         // Update the UI if a file has been successfully selected
         if (fileMetadata !== undefined) {
+            dispatch(SetField.action({ id: 4, value: fileMetadata.uri }));
+
             setFileSelectorTitle(fileMetadata.name);
             setFileSelected(true);
             

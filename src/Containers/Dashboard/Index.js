@@ -10,6 +10,7 @@ import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
 import { DeleteUserFileService } from '@/Services/Server'
 import SetIntention from '@/Store/Intention/SetIntention'
+import ResetUploadDownloadProgress from '@/Store/UploadDownloadProgress/ResetUploadDownloadProgress'
 import { useDispatch } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import RBSheet from 'react-native-raw-bottom-sheet'
@@ -72,7 +73,9 @@ const DashboardContainer = () => {
             // Show the result
             requestAlert(requestResult[0], requestResult[1]);
         } else {
+            // Record if it is an upload or download, and reset the progress (to it occurs before the view loads)
             dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
+            dispatch(ResetUploadDownloadProgress.action());
 
             setSpinnerVisible(false);
             downloadRBSheet.current.close();
