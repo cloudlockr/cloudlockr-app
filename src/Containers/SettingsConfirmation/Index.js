@@ -21,9 +21,9 @@ const SettingsConfirmationContainer = () => {
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
             <BasicHeader title={"MyDevice"} previousView={"Settings"} />
             <View style={[Layout.column, Layout.center, Gutters.largexlHPadding, Layout.fill]} >
-                <Text style={[Fonts.detailDarkFileName, Fonts.textCenter]}>configuration update {status}</Text>
-                <View style={[Layout.row, Layout.alignItemsCenter, Gutters.regularxlTPadding]}>
-                    <Button title={"done"} clickCallback={confirmCallback} color={Colors.secondaryGreen} style={Layout.fill} />
+                <Text style={[Fonts.listFileName, Fonts.textCenter]}>configuration update {status}</Text>
+                <View style={[Layout.row, Layout.alignItemsCenter, Gutters.largexlTPadding]}>
+                    <Button title={"okay"} clickCallback={confirmCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                 </View>
             </View>
         </View>

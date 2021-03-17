@@ -42,7 +42,10 @@ export const FontSize = {
  * FontFamily
  */
 export const FontFamily = {
-  primary: 'Roboto-Black'
+  light: 'Roboto-Light',
+  regular: 'Roboto-Regular',
+  bold: 'Roboto-Bold',
+  blaak: 'Roboto-Black',
 }
 
 /**

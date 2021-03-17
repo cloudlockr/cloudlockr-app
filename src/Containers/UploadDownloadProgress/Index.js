@@ -83,7 +83,7 @@ const UploadDownloadProgressContainer = () => {
                 <Text style={Fonts.smallerDetailLessBoldWhite}>est. time remaining: {status.timeRemainingMsg}</Text>
             </View>
             <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 50}]}>
-                <Button title={"done"} clickCallback={doneCallback} setEnabled={doneEnabled} useLightStyle style={Layout.fill} />
+                <Button title={"contiune"} clickCallback={doneCallback} setEnabled={doneEnabled} useLightStyle style={Layout.fill} />
             </View>
         </View>
     )

@@ -17,7 +17,7 @@ const SettingsDevicePasswordContainer = () => {
     const [accessCode, setAccessCode] = useState('');
     const [buttonEnabled, setButtonEnabled] = useState(false); 
     const [spinnerVisible, setSpinnerVisible] = useState(false);
-    const [spinnerMessage, setSpinnerMessage] = useState('processing...');
+    const [spinnerMessage, setSpinnerMessage] = useState('processing');
 
     const confirmCallback = () => {
         // Show confirmation alert to ensure the user does not accidentally change password

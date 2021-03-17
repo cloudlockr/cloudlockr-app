@@ -90,7 +90,7 @@ const DashboardContainer = () => {
             wasSuccessful ? message : message + ". Please try again later and/or resolve the error.",
             [
                 {
-                text: "Cancel",
+                text: "Okay",
                 style: "cancel"
                 }
             ],
