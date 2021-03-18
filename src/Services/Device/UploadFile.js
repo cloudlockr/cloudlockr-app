@@ -1,4 +1,4 @@
-import SetUploadDownloadProgress from '@/Store/UploadDownloadProgress/SetUploadDownloadProgress'
+import SetUploadDownloadProgress from '@/Store/FileTransfer/SetUploadDownloadProgress'
 
 export default async (dispatch, fileId, fileData) => {
     // TODO: Need to implement properly and remove the below stub code

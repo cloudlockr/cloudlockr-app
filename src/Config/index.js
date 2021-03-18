@@ -1,3 +1,4 @@
 export const Config = {
-  API_URL: 'https://jsonplaceholder.typicode.com/',
+  API_URL: 'https://cloudlockr.herokuapp.com/',
+  MOCK_EXTERNAL_CONNECTIONS: false,
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator, Button } from 'react-native'
 import { useTheme } from '@/Theme'
 import { useDispatch } from 'react-redux'
-import SetDownloadInfo from '@/Store/Dashboard/SetDownloadInfo'
+import SetDetails from '@/Store/FileTransfer/SetDetails'
 import { GetUserFilesService } from '@/Services/Server'
 
 const FileList = (props) => {
@@ -45,7 +45,7 @@ const FileList = (props) => {
       <Item
         item={item}
         onPress={() => {
-          dispatch(SetDownloadInfo.action(item));
+          dispatch(SetDetails.action(item));
           downloadCallback();
         }}
         style={[{backgroundColor: Colors.secondaryGreen}]}

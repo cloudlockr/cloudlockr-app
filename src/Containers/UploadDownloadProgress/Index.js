@@ -24,10 +24,11 @@ const UploadDownloadProgressContainer = () => {
     const dispatch = useDispatch();
 
     const isDownloading = useSelector((state) => state.intention).intention.UploadDownloadProgress_isDownloading;
-    const downloadInfo = isDownloading ? useSelector((state) => state.dashboard).downloadInfo : undefined;
-    const fileName = isDownloading ? downloadInfo.fileName : useSelector((state) => state.fields).fields['3'];
-    const fileUri = isDownloading ? undefined : useSelector((state) => state.fields).fields['4'];
-    const fileId = isDownloading ? downloadInfo.id : undefined;
+    const transferInfo = useSelector((state) => state.fileTransfer).details;
+
+    const fileName = transferInfo.fileName;
+    const fileUri = isDownloading ? undefined : transferInfo.fileMetadata.uri;
+    const fileId = isDownloading ? transferInfo.id : undefined;
 
     const doneCallback = () => {
         navigate('Dashboard', {});
@@ -37,7 +38,7 @@ const UploadDownloadProgressContainer = () => {
     // Status checking
     //
 
-    const status = useSelector((state) => state.uploadDownloadProgress);
+    const status = useSelector((state) => state.fileTransfer).progress;
 
     const doneEnabled = status.progress === 1;
     var bgUpdater;
@@ -73,9 +74,9 @@ const UploadDownloadProgressContainer = () => {
         <View style={[Layout.fill, Common.backgroundSecondaryGreen, Layout.column, Gutters.largexlHPadding, Gutters.largexxxlVPadding, Layout.justifyContentBetween]}>
             <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 250}]}>
                 {!doneEnabled ? <Spinner isVisible size={150} type={'Bounce'} color={Colors.primary}/> : <Image source={Images.checkIcon} style={{height: 150, width: 150}} />}
-                <View style={[Layout.column, Layout.alignItemsCenter]}>
-                    <Text style={[Fonts.titleExtraDarkWhite, Gutters.tinyBPadding]}>{isDownloading ? 'downloading' : 'uploading'} {fileName}</Text>
-                    <Text style={Fonts.smallerDetailLessBoldWhite}>{status.statusMessage}</Text>
+                <View style={[Layout.column, Layout.alignItemsCenter, Gutters.regularxlTPadding]}>
+                    <Text style={[Fonts.titleExtraDarkWhite, Fonts.textCenter, Gutters.tinyBPadding]}>{isDownloading ? 'downloading' : 'uploading'} {fileName}</Text>
+                    <Text style={[Fonts.smallerDetailLessBoldWhite, Fonts.textCenter]}>{status.statusMessage}</Text>
                 </View>
             </View>
             <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 60}]}>

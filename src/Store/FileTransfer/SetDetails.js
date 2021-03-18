@@ -2,8 +2,8 @@ import { createAction } from '@reduxjs/toolkit'
 
 export default {
   initialState: {},
-  action: createAction('fields/setField'),
+  action: createAction('fileTransfer/setDetails'),
   reducers(state, { payload }) {
-    state.fields[payload.id] = payload.value;
+    state.details = payload;
   },
 }

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import {
     Text,
-    View
+    View,
+    Keyboard
 } from 'react-native'
 import { useDispatch } from 'react-redux'
-import SetField from '@/Store/Fields/SetField'
+import SetDetails from '@/Store/FileTransfer/SetDetails'
 import { InputField, Button } from '@/Components'
 import { useTheme } from '@/Theme'
 import { SelectFileService } from '@/Services/FileSystem'
@@ -13,8 +14,8 @@ const UploadDetail = (props) => {
     const { Layout, Fonts, Gutters, Colors } = useTheme();
     const dispatch = useDispatch();
 
-    const [nameEntered, setNameEntered] = useState(false);
-    const [fileSelected, setFileSelected] = useState(false);
+    const [fileName, setFileName] = useState('');
+    const [fileMetadata, setFileMetadata] = useState({});
     const [password, setPassword] = useState('');
     const [accessCode, setAccessCode] = useState('');
     const [buttonEnabled, setButtonEnabled] = useState(false); 
@@ -23,41 +24,53 @@ const UploadDetail = (props) => {
 
     const requestCallback = props.requestCallback;
 
-    const fileNameCallback = () => {
-        setNameEntered(true);
-        if (fileSelected && password !== '' && accessCode !== '')
+    const fileNameCallback = (returnedName) => {
+        setFileName(returnedName);
+        if (fileMetadata.uri !== undefined && password !== '' && accessCode !== '')
             setButtonEnabled(true);
     }
 
     const fileSelectorCallback = async () => {
+        // Close the keyboard to ensure previous input fields are saved
+        Keyboard.dismiss();
+        
         // Select a file from the file system
         var fileMetadata = await SelectFileService();
 
         // Update the UI if a file has been successfully selected
         if (fileMetadata !== undefined) {
-            dispatch(SetField.action({ id: 4, value: fileMetadata.uri }));
-
             setFileSelectorTitle(fileMetadata.name);
-            setFileSelected(true);
+            setFileMetadata(fileMetadata);
             
-            if (nameEntered && password !== '' && accessCode !== '')
+            if (fileName !== '' && password !== '' && accessCode !== '')
                 setButtonEnabled(true);
         }
     }
 
     const passwordCallback = (returnedPassword) => {
         setPassword(returnedPassword);
-        if (nameEntered && fileSelected && accessCode !== '')
+        if (fileName !== '' && fileMetadata.uri !== undefined && accessCode !== '')
             setButtonEnabled(true);
     }
     
     const accessCodeCallback = (returnedCode) => {
         setAccessCode(returnedCode);
-        if (nameEntered && fileSelected && password !== '')
+        if (fileName !== '' && fileMetadata.uri !== undefined && password !== '')
             setButtonEnabled(true);
     }
 
     const uploadCallback = () => {
+        // Append file extention to fileName if not already user entered
+        var extention = fileMetadata.name.substring(fileMetadata.name.lastIndexOf('.'));
+        var fileNameExtentionIdx = fileName.lastIndexOf(extention);
+
+        var fileNameWithExtention = fileName;
+        if (fileNameExtentionIdx === -1 || fileNameExtentionIdx !== fileName.length - extention.length) {
+            fileNameWithExtention += extention;
+        }
+
+        // Store the data and return
+        dispatch(SetDetails.action({ fileName: fileNameWithExtention, fileMetadata: fileMetadata }));
         requestCallback('upload', accessCode, password, undefined);
     }
 
@@ -65,12 +78,12 @@ const UploadDetail = (props) => {
         <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexlHPadding]} >
             <Text style={[Fonts.detailFileName, Gutters.regularxlVPadding]}>upload new file</Text>
             <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 320}]}>
-                <InputField placeholder={"file name"} fieldId={3} useLightInput finishEditingCallback={fileNameCallback} />
+                <InputField placeholder={"file name"} useLightInput finishEditingCallback={fileNameCallback} />
                 <View style={[Layout.row, Layout.alignItemsCenter]}>
                     <Button title={fileSelectorTitle} useInputFieldStyle style={Layout.fill} clickCallback={fileSelectorCallback} />
                 </View>
-                <InputField placeholder={"device password"} hideInput useLightInput finishEditingCallback={passwordCallback} returnValue persist={false} />
-                <InputField placeholder={"displayed device access code"} useLightInput finishEditingCallback={accessCodeCallback} returnValue persits={false} />
+                <InputField placeholder={"device password"} hideInput useLightInput finishEditingCallback={passwordCallback} />
+                <InputField placeholder={"displayed device access code"} useLightInput finishEditingCallback={accessCodeCallback} />
                 <View style={[Layout.row, Layout.alignItemsCenter]}>
                     <Button title={"upload file"} color={Colors.secondary} style={Layout.fill} setEnabled={buttonEnabled} clickCallback={uploadCallback} />
                 </View>

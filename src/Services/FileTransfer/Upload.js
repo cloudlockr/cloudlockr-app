@@ -1,4 +1,4 @@
-import SetUploadDownloadProgress from '@/Store/UploadDownloadProgress/SetUploadDownloadProgress'
+import SetUploadDownloadProgress from '@/Store/FileTransfer/SetUploadDownloadProgress'
 import { PostNewFileService } from '@/Services/Server'
 import { ReadFileService } from '@/Services/FileSystem'
 import { UploadFileService } from '@/Services/Device'

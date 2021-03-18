@@ -69,7 +69,7 @@ const SettingsDeviceWifiContainer = () => {
                     <View style={[Gutters.largexlHPadding, Layout.fullWidth]}>
                         <Text style={[Fonts.detailFileName, Fonts.textCenter]}>enter password for:</Text>
                         <Text style={[Fonts.detailWhite, Gutters.regularBPadding, Fonts.textCenter]}>{networkName}</Text>
-                        <InputField placeholder='network password (if required)' hideInput useLightInput enabled={confirmEnabled} persist={false} returnValue finishEditingCallback={passwordCallback} />
+                        <InputField placeholder='network password (if required)' hideInput useLightInput enabled={confirmEnabled} finishEditingCallback={passwordCallback} />
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter, Gutters.largexlHPadding, Gutters.regularVPadding]}>
                         <Button title={"connect device to network"} clickCallback={confirmCallback} setEnabled={confirmEnabled} color={Colors.secondary} style={Layout.fill} />

@@ -10,7 +10,7 @@ import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
 import { DeleteUserFileService } from '@/Services/Server'
 import SetIntention from '@/Store/Intention/SetIntention'
-import ResetUploadDownloadProgress from '@/Store/UploadDownloadProgress/ResetUploadDownloadProgress'
+import ResetUploadDownloadProgress from '@/Store/FileTransfer/ResetUploadDownloadProgress'
 import { useDispatch } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import RBSheet from 'react-native-raw-bottom-sheet'
@@ -50,6 +50,7 @@ const DashboardContainer = () => {
     }
 
     const requestCallback = async (requestName, accessCode, password, fileId) => {
+        // TODO: This should be moved to a service method
         // Confirm access code with device
         setSpinnerMessage('validating access');
         setSpinnerVisible(true);

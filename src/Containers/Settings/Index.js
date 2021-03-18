@@ -6,7 +6,6 @@ import {
 } from 'react-native'
 import { BasicHeader, Button, HorizontalLine } from '@/Components'
 import SetIntention from '@/Store/Intention/SetIntention'
-import RemoveField from '@/Store/Fields/RemoveField'
 import { navigate } from '@/Navigators/Root'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -23,14 +22,10 @@ const SettingsContainer = () => {
         navigate("SettingsDeviceConnection", {});
     }
     const logOutCallback = () => {
-        // Ensure login credentials are cleared
-        dispatch(RemoveField.action({ id: '1' }));
-        dispatch(RemoveField.action({ id: '2' }));
-        
         navigate("Main", {});
     }
 
-    var userEmail = useSelector((state) => state.fields).fields['1'];
+    var userEmail = useSelector((state) => state.user).email;
 
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>

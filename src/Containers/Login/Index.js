@@ -6,7 +6,6 @@ import {
 } from 'react-native'
 import { Brand, InputField, HorizontalLine, Button } from '@/Components'
 import { useDispatch } from 'react-redux'
-import RemoveField from '@/Store/Fields/RemoveField'
 import { useFocusEffect } from '@react-navigation/native'
 import { PostLoginService } from '@/Services/Server'
 import { navigate } from '@/Navigators/Root'
@@ -24,9 +23,6 @@ const LoginContainer = () => {
     // Remove any stored credential data when the view loads from the store
     useFocusEffect(
         React.useCallback(() => {
-            dispatch(RemoveField.action({ id: '1' }));
-            dispatch(RemoveField.action({ id: '2' }));
-
             setEmail('');
             setPassword('');
             setSpinnerVisible(false);
@@ -52,7 +48,7 @@ const LoginContainer = () => {
 
     const loginCallback = async () => {
         setSpinnerVisible(true);
-        const loginResult = await PostLoginService(email, password);
+        const loginResult = await PostLoginService(email, password, dispatch);
         setSpinnerVisible(false);
         
         if (loginResult[0]) {
@@ -68,7 +64,7 @@ const LoginContainer = () => {
             message,
             [
                 {
-                text: "Cancel",
+                text: "Okay",
                 style: "cancel"
                 }
             ],
@@ -84,10 +80,10 @@ const LoginContainer = () => {
                     <Brand />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                    <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' finishEditingCallback={emailCallback} returnValue={true} />
+                    <InputField placeholder='email' iconSrc={Images.userIcon} fieldId='1' finishEditingCallback={emailCallback} />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
-                    <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput={true} finishEditingCallback={passwordCallback} returnValue={true} persist={false} />
+                    <InputField placeholder='password' iconSrc={Images.keyIcon} fieldId='2' hideInput finishEditingCallback={passwordCallback} />
                 </View>
                 <View style={[Layout.rowCenter, Gutters.regularxlBPadding]}>
                     <Button title='log in' color={Colors.secondaryGreen} clickCallback={loginCallback} setEnabled={loginButtonEnabled} />

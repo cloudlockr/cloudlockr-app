@@ -1,24 +1,18 @@
 import React, { useState } from 'react'
 import { View, TextInput, Image, Keyboard } from 'react-native'
 import { useTheme } from '@/Theme'
-import SetField from '@/Store/Fields/SetField'
-import { useDispatch } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native';
 
 const InputField = (props) => {
   const { Layout, Gutters, Common, Fonts } = useTheme();
-  const dispatch = useDispatch();
 
   const height = props.height !== undefined ? props.height : 50;
   const placeholder = props.placeholder;
   const textInputStyle = props.useLightInput !== undefined && props.useLightInput ? Common.textInputLight : Common.textInputDark;
   const iconSrc = props.iconSrc;
-  const fieldId = props.fieldId;
   const hideInput = props.hideInput !== undefined ? props.hideInput : false;
   const finishEditingCallback = props.finishEditingCallback;
   const enabled = props.enabled !== undefined ? props.enabled : true;
-  const returnValue = props.returnValue !== undefined ? props.returnValue : false;
-  const persist = props.persist !== undefined ? props.persist : true;
 
   // Store field value in Redux store so it can be accessed by other components by fieldId
   const finishEditing = () => {
@@ -32,17 +26,8 @@ const InputField = (props) => {
     setFinished(true);
 
     if (value !== "") {
-      // Store the field data in the Redux store
-      if (persist)
-        dispatch(SetField.action({ id: fieldId, value: value }));
-
-      // Perform custom callback (if given)
-      if (finishEditingCallback !== undefined) {
-        if (returnValue)
-          finishEditingCallback(value);
-        else
-          finishEditingCallback();
-      } 
+      // Return value to parent via callback function
+      finishEditingCallback(value);
     } else {
       // Restore the placeholders if no data was entered
       onChangeText(placeholder);

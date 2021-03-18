@@ -83,8 +83,8 @@ const SettingsDevicePasswordContainer = () => {
                         <Text style={[Fonts.listFileName, Fonts.textCenter]}>enter your new device master password</Text>
                     </View>
                     <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 120}]}>
-                        <InputField placeholder={"new device master password"} hideInput finishEditingCallback={passwordCallback} returnValue persist={false} />
-                        <InputField placeholder={"displayed device access code"} finishEditingCallback={accessCodeCallback} returnValue persist={false} />
+                        <InputField placeholder={"new device master password"} hideInput finishEditingCallback={passwordCallback} />
+                        <InputField placeholder={"displayed device access code"} finishEditingCallback={accessCodeCallback} />
                     </View>
                 </View>
                 <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexxlBPadding]}>

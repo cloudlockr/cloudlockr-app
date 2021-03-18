@@ -2,8 +2,8 @@ import { createAction } from '@reduxjs/toolkit'
 
 export default {
   initialState: {},
-  action: createAction('fields/setDownloadInfo'),
+  action: createAction('user/setEmail'),
   reducers(state, { payload }) {
-    state.downloadInfo = payload;
+    state.email = payload;
   },
 }

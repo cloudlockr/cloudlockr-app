@@ -12,7 +12,7 @@ const DownloadDetail = (props) => {
 
     const requestCallback = props.requestCallback;
 
-    var downloadInfo = useSelector((state) => state.dashboard).downloadInfo;
+    var downloadInfo = useSelector((state) => state.fileTransfer).details;
 
     const [password, setPassword] = useState('');
     const [accessCode, setAccessCode] = useState('');
@@ -42,8 +42,8 @@ const DownloadDetail = (props) => {
         <View style={[Layout.column, Layout.alignItemsCenter, Gutters.largexlHPadding]} >
             <Text style={[Fonts.detailFileName, Gutters.regularxlVPadding]}>access {downloadInfo.fileName}</Text>
             <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 190}]}>
-                <InputField placeholder={"device password"} hideInput useLightInput finishEditingCallback={passwordCallback} returnValue persist={false} />
-                <InputField placeholder={"displayed device access code"} useLightInput finishEditingCallback={accessCodeCallback} returnValue persist={false} />
+                <InputField placeholder={"device password"} hideInput useLightInput finishEditingCallback={passwordCallback} />
+                <InputField placeholder={"displayed device access code"} useLightInput finishEditingCallback={accessCodeCallback} />
                 <View style={[Layout.row, Layout.alignItemsCenter]}>
                     <Button title={"download"} color={Colors.secondary} style={[Gutters.regularRPadding, {flex: 2}]} setEnabled={buttonsEnabled} clickCallback={downloadCallback} />
                     <Button title={"delete"} color={Colors.red} style={{flex: 1}} setEnabled={buttonsEnabled} clickCallback={deleteCallback} />

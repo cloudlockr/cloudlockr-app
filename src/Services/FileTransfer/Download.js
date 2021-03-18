@@ -1,4 +1,4 @@
-import SetUploadDownloadProgress from '@/Store/UploadDownloadProgress/SetUploadDownloadProgress'
+import SetUploadDownloadProgress from '@/Store/FileTransfer/SetUploadDownloadProgress'
 import { ProcessSaveFileService } from '@/Services/FileSystem'
 import { DownloadFileService } from '@/Services/Device'
 

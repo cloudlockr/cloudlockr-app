@@ -13,17 +13,15 @@ import {
 import { configureStore } from '@reduxjs/toolkit'
 
 import startup from './Startup'
-import fields from './Fields'
-import dashboard from './Dashboard'
 import intention from './Intention'
-import uploadDownloadProgress from './UploadDownloadProgress'
+import user from './User'
+import fileTransfer from './FileTransfer'
 
 const reducers = combineReducers({
   startup,
-  fields,
-  dashboard,
   intention,
-  uploadDownloadProgress
+  user,
+  fileTransfer,
 })
 
 const persistConfig = {
