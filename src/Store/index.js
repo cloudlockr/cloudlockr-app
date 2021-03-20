@@ -11,6 +11,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import { configureStore } from '@reduxjs/toolkit'
+import initialState from '@/Store/initialState'
 
 import startup from './Startup'
 import intention from './Intention'
@@ -30,7 +31,16 @@ const persistConfig = {
   whitelist: [],
 }
 
-const persistedReducer = persistReducer(persistConfig, reducers)
+const rootReducer = (state, action) => {
+  // Handle special PURGE_STORE case, reset to default
+  if (action.type === 'PURGE_STORE') {
+    state = initialState;
+  }
+
+  return reducers(state, action);
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
@@ -50,6 +60,12 @@ const store = configureStore({
   },
 })
 
-const persistor = persistStore(store)
+const persistor = persistStore(store);
 
-export { store, persistor }
+const PurgeStore = () => {
+  return {
+    type: 'PURGE_STORE'
+  }
+}
+
+export { store, persistor, PurgeStore }

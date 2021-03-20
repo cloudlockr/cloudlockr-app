@@ -2,9 +2,8 @@ import { useTheme } from '@/Theme'
 import React, { useState } from 'react'
 import {
     View,
-    Alert,
 } from 'react-native'
-import { Brand, InputField, HorizontalLine, Button } from '@/Components'
+import { Brand, InputField, HorizontalLine, Button, ErrorAlert } from '@/Components'
 import { useDispatch } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
 import { PostLoginService } from '@/Services/Server'
@@ -54,22 +53,8 @@ const LoginContainer = () => {
         if (loginResult[0]) {
             navigate("Dashboard", {});
         } else {
-            loginErrorAlert(loginResult[1]);
+            ErrorAlert("Login Error", loginResult[1]);
         }
-    }
-
-    const loginErrorAlert = (message) => {
-        Alert.alert(
-            "Login Error",
-            message,
-            [
-                {
-                text: "Okay",
-                style: "cancel"
-                }
-            ],
-            { cancelable: true }
-        );
     }
 
     return (
