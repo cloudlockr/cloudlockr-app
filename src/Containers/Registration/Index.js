@@ -6,9 +6,8 @@ import {
     Image,
     TouchableOpacity,
     Keyboard,
-    Alert,
 } from 'react-native'
-import { InputField, Button } from '@/Components'
+import { InputField, Button, ErrorAlert } from '@/Components'
 import { useDispatch } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import { useFocusEffect } from '@react-navigation/native'
@@ -71,22 +70,8 @@ const RegisterContainer = () => {
         if (registerResult[0]) {
             navigate("Dashboard", {});
         } else {
-            registerErrorAlert(registerResult[1]);
+            ErrorAlert("Registration Error", registerResult[1]);
         }
-    }
-
-    const registerErrorAlert = (message) => {
-        Alert.alert(
-            "Registration Error",
-            message,
-            [
-                {
-                text: "Okay",
-                style: "cancel"
-                }
-            ],
-            { cancelable: true }
-        );
     }
 
     return (
