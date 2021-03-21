@@ -1,5 +1,6 @@
 import api from '@/Services'
 import { Config } from '@/Config'
+import CheckHandleResponseErrors from './Util/ResponseErrorHandler'
 import SetToken from '@/Store/User/SetToken'
 import SetEmail from '@/Store/User/SetEmail'
 
@@ -9,7 +10,7 @@ export default async (email, password, passwordConfirm, dispatch) => {
         return [true, ''];
     
     // Request data
-    var errorMessage = undefined;
+    var error = undefined;
     const headers = {
         'email': email,
         'password': password,
@@ -17,14 +18,12 @@ export default async (email, password, passwordConfirm, dispatch) => {
     }
     const response = await api.post(`user/register`, {}, {
         headers: headers
-    }).catch(err => {
-        errorMessage = err.data.errors[0];
-        errorMessage = errorMessage[Object.keys(errorMessage)[0]];
-    });
+    }).catch(err => error = err);
 
     // Check for errors
-    if (errorMessage !== undefined)
-        return [false, errorMessage];
+    var errorCheck = CheckHandleResponseErrors(error, dispatch);
+    if (!errorCheck[0])
+        return errorCheck;
     
     // Persist token data
     dispatch(SetEmail.action(email));

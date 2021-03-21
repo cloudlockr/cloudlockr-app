@@ -1,4 +1,5 @@
 import api from '@/Services'
+import CheckHandleResponseErrors from './Util/ResponseErrorHandler'
 import { Config } from '@/Config'
 import { PurgeStore } from '@/Store'
 
@@ -8,21 +9,19 @@ export default async (token, dispatch) => {
         return [true, ''];
     
     // Request data
-    var errorMessage = undefined;
+    var error = undefined;
     const headers = {
         'authorization': token.tokenType + ' ' + token.accessToken,
         'refreshToken': token.refreshToken
     }
     await api.post(`user/logout`, {}, {
         headers: headers
-    }).catch(err => {
-        errorMessage = err.data.errors[0];
-        errorMessage = errorMessage[Object.keys(errorMessage)[0]];
-    });
+    }).catch(err => error = err);
 
     // Check for errors
-    if (errorMessage !== undefined)
-        return [false, errorMessage];
+    var errorCheck = CheckHandleResponseErrors(error, dispatch);
+    if (!errorCheck[0])
+        return errorCheck;
     
     // Remove all data from the Redux store
     dispatch(PurgeStore());
