@@ -50,7 +50,6 @@ const DashboardContainer = () => {
     }
 
     const requestCallback = async (requestName, accessCode, password, fileId) => {
-        // TODO: This should be moved to a service method
         // Confirm access code with device
         setSpinnerMessage('validating access');
         setSpinnerVisible(true);
