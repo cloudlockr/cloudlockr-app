@@ -2,13 +2,16 @@ import { useTheme } from '@/Theme'
 import React, { useState } from 'react'
 import {
     View,
-    Text
+    Text,
 } from 'react-native'
 import { BasicHeader, Button, HorizontalLine, ErrorAlert } from '@/Components'
 import SetIntention from '@/Store/Intention/SetIntention'
 import PostLogout from '@/Services/Server/PostLogout'
-import { navigateAndSimpleReset } from '@/Navigators/Root'
+import { CheckBondedService } from '@/Services/Device'
+import { navigateAndSimpleReset, navigate } from '@/Navigators/Root'
 import { useSelector, useDispatch } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
+import Toast from 'react-native-toast-message'
 import Spinner from 'react-native-loading-spinner-overlay'
 
 const SettingsContainer = () => {
@@ -16,6 +19,34 @@ const SettingsContainer = () => {
     const dispatch = useDispatch();
 
     const [spinnerVisible, setSpinnerVisible] = useState(false);
+    const [deviceConnected, setDeviceConnected] = useState(false);
+
+    // Check if the device is bonded on view load
+    useFocusEffect(
+        React.useCallback(() =>  {
+            const checkBonded = async () => {
+                var checkBonded = await CheckBondedService();
+                setDeviceConnected(checkBonded[0]);
+
+                if (checkBonded[1] !== '') {
+                    Toast.show({
+                        text1: 'Could not check connection/bonding status',
+                        text2: checkBonded[1],
+                        type: 'error',
+                        position: 'bottom',
+                        visibilityTime: 10000
+                    });
+                }
+            }
+
+            checkBonded();
+
+            return () => {
+                // Hide the toasts when the user navigates away from the view
+                Toast.hide();
+            };
+        }, [])
+    );
 
     const devicePasswordCallback = () => {
         dispatch(SetIntention.action({ id: "settingsDeviceConnection", value: 1 }));
@@ -52,7 +83,7 @@ const SettingsContainer = () => {
                     </View>
                     <View style={[Layout.column, Layout.alignItemsCenter]}>
                         <Text style={Fonts.detailBold}>CloudLockr Device Status:</Text>
-                        <Text style={Fonts.detail}>Configured and Connected</Text>
+                        <Text style={Fonts.detail}>{deviceConnected ? "Connected" : "Not Connected"}</Text>
                     </View>
                 </View>
                 <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 220}]}>

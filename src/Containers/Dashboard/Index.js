@@ -2,8 +2,7 @@ import { useTheme } from '@/Theme'
 import React, { useEffect, useRef, useState } from 'react'
 import {
     View,
-    Alert,
-    BackHandler
+    BackHandler,
 } from 'react-native'
 import { DashboardHeader, FileList } from '@/Components'
 import { DownloadDetail, UploadDetail } from '@/Modals'
@@ -15,6 +14,7 @@ import { useDispatch } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import Spinner from 'react-native-loading-spinner-overlay'
+import Toast from 'react-native-toast-message'
 
 const DashboardContainer = () => {
     const { Common, Layout, Colors } = useTheme();
@@ -28,8 +28,12 @@ const DashboardContainer = () => {
     // Prevent user from going back to login view via back button press
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => true);
-        return () =>
-          BackHandler.removeEventListener('hardwareBackPress', () => true);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', () => true);
+
+            // Hide the toasts when the user navigates away from the view
+            Toast.hide();
+        }
     }, []);
 
     // Update callback function
@@ -69,9 +73,15 @@ const DashboardContainer = () => {
             
             downloadRBSheet.current.close();
             setSpinnerVisible(false);
-
-            // Show the result
-            requestAlert(requestResult[0], requestResult[1]);
+            
+            // Indicate the result via a toast
+            Toast.show({
+                text1: requestResult[0] ? 'Success' : 'Failed',
+                text2: requestResult[1],
+                type: requestResult[0] ? 'success' : 'error',
+                position: 'bottom',
+                visibilityTime: 5000
+            });
         } else {
             // Record if it is an upload or download, and reset the progress (to it occurs before the view loads)
             dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
@@ -82,20 +92,6 @@ const DashboardContainer = () => {
             uploadRBSheet.current.close();
             navigate('UploadDownloadProgress', {});
         }
-    }
-
-    const requestAlert = (wasSuccessful, message) => {
-        Alert.alert(
-            wasSuccessful ? "Success" : "Error Occured While Updating",
-            wasSuccessful ? message : message + ". Please try again later and/or resolve the error.",
-            [
-                {
-                text: "Okay",
-                style: "cancel"
-                }
-            ],
-            { cancelable: true }
-        );
     }
 
     return (
