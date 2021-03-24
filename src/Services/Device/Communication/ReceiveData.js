@@ -1,6 +1,20 @@
 import { Config } from '@/Config'
 
-const readData = (bluetoothDevice) => {
+// Fake data that covers all possible response message fields
+// TODO: could make this more advanced, giving proper responses to given inputs
+const fakeData = {
+    status: 1,
+
+    localEncryptionComponent: 'qwefgasdasip',
+    
+    packetNumber: 1,
+    totalPackets: 10,
+    fileData: 'asdasdasjkdhnaskjdnas',
+
+    networks: ['network1', 'NETwork2', 'netWORK8'],
+}
+
+const readData = async (bluetoothDevice) => {
     var data = []
 
     for (let i = 0; i < available; i++) {
@@ -9,6 +23,7 @@ const readData = (bluetoothDevice) => {
     }
 
     // TODO: will likely have to do other processing on the data, espeically if we are recieving bytes as we expect normal text right now.
+    //       may also be in BASE-64 right now, so that may need to be parsed too. Have to see when we have real data to test with.
     return JSON.parse(data.join());
 }
 
@@ -17,7 +32,7 @@ export default RecieveData = async (bluetoothDevice) => {
     // Mock data (if selected)
     if (Config.mocking.deviceConnection) {
         await new Promise(resolve => setTimeout(resolve, 3000));
-        return [true, { data: 'Fake "recieved" data'}];
+        return fakeData;
     }
 
     var secElapsed = 0;
@@ -28,7 +43,7 @@ export default RecieveData = async (bluetoothDevice) => {
             var available = await bluetoothDevice.available();
 
             if (available > 0) {
-                return [true, readData(bluetoothDevice)];
+                return await readData(bluetoothDevice);
             }
 
             // Wait before checking again to prevent unneeded busy looping
@@ -36,9 +51,9 @@ export default RecieveData = async (bluetoothDevice) => {
             secElapsed += Config.device.refreshRate;
         }
     } catch (err) {
-        return [false, err.toString()];
+        throw err.toString();
     }
 
     // If we reach here, then a timeout has occured
-    return [false, 'Device connection timeout. Waited too long for device response message.'];
+    throw 'Device connection timeout. Waited too long for device response message.';
 }

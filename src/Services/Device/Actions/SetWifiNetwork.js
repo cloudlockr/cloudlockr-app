@@ -1,6 +1,11 @@
-export default async (networkName, password) => {
-    // TODO: Need to implement properly and remove the below stub code
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return [true, ""];
+import BasicRequestHandler from '../Communication/BasicRequestHandler';
+
+export default async (networkName, networkPassword) => {
+    const requestMessage = {
+        "messageType": 6,
+        "networkName": networkName,
+        "networkPassword": networkPassword
+    };
+
+    await BasicRequestHandler(requestMessage);
 }

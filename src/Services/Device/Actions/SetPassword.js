@@ -1,6 +1,14 @@
-export default async (newPassword, accessCode) => {
-    // TODO: Need to implement properly and remove the below stub code
+import BasicRequestHandler from '../Communication/BasicRequestHandler';
+import ValidateDeviceAccess from './ValidateDeviceAccess';
+
+export default async (currentPassword, newPassword, accessCode) => {
+    // Confirm access code
+    await ValidateDeviceAccess(accessCode, currentPassword);
     
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return [true, ""];
+    const requestMessage = {
+        "messageType": 7,
+        "password": newPassword
+    };
+
+    await BasicRequestHandler(requestMessage);
 }

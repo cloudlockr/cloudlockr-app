@@ -1,28 +1,19 @@
-export default async () => {
-    // TODO: Later need to make Bluetooth request to get local wifi networks from the device. The below code should be removed when properly implemented
-    await new Promise(resolve => setTimeout(resolve, 1000));
+import BasicRequestHandler from '../Communication/BasicRequestHandler';
 
-    return [
-        {
-            name: 'Network1'
-        },
-        {
-            name: 'Network2'
-        },
-        {
-            name: 'Network3'
-        }, 
-        {
-            name: 'Network4'
-        },
-        {
-            name: 'Network5'
-        },
-        {
-            name: 'Network6'
-        },
-        {
-            name: 'Network7'
-        },
-    ];
+export default async () => {
+    const requestMessage = {
+        "messageType": 5
+    };
+
+    const responseMessage = await BasicRequestHandler(requestMessage);
+
+    if (responseMessage.networks === undefined)
+        throw 'Received response from device, but was missing the expected networks field';
+
+    var formattedResponse = [];
+    for (let i = 0; i < responseMessage.networks.length; i++) {
+        formattedResponse.push({ name: responseMessage.networks[i] });
+    }
+
+    return formattedResponse;
 }

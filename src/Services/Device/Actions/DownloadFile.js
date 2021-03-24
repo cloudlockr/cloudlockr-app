@@ -8,5 +8,5 @@ export default async (dispatch, fileId) => {
         await new Promise(resolve => setTimeout(resolve, 1000));
     }
 
-    return [{}, ''];
+    return {};
 }

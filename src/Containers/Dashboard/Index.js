@@ -36,62 +36,70 @@ const DashboardContainer = () => {
         }
     }, []);
 
-    // Update callback function
-    const downloadCallback = () => {
-        // Request a new HEX code to be generated
-        GenerateHexCodeService();
-
-        // Show the download popup
-        downloadRBSheet.current.open();
+    const downloadCallback = async () => {
+        try {
+            // Show the download popup and generate a HEX code
+            downloadRBSheet.current.open();
+            await GenerateHexCodeService();
+        } catch (err) {
+            showToast(false, err);
+        }
     }
     
-    const uploadCallback = () => {
-        // Request a new HEX code to be generated
-        GenerateHexCodeService();
-
-        // Show the upload popup
-        uploadRBSheet.current.open();
+    const uploadCallback = async () => {
+        try {
+            // Show the upload popup and generate a HEX code
+            uploadRBSheet.current.open();
+            await GenerateHexCodeService();
+        } catch (err) {
+            showToast(false, err);
+        }
     }
 
     const requestCallback = async (requestName, accessCode, password, fileId) => {
-        // Confirm access code with device
-        setSpinnerMessage('validating access');
-        setSpinnerVisible(true);
-        const requestResult = await ValidateDeviceAccessService(accessCode, password);
-        if (!requestResult[0]) {
-            // Show alert if there is an error validating the code
-            setSpinnerVisible(false);
-            requestAlert(requestAlert[0], requestAlert[1]);
-            return;
-        }
+        try {
+            // Confirm access code with device
+            setSpinnerMessage('validating device access');
+            setSpinnerVisible(true);
+            await ValidateDeviceAccessService(accessCode, password);
 
-        // Execute request
-        if (requestName === 'delete') {
-            // Request the file to be deleted
-            setSpinnerMessage('deleting file');
-            const requestResult = await DeleteUserFileService(fileId);
-            
-            downloadRBSheet.current.close();
-            setSpinnerVisible(false);
-            
-            // Indicate the result via a toast
-            Toast.show({
-                text1: requestResult[0] ? 'Success' : 'Failed',
-                text2: requestResult[1],
-                type: requestResult[0] ? 'success' : 'error',
-                position: 'bottom',
-                visibilityTime: 5000
-            });
-        } else {
-            // Record if it is an upload or download, and reset the progress (to it occurs before the view loads)
-            dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
-            dispatch(ResetUploadDownloadProgress.action());
+            // Execute actual request
+            if (requestName === 'delete') {
+                // Request the file to be deleted
+                setSpinnerMessage('deleting file');
+                const requestResult = await DeleteUserFileService(fileId);
+                
+                downloadRBSheet.current.close();
+                setSpinnerVisible(false);
+                
+                // Indicate the result via a toast
+                showToast(true, requestResult);
+            } else {
+                // Record if it is an upload or download, and reset the progress (to it occurs before the view loads)
+                dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
+                dispatch(ResetUploadDownloadProgress.action());
 
+                setSpinnerVisible(false);
+                downloadRBSheet.current.close();
+                uploadRBSheet.current.close();
+                navigate('UploadDownloadProgress', {});
+            }
+        } catch (err) {
+            // Show toast for any errors
             setSpinnerVisible(false);
-            downloadRBSheet.current.close();
-            uploadRBSheet.current.close();
-            navigate('UploadDownloadProgress', {});
+            showToast(false, err);
         }
+    }
+
+    const showToast = (wasSuccessful, message) => {
+        // Indicate the result via a toast
+        Toast.show({
+            text1: wasSuccessful ? 'Success' : 'File transfer error',
+            text2: message,
+            type: wasSuccessful ? 'success' : 'error',
+            position: 'top',
+            visibilityTime: 5000
+        });
     }
 
     return (

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
+import ErrorAlert from './ErrorAlert'
 import { useTheme } from '@/Theme'
 import { GetWifiNetworksService } from '@/Services/Device'
 
 const WifiList = (props) => {
-  const { Layout, Gutters, Colors, Fonts, Common } = useTheme();
+  const { Layout, Gutters, Fonts, Common } = useTheme();
 
   const [refreshing, setRefreshing] = useState(true);
   const [dataSource, setDataSource] = useState([]);
@@ -18,9 +19,15 @@ const WifiList = (props) => {
 
   const getData = async () => {
     setRefreshing(true);
-    const returnedNetworks = await GetWifiNetworksService();
-    setRefreshing(false);
 
+    const returnedNetworks = [];
+    try {
+      returnedNetworks = await GetWifiNetworksService();
+    } catch (err) {
+      ErrorAlert('Error fetching nearby networks', err);
+    }
+
+    setRefreshing(false);
     setDataSource(returnedNetworks);
   };
 

@@ -7,7 +7,7 @@ export default async (token, dispatch) => {
     // Mock data (if selected)
     if (Config.mocking.apiConnection) {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        return [true, ''];
+        return;
     }
     
     // Request data
@@ -23,10 +23,8 @@ export default async (token, dispatch) => {
     // Check for errors
     var errorCheck = CheckHandleResponseErrors(error, dispatch);
     if (!errorCheck[0])
-        return errorCheck;
+        throw errorCheck[1];
     
     // Remove all data from the Redux store
     dispatch(PurgeStore());
-
-    return [true, ''];
 }

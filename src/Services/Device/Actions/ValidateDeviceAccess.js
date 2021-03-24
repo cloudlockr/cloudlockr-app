@@ -1,6 +1,11 @@
+import BasicRequestHandler from '../Communication/BasicRequestHandler';
+
 export default async (hexCode, devicePassword) => {
-    // TODO: Need to implement properly and remove the below stub code
-    
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return [true, ""];
+    const requestMessage = {
+        "messageType": 2,
+        "password": devicePassword,
+        "hex": hexCode
+    };
+
+    await BasicRequestHandler(requestMessage);
 }

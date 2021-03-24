@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator, Button } from 'react-native'
+import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
 import { useTheme } from '@/Theme'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import ErrorAlert from './ErrorAlert'
 import SetDetails from '@/Store/FileTransfer/SetDetails'
 import { GetUserFilesService } from '@/Services/Server'
 
@@ -11,8 +12,7 @@ const FileList = (props) => {
   const [refreshing, setRefreshing] = useState(true);
   const [dataSource, setDataSource] = useState([]);
 
-  // TODO: get auth token from the store (once it is implemented)
-  const authToken = '123456';
+  const authToken = useSelector((state) => state.user).token;
 
   const downloadCallback = props.downloadCallback;
 
@@ -22,9 +22,15 @@ const FileList = (props) => {
 
   const getData = async () => {
     setRefreshing(true);
-    const requestedFiles = await GetUserFilesService(authToken);
-    setRefreshing(false);
 
+    var requestedFiles = [];
+    try {
+      requestedFiles = await GetUserFilesService(authToken);
+    } catch (err) {
+      ErrorAlert("Error gathering user files", err);
+    }
+
+    setRefreshing(false);
     setDataSource(requestedFiles);
   };
 
