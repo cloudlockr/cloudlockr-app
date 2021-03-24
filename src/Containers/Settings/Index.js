@@ -52,10 +52,12 @@ const SettingsContainer = () => {
         dispatch(SetIntention.action({ id: "settingsDeviceConnection", value: 1 }));
         navigate("SettingsDeviceConnection", {});
     }
+
     const deviceWifiCallback = () => {
         dispatch(SetIntention.action({ id: "settingsDeviceConnection", value: 2 }));
         navigate("SettingsDeviceConnection", {});
     }
+    
     const logOutCallback = async () => {
         setSpinnerVisible(true);
         const logoutResult = await PostLogout(userAuthToken, dispatch);

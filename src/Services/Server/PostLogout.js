@@ -5,8 +5,10 @@ import { PurgeStore } from '@/Store'
 
 export default async (token, dispatch) => {
     // Mock data (if selected)
-    if (Config.MOCK_EXTERNAL_CONNECTIONS)
+    if (Config.mocking.apiConnection) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
         return [true, ''];
+    }
     
     // Request data
     var error = undefined;
