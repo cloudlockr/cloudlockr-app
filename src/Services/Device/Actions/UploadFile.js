@@ -1,14 +1,52 @@
-import SetUploadDownloadProgress from '@/Store/FileTransfer/SetUploadDownloadProgress'
+import { Config } from '@/Config'
+import BasicRequestHandler from '../Communication/BasicRequestHandler'
+import { AddEncryptionComponent } from '@/Store/FileTransfer'
 
-export default async (dispatch, fileId, fileData) => {
-    // TODO: Need to implement properly and remove the below stub code
+export default UploadFile = async (dispatch, fileId, fileDataBufferArray, userEmail) => {
+    var totalPackets = fileDataBufferArray.length;
 
-    // TODO: should connect to device, transmit data, and close connection. During the process, use the waitForData hook to recieve confirmation before sending more data.
+    var requestMessage = {
+        "messageType": 3,
+        "email": userEmail,
+        "fileId": fileId,
+        "totalPackets": totalPackets,
+    };
     
-    for (var i = 0; i < 10; i++) {
-        dispatch(SetUploadDownloadProgress.action({ progress: i/10, statusMessage: 'uploading to server via device', timeRemainingMsg: (10 - i) + ' sec', indeterminate: false}));
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    var curPacketNum = 1;
+    var transmissionAttempts = 0;
+    var localEncryptionComponent = undefined;
+
+    // Send each of the packets of data
+    while (curPacketNum <= totalPackets) {
+        requestMessage.packetNumber = curPacketNum;
+        requestMessage.fileData = fileDataBufferArray[curPacketNum - 1].toString();
+
+        try {
+            const responseData = await BasicRequestHandler(requestMessage);
+            
+            if (localEncryptionComponent === undefined)
+                localEncryptionComponent = responseData.localEncryptionComponent;
+            
+            // Update transmission state
+            curPacketNum++;
+            if (transmissionAttempts !== 0)
+                transmissionAttempts = 0;
+        } catch (err) {
+            // Check if the device rejected the transmission. Retry if so
+            if (err.contains('Request with id')) {
+                transmissionAttempts++;
+
+                // Prevent continuous reattempts
+                if (transmissionAttempts === Config.device.maxTransmissionAttempts) {
+                    throw 'Too many transmission attempts';
+                }
+            }
+
+            // Otherwise send the error upwards
+            throw err;
+        } 
     }
 
-    return '';
+    // Store the localEncryptionComponent
+    dispatch(AddEncryptionComponent.action({ fileId: fileId, value: localEncryptionComponent }));
 }

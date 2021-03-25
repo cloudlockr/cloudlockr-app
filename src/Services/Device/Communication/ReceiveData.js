@@ -31,7 +31,7 @@ const readData = async (bluetoothDevice) => {
 export default RecieveData = async (bluetoothDevice) => {
     // Mock data (if selected)
     if (Config.mocking.deviceConnection) {
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise(resolve => setTimeout(resolve, 1500));
         return fakeData;
     }
 

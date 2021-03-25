@@ -3,16 +3,19 @@ import {
     Text,
     View
 } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { InputField, Button } from '@/Components'
+import SetDetails from '@/Store/FileTransfer/SetDetails'
 import { useTheme } from '@/Theme'
 
 const DownloadDetail = (props) => {
     const { Layout, Fonts, Gutters, Colors } = useTheme();
+    const dispatch = useDispatch();
 
     const requestCallback = props.requestCallback;
 
     var downloadInfo = useSelector((state) => state.fileTransfer).details;
+    var encrpytionComponents = useSelector((state) => state.fileTransfer).encrpytionComponents;
 
     const [password, setPassword] = useState('');
     const [accessCode, setAccessCode] = useState('');
@@ -31,6 +34,13 @@ const DownloadDetail = (props) => {
     }
 
     const downloadCallback = () => {
+        // Save the updated file details so that the localEncrpytionComponent is stored
+        if (encrpytionComponents !== undefined) {
+            var component = encrpytionComponents[downloadInfo.id];
+            downloadInfo.localEncrpytionComponent = component;
+            dispatch(SetDetails.action(downloadInfo));
+        }
+
         requestCallback('download', accessCode, password, downloadInfo.id);
     }
 

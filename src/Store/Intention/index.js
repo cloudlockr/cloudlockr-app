@@ -5,3 +5,5 @@ import SetIntention from '@/Store/Intention/SetIntention'
 export default buildSlice('intention', [SetIntention], {
   intention: initialState.intention.intention,
 }).reducer
+
+export { SetIntention };

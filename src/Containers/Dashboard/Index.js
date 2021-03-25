@@ -7,7 +7,7 @@ import {
 import { DashboardHeader, FileList } from '@/Components'
 import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
-import { DeleteUserFileService } from '@/Services/Server'
+import { DeleteService } from '@/Services/FileTransfer'
 import SetIntention from '@/Store/Intention/SetIntention'
 import ResetUploadDownloadProgress from '@/Store/FileTransfer/ResetUploadDownloadProgress'
 import { useDispatch } from 'react-redux'
@@ -67,7 +67,7 @@ const DashboardContainer = () => {
             if (requestName === 'delete') {
                 // Request the file to be deleted
                 setSpinnerMessage('deleting file');
-                const requestResult = await DeleteUserFileService(fileId);
+                const requestResult = await DeleteService(fileId, dispatch);
                 
                 downloadRBSheet.current.close();
                 setSpinnerVisible(false);

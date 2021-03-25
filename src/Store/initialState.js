@@ -1,12 +1,12 @@
 const initialState = {
     fileTransfer: {
-        details : {},
+        details: {},
         progress: {
             progress: 0,
             statusMessage: 'initializing',
             timeRemainingMsg: 'tbd',
             indeterminate: true
-        }
+        },
     },
     intention: {
         intention: {}
