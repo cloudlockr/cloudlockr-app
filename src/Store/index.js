@@ -32,7 +32,7 @@ const persistConfig = {
 }
 
 const rootReducer = (state, action) => {
-  // Handle special PURGE_STORE case, reset to default
+  // Handle special PURGE_STORE case, reset to default (does not remove local encryptionComponents)
   if (action.type === 'PURGE_STORE') {
     state = initialState;
   }

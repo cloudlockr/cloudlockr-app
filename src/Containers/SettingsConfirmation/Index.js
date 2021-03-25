@@ -14,14 +14,11 @@ const SettingsConfirmationContainer = () => {
         navigate("Settings", {});
     }
 
-    // TODO: read from the Redux store later to identify the status and error message to display
-    const status = "successful"
-
     return (
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
             <BasicHeader title={"MyDevice"} previousView={"Settings"} />
             <View style={[Layout.column, Layout.center, Gutters.largexlHPadding, Layout.fill]} >
-                <Text style={[Fonts.listFileName, Fonts.textCenter]}>configuration update {status}</Text>
+                <Text style={[Fonts.listFileName, Fonts.textCenter]}>configuration update successful!</Text>
                 <View style={[Layout.row, Layout.alignItemsCenter, Gutters.largexlTPadding]}>
                     <Button title={"okay"} clickCallback={confirmCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                 </View>

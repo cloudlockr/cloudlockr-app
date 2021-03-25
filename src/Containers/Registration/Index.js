@@ -64,13 +64,13 @@ const RegisterContainer = () => {
 
     const registerCallback = async () => {
         setSpinnerVisible(true);
-        const registerResult = await PostRegistrationService(email, password, passwordConfirm, dispatch);
-        setSpinnerVisible(false);
-        
-        if (registerResult[0]) {
+        try {
+            await PostRegistrationService(email, password, passwordConfirm, dispatch);
+            setSpinnerVisible(false);
             navigate("Dashboard", {});
-        } else {
-            ErrorAlert("Registration Error", registerResult[1]);
+        } catch (err) {
+            setSpinnerVisible(false);
+            ErrorAlert("Error while registering", err);
         }
     }
 

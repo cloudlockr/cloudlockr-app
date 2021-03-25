@@ -7,3 +7,5 @@ export default buildSlice('user', [SetToken, SetEmail], {
     email: initialState.user.email,
     token: initialState.user.token
 }).reducer
+
+export { SetToken, SetEmail };

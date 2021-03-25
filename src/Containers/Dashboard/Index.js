@@ -2,19 +2,19 @@ import { useTheme } from '@/Theme'
 import React, { useEffect, useRef, useState } from 'react'
 import {
     View,
-    Alert,
-    BackHandler
+    BackHandler,
 } from 'react-native'
 import { DashboardHeader, FileList } from '@/Components'
 import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
-import { DeleteUserFileService } from '@/Services/Server'
+import { DeleteService } from '@/Services/FileTransfer'
 import SetIntention from '@/Store/Intention/SetIntention'
 import ResetUploadDownloadProgress from '@/Store/FileTransfer/ResetUploadDownloadProgress'
 import { useDispatch } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import Spinner from 'react-native-loading-spinner-overlay'
+import Toast from 'react-native-toast-message'
 
 const DashboardContainer = () => {
     const { Common, Layout, Colors } = useTheme();
@@ -28,74 +28,78 @@ const DashboardContainer = () => {
     // Prevent user from going back to login view via back button press
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => true);
-        return () =>
-          BackHandler.removeEventListener('hardwareBackPress', () => true);
+        return () => {
+            BackHandler.removeEventListener('hardwareBackPress', () => true);
+
+            // Hide the toasts when the user navigates away from the view
+            Toast.hide();
+        }
     }, []);
 
-    // Update callback function
-    const downloadCallback = () => {
-        // Request a new HEX code to be generated
-        GenerateHexCodeService();
-
-        // Show the download popup
-        downloadRBSheet.current.open();
+    const downloadCallback = async () => {
+        try {
+            // Show the download popup and generate a HEX code
+            downloadRBSheet.current.open();
+            await GenerateHexCodeService();
+        } catch (err) {
+            showToast(false, err);
+        }
     }
     
-    const uploadCallback = () => {
-        // Request a new HEX code to be generated
-        GenerateHexCodeService();
-
-        // Show the upload popup
-        uploadRBSheet.current.open();
+    const uploadCallback = async () => {
+        try {
+            // Show the upload popup and generate a HEX code
+            uploadRBSheet.current.open();
+            await GenerateHexCodeService();
+        } catch (err) {
+            showToast(false, err);
+        }
     }
 
     const requestCallback = async (requestName, accessCode, password, fileId) => {
-        // Confirm access code with device
-        setSpinnerMessage('validating access');
-        setSpinnerVisible(true);
-        const requestResult = await ValidateDeviceAccessService(accessCode, password);
-        if (!requestResult[0]) {
-            // Show alert if there is an error validating the code
-            setSpinnerVisible(false);
-            requestAlert(requestAlert[0], requestAlert[1]);
-            return;
-        }
+        try {
+            // Confirm access code with device
+            setSpinnerMessage('validating device access');
+            setSpinnerVisible(true);
+            await ValidateDeviceAccessService(accessCode, password);
 
-        // Execute request
-        if (requestName === 'delete') {
-            // Request the file to be deleted
-            setSpinnerMessage('deleting file');
-            const requestResult = await DeleteUserFileService(fileId);
-            
-            downloadRBSheet.current.close();
-            setSpinnerVisible(false);
+            // Execute actual request
+            if (requestName === 'delete') {
+                // Request the file to be deleted
+                setSpinnerMessage('deleting file');
+                const requestResult = await DeleteService(fileId, dispatch);
+                
+                downloadRBSheet.current.close();
+                setSpinnerVisible(false);
+                
+                // Indicate the result via a toast
+                showToast(true, requestResult);
+            } else {
+                // Record if it is an upload or download, and reset the progress (to it occurs before the view loads)
+                dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
+                dispatch(ResetUploadDownloadProgress.action());
 
-            // Show the result
-            requestAlert(requestResult[0], requestResult[1]);
-        } else {
-            // Record if it is an upload or download, and reset the progress (to it occurs before the view loads)
-            dispatch(SetIntention.action({ id: "UploadDownloadProgress_isDownloading", value: (requestName === 'download') }));
-            dispatch(ResetUploadDownloadProgress.action());
-
+                setSpinnerVisible(false);
+                downloadRBSheet.current.close();
+                uploadRBSheet.current.close();
+                navigate('UploadDownloadProgress', {});
+            }
+        } catch (err) {
+            // Show toast for any errors
             setSpinnerVisible(false);
-            downloadRBSheet.current.close();
-            uploadRBSheet.current.close();
-            navigate('UploadDownloadProgress', {});
+            showToast(false, err);
         }
     }
 
-    const requestAlert = (wasSuccessful, message) => {
-        Alert.alert(
-            wasSuccessful ? "Success" : "Error Occured While Updating",
-            wasSuccessful ? message : message + ". Please try again later and/or resolve the error.",
-            [
-                {
-                text: "Okay",
-                style: "cancel"
-                }
-            ],
-            { cancelable: true }
-        );
+    const showToast = (wasSuccessful, message) => {
+        // Indicate the result via a toast
+        Toast.show({
+            text1: wasSuccessful ? 'Success' : 'File transfer error',
+            text2: message,
+            type: wasSuccessful ? 'success' : 'error',
+            position: 'top',
+            visibilityTime: 5000
+        });
     }
 
     return (

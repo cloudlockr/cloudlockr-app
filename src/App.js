@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
 import { store, persistor } from '@/Store'
 import { ApplicationNavigator } from '@/Navigators'
+import Toast from 'react-native-toast-message'
 
 const App = () => (
   <Provider store={store}>
@@ -16,6 +17,7 @@ const App = () => (
      */}
     <PersistGate loading={null} persistor={persistor}>
       <ApplicationNavigator />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </PersistGate>
   </Provider>
 )

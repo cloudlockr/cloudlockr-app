@@ -4,7 +4,7 @@ import {
     View,
     Text
 } from 'react-native'
-import { BasicHeader, Button, InputField, WifiList } from '@/Components'
+import { BasicHeader, Button, InputField, WifiList, ErrorAlert } from '@/Components'
 import { navigate } from '@/Navigators/Root'
 import { SetWifiNetworkService } from '@/Services/Device'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -14,28 +14,14 @@ const SettingsDeviceWifiContainer = () => {
 
     const confirmCallback = async () => {
         setSpinnerVisible(true);
-        const wifiChangeResult = await SetWifiNetworkService(networkName, password);
-        setSpinnerVisible(false);
-
-        if (wifiChangeResult[0]) {
+        try {
+            await SetWifiNetworkService(networkName, password);
+            setSpinnerVisible(false);
             navigate("SettingsConfirmation", {});
-        } else {
-            errorAlert(wifiChangeResult[1]);
+        } catch (err) {
+            setSpinnerVisible(false);
+            ErrorAlert('Error while updating configuration', err);
         }
-    }
-
-    const errorAlert = (message) => {
-        Alert.alert(
-            "Error Occured While Updating",
-            message + ". Please try again later and/or resolve the error.",
-            [
-                {
-                text: "Cancel",
-                style: "cancel"
-                }
-            ],
-            { cancelable: true }
-        );
     }
 
     const networkClickCallback = (clickedNetworkName) => {
@@ -51,7 +37,7 @@ const SettingsDeviceWifiContainer = () => {
     const [password, setPassword] = useState("");
     const [confirmEnabled, setConfirmedEnabled] = useState(false);
     const [spinnerVisible, setSpinnerVisible] = useState(false);
-    const [spinnerMessage, setSpinnerMessage] = useState('processing...');
+    const [spinnerMessage, setSpinnerMessage] = useState('processing');
 
     return (
         <View style={[Layout.fill, Layout.column]}>

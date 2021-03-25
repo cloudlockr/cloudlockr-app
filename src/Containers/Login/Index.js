@@ -47,13 +47,13 @@ const LoginContainer = () => {
 
     const loginCallback = async () => {
         setSpinnerVisible(true);
-        const loginResult = await PostLoginService(email, password, dispatch);
-        setSpinnerVisible(false);
-        
-        if (loginResult[0]) {
+        try {
+            await PostLoginService(email, password, dispatch);
+            setSpinnerVisible(false);
             navigate("Dashboard", {});
-        } else {
-            ErrorAlert("Login Error", loginResult[1]);
+        } catch (err) {
+            setSpinnerVisible(false);
+            ErrorAlert("Error while logging in", err);
         }
     }
 

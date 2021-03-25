@@ -6,8 +6,10 @@ import SetEmail from '@/Store/User/SetEmail'
 
 export default async (email, password, passwordConfirm, dispatch) => {
     // Mock data (if selected)
-    if (Config.MOCK_EXTERNAL_CONNECTIONS)
-        return [true, ''];
+    if (Config.mocking.apiConnection) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return;
+    }
     
     // Request data
     var error = undefined;
@@ -23,11 +25,9 @@ export default async (email, password, passwordConfirm, dispatch) => {
     // Check for errors
     var errorCheck = CheckHandleResponseErrors(error, dispatch);
     if (!errorCheck[0])
-        return errorCheck;
+        throw errorCheck[1];
     
     // Persist token data
     dispatch(SetEmail.action(email));
     dispatch(SetToken.action(response.data));
-
-    return [true, ''];
 }

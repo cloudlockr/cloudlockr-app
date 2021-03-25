@@ -5,8 +5,10 @@ import { PurgeStore } from '@/Store'
 
 export default async (token, dispatch) => {
     // Mock data (if selected)
-    if (Config.MOCK_EXTERNAL_CONNECTIONS)
-        return [true, ''];
+    if (Config.mocking.apiConnection) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return;
+    }
     
     // Request data
     var error = undefined;
@@ -17,14 +19,7 @@ export default async (token, dispatch) => {
     await api.post(`user/logout`, {}, {
         headers: headers
     }).catch(err => error = err);
-
-    // Check for errors
-    var errorCheck = CheckHandleResponseErrors(error, dispatch);
-    if (!errorCheck[0])
-        return errorCheck;
     
     // Remove all data from the Redux store
     dispatch(PurgeStore());
-
-    return [true, ''];
 }
