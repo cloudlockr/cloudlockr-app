@@ -1,9 +1,9 @@
 import Toast from 'react-native-toast-message'
 
-const ErrorAlert = (message="Error", details) => {
+const ErrorAlert = (message='Error', details='') => {
     Toast.show({
         text1: message,
-        text2: details,
+        text2: details.toString(),
         type: 'error',
         position: 'bottom',
         visibilityTime: 10000

@@ -4,13 +4,13 @@ import {
     View,
     BackHandler,
 } from 'react-native'
-import { DashboardHeader, FileList } from '@/Components'
+import { DashboardHeader, FileList, ErrorAlert } from '@/Components'
 import { DownloadDetail, UploadDetail } from '@/Modals'
 import { GenerateHexCodeService, ValidateDeviceAccessService } from '@/Services/Device'
 import { DeleteService } from '@/Services/FileTransfer'
 import SetIntention from '@/Store/Intention/SetIntention'
 import ResetUploadDownloadProgress from '@/Store/FileTransfer/ResetUploadDownloadProgress'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { navigate } from '@/Navigators/Root'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -24,6 +24,9 @@ const DashboardContainer = () => {
 
     const [spinnerVisible, setSpinnerVisible] = useState(false);
     const [spinnerMessage, setSpinnerMessage] = useState('');
+    const [refreshTrigger, setRefreshTrigger] = useState(false);
+
+    const token = useSelector((state) => state.user).token;
 
     // Prevent user from going back to login view via back button press
     useEffect(() => {
@@ -67,10 +70,13 @@ const DashboardContainer = () => {
             if (requestName === 'delete') {
                 // Request the file to be deleted
                 setSpinnerMessage('deleting file');
-                const requestResult = await DeleteService(fileId, dispatch);
+                const requestResult = await DeleteService(fileId, token, dispatch);
                 
                 downloadRBSheet.current.close();
                 setSpinnerVisible(false);
+
+                // Swap the value to force the file list to refresh
+                setRefreshTrigger(!refreshTrigger);
                 
                 // Indicate the result via a toast
                 showToast(true, requestResult);
@@ -92,11 +98,15 @@ const DashboardContainer = () => {
     }
 
     const showToast = (wasSuccessful, message) => {
-        // Indicate the result via a toast
+        if (!wasSuccessful) {
+            ErrorAlert('File transfer error', message);
+            return;
+        }
+
         Toast.show({
-            text1: wasSuccessful ? 'Success' : 'File transfer error',
+            text1: 'Success',
             text2: message,
-            type: wasSuccessful ? 'success' : 'error',
+            type: 'success',
             position: 'top',
             visibilityTime: 5000
         });
@@ -106,7 +116,7 @@ const DashboardContainer = () => {
         <View style={[Layout.fill, Common.backgroundPrimary, Layout.column]}>
             <Spinner visible={spinnerVisible} textContent={spinnerMessage} textStyle={{color: Colors.white}} />
             <DashboardHeader uploadCallback={uploadCallback} />
-            <FileList downloadCallback={downloadCallback} />
+            <FileList downloadCallback={downloadCallback} refreshTrigger={refreshTrigger} />
 
             <RBSheet
                 ref={downloadRBSheet}

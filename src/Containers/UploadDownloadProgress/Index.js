@@ -25,11 +25,14 @@ const UploadDownloadProgressContainer = () => {
 
     const isDownloading = useSelector((state) => state.intention).intention.UploadDownloadProgress_isDownloading;
     const transferInfo = useSelector((state) => state.fileTransfer).details;
-    const userEmail = useSelector((state) => state.user).email;
-
+    const user = useSelector((state) => state.user);
+    
+    const userEmail = user.email;
+    const userToken = user.token;
     const fileName = transferInfo.fileName !== undefined ? transferInfo.fileName : undefined;
     const fileUri = transferInfo.fileMetadata !== undefined ? transferInfo.fileMetadata.uri : undefined;
     const fileId = transferInfo.id;
+    const fileType = transferInfo.fileMetadata !== undefined ? transferInfo.fileMetadata.type : undefined;
     const fileLocalEncrpytionComponent = transferInfo.localEncrpytionComponent !== undefined ? transferInfo.localEncrpytionComponent : undefined;
 
     const doneCallback = () => {
@@ -62,7 +65,7 @@ const UploadDownloadProgressContainer = () => {
                 DownloadService(dispatch, fileId, fileName, fileLocalEncrpytionComponent, userEmail);
             } else {
                 // Start upload process in the background
-                UploadService(dispatch, fileUri, fileName, userEmail);
+                UploadService(dispatch, fileUri, fileName, fileType, userToken, userEmail);
             }
 
             return () => {
