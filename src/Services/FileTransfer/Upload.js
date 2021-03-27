@@ -3,7 +3,7 @@ import { PostNewFileService } from '@/Services/Server'
 import { ReadFileService } from '@/Services/FileSystem'
 import { UploadFileService } from '@/Services/Device'
 
-export default async (dispatch, fileUri, fileName, userEmail) => {
+export default async (dispatch, fileUri, fileName, fileType, token, userEmail) => {
     try {
         // Obtain file from filesystem 
         dispatch(SetUploadDownloadProgress.action({ progress: 0, statusMessage: 'Obtaining file data', timeRemainingMsg: 'tbd', indeterminate: true}));
@@ -11,7 +11,7 @@ export default async (dispatch, fileUri, fileName, userEmail) => {
 
         // Create new file entry in database
         dispatch(SetUploadDownloadProgress.action({ progress: 0, statusMessage: 'Contacting servers', timeRemainingMsg: 'tbd', indeterminate: true}));
-        const fileId = await PostNewFileService(fileName);
+        const fileId = await PostNewFileService(dispatch, token, fileName, fileType);
 
         // Send request to DE1 to upload data
         dispatch(SetUploadDownloadProgress.action({ progress: 0, statusMessage: 'Uploading file', timeRemainingMsg: 'tbd', indeterminate: true}));

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, FlatList, Text, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native'
 import { useTheme } from '@/Theme'
 import { useDispatch, useSelector } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native'
 import ErrorAlert from './ErrorAlert'
 import SetDetails from '@/Store/FileTransfer/SetDetails'
 import { GetUserFilesService } from '@/Services/Server'
@@ -18,16 +19,27 @@ const FileList = (props) => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [props.refreshTrigger]);
+  
+  // Remove any stored credential data when the view loads from the store
+  useFocusEffect(
+    React.useCallback(() => {
+      getData();
+
+      return () => {
+          // Nothing to do when screen is unfocused
+      };
+    }, [])
+);
 
   const getData = async () => {
     setRefreshing(true);
 
     var requestedFiles = [];
     try {
-      requestedFiles = await GetUserFilesService(authToken);
+      requestedFiles = await GetUserFilesService(dispatch, authToken);
     } catch (err) {
-      ErrorAlert("Error gathering user files", err);
+      ErrorAlert("Error gathering user files", err.toString());
     }
 
     setRefreshing(false);
