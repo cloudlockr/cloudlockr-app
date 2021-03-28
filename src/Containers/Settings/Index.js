@@ -3,10 +3,11 @@ import React, { useState } from 'react'
 import {
     View,
     Text,
+    Alert,
 } from 'react-native'
 import { BasicHeader, Button, HorizontalLine, ErrorAlert } from '@/Components'
 import SetIntention from '@/Store/Intention/SetIntention'
-import PostLogout from '@/Services/Server/PostLogout'
+import { DeleteUserService, PostLogoutService } from '@/Services/Server'
 import { CheckBondedService } from '@/Services/Device'
 import { navigateAndSimpleReset, navigate } from '@/Navigators/Root'
 import { useSelector, useDispatch } from 'react-redux'
@@ -56,12 +57,40 @@ const SettingsContainer = () => {
     const logOutCallback = async () => {
         setSpinnerVisible(true);
         try {
-            await PostLogout(userAuthToken, dispatch);
+            await PostLogoutService(userAuthToken, dispatch);
             setSpinnerVisible(false);
             navigateAndSimpleReset("Main");
         } catch (err) {
             setSpinnerVisible(false);
             ErrorAlert("Error while logging out", err);
+        }
+    }
+
+    const deleteAccountCallback = async () => {
+        // Show confirmation alert to ensure the user does not accidentally delete their account
+        Alert.alert(
+            "ACCOUNT DELETION WARNING",
+            "Deleting your account is irreversible. If you choose to proceed, we will delete all of your user data, including all encrypted file data stored on our servers.",
+            [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+              { text: "Accept & Continue", onPress: deleteAccount }
+            ],
+            { cancelable: true }
+          );
+    }
+
+    const deleteAccount = async () => {
+        setSpinnerVisible(true);
+        try {
+            await DeleteUserService(userAuthToken, dispatch);
+            setSpinnerVisible(false);
+            navigateAndSimpleReset("Main");
+        } catch (err) {
+            setSpinnerVisible(false);
+            ErrorAlert("Error while deleting acccount", err);
         }
     }
 
@@ -83,9 +112,9 @@ const SettingsContainer = () => {
                         <Text style={Fonts.detail}>{deviceConnected}</Text>
                     </View>
                 </View>
-                <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 220}]}>
+                <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 300}]}>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
-                        <Button title={"device password"} clickCallback={devicePasswordCallback} color={Colors.secondaryGreen} style={Layout.fill} />
+                        <Button title={"device password settings"} clickCallback={devicePasswordCallback} color={Colors.secondaryGreen} style={Layout.fill} />
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
                         <Button title={"device wifi settings"} clickCallback={deviceWifiCallback} color={Colors.secondaryGreen} style={Layout.fill} />
@@ -95,6 +124,12 @@ const SettingsContainer = () => {
                     </View>
                     <View style={[Layout.row, Layout.alignItemsCenter]}>
                         <Button title={"log out"} clickCallback={logOutCallback} color={Colors.secondary} style={Layout.fill} />
+                    </View>
+                    <View style={[Layout.row, Layout.alignItemsCenter]}>
+                        <HorizontalLine />
+                    </View>
+                    <View style={[Layout.row, Layout.alignItemsCenter]}>
+                        <Button title={"delete account"} clickCallback={deleteAccountCallback} color={Colors.red} style={Layout.fill} />
                     </View>
                 </View>
             </View>
