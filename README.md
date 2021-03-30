@@ -21,6 +21,12 @@ This repo contains the Android application code facilitating the CloudLockr devi
 
 ---
 
+### Running tests
+
+Execute `yarn test` to run the entire test suite (UI and service logic tests). Verbose results are enabled by default for clarity.
+
+---
+
 ### Other Useful Information
 - Boilerplate code documentation: https://thecodingmachine.github.io/react-native-boilerplate/docs/Introduction/
     - Since the codebase has been significantly altered from the boilerplate code to meet project requirements, many parts of the documentation at the given link are not applicable to this project.

@@ -9,4 +9,4 @@ import { Provider } from 'react-redux'
 it('renders and matches snapshot', () => {
   const { toJSON } = render(<Provider store={store}><IndexStartupContainer /></Provider>);
   expect(toJSON()).toMatchSnapshot();
-})
+});
