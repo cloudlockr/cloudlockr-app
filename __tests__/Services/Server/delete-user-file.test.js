@@ -8,20 +8,22 @@ m.navigateAndSimpleReset = jest.fn();
 
 let testDispatch = jest.fn();
 
-afterEach(() => {
-  // cleaning up the mess left behind the previous test
-  mockAxios.reset();
-  testDispatch = jest.fn();
-});
-
 describe('DeleteUserFileService tests', () => {
+  beforeEach(() => {
+    // cleaning up the mess left behind the previous test
+    mockAxios.reset();
+    testDispatch = jest.fn();
+  });
+
   it('deletes user file on server', async () => { 
     let execution = DeleteUserFileService(testDispatch, token, fileId);
     mockAxios.mockResponse({ status: 200, data: { message: 'success' } });
-    await execution;
+    let result = await execution;
+
+    expect(result).toStrictEqual('File was successfully deleted');
 
     // Check API request was made as intended
-    expect(mockAxios.delete).toHaveBeenCalledWith(`/file/${fileId}`, { 
+    expect(mockAxios.delete).toHaveBeenCalledWith(`file/${fileId}`, { 
       headers: {
         'Authorization': token.tokenType + ' ' + token.accessToken,
       }
@@ -44,7 +46,7 @@ describe('DeleteUserFileService tests', () => {
     }
 
     // Check API request was made as intended
-    expect(mockAxios.delete).toHaveBeenCalledWith(`/file/${fileId}`, { 
+    expect(mockAxios.delete).toHaveBeenCalledWith(`file/${fileId}`, { 
       headers: {
         'Authorization': token.tokenType + ' ' + token.accessToken,
       }
@@ -67,7 +69,7 @@ describe('DeleteUserFileService tests', () => {
     }
 
     // Check API request was made as intended
-    expect(mockAxios.delete).toHaveBeenCalledWith(`/file/${fileId}`, { 
+    expect(mockAxios.delete).toHaveBeenCalledWith(`file/${fileId}`, { 
       headers: {
         'Authorization': token.tokenType + ' ' + token.accessToken,
       }

@@ -18,7 +18,7 @@ export default async (dispatch, token, fileName, fileType) => {
         'fileName': fileName,
         'fileType': fileType
     }
-    const response = await api.post(`/file`, body, {
+    const response = await api.post(`file`, body, {
         headers: headers
     }).catch(err => error = err);
 

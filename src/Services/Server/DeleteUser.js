@@ -17,7 +17,7 @@ export default async (token, dispatch) => {
         'Authorization': token.tokenType + ' ' + token.accessToken,
         'refreshToken': token.refreshToken
     }
-    await api.delete(`/user`, {
+    await api.delete(`user`, {
         headers: headers
     }).catch(err => error = err);
 

@@ -1,6 +1,6 @@
 import mockAxios from 'jest-mock-axios';
-import { GetUserFilesService } from '../../../src/Services/Server';
-import { token, serverFormattedFiles, phoneFormattedFiles } from '../../../__mocks__/mock-data';
+import { PostNewFileService } from '../../../src/Services/Server';
+import { token, fileName, fileType, fileId } from '../../../__mocks__/mock-data';
 
 // Mock navigation functions (relevant when expired tokens occur)
 import * as m from '../../../src/Navigators/Root';
@@ -8,33 +8,36 @@ m.navigateAndSimpleReset = jest.fn();
 
 let testDispatch = jest.fn();
 
-describe('GetUserFilesService tests', () => {
+describe('PostNewFileService tests', () => {
   beforeEach(() => {
     // cleaning up the mess left behind the previous test
     mockAxios.reset();
     testDispatch = jest.fn();
   });
 
-  it('gets user files on server and correctly formats result', async () => { 
-    let execution = GetUserFilesService(testDispatch, token);
-    mockAxios.mockResponse({ status: 200, data: { filesMetadata: serverFormattedFiles } });
-    let result = await execution;
+  it('posts the new file and returns the new file id', async () => { 
+    let execution = PostNewFileService(testDispatch, token, fileName, fileType);
+    mockAxios.mockResponse({ status: 200, data: { fileId: fileId } });
+    let response = await execution;
 
-    expect(result).toStrictEqual(phoneFormattedFiles);
+    expect(response).toBe(fileId);
 
     // Check API request was made as intended
-    expect(mockAxios.get).toHaveBeenCalledWith(`user/files`, { 
-      headers: {
-        'Authorization': token.tokenType + ' ' + token.accessToken,
-      }
+    expect(mockAxios.post).toHaveBeenCalledWith(`file`, {
+        'fileName': fileName,
+        'fileType': fileType
+    }, { 
+        headers: {
+            'authorization': token.tokenType + ' ' + token.accessToken,
+        }
     });
 
     // Check that no requests were made using dispatch
-    expect(testDispatch.mock.calls.length).toStrictEqual(0);
+    expect(testDispatch.mock.calls.length).toBe(0);
   });
 
   it('handles normal server error', async () => {
-    let execution = GetUserFilesService(testDispatch, token);
+    let execution = PostNewFileService(testDispatch, token, fileName, fileType);
     mockAxios.mockError({ status: 401, data: {errors:[{token:'Invalid token'}]}});
 
     try {
@@ -46,10 +49,13 @@ describe('GetUserFilesService tests', () => {
     }
 
     // Check API request was made as intended
-    expect(mockAxios.get).toHaveBeenCalledWith(`user/files`, { 
-      headers: {
-        'Authorization': token.tokenType + ' ' + token.accessToken,
-      }
+    expect(mockAxios.post).toHaveBeenCalledWith(`file`, {
+        'fileName': fileName,
+        'fileType': fileType
+    }, { 
+        headers: {
+            'authorization': token.tokenType + ' ' + token.accessToken,
+        }
     });
     
     // Check that no requests were made using dispatch
@@ -57,7 +63,7 @@ describe('GetUserFilesService tests', () => {
   });
 
   it('handles token rejection error (clears local data and logs user out)', async () => {
-    let execution = GetUserFilesService(testDispatch, token);
+    let execution = PostNewFileService(testDispatch, token, fileName, fileType);
     mockAxios.mockError({ status: 403, data: {errors:[{token:'Expired token'}]}});
 
     try {
@@ -69,10 +75,13 @@ describe('GetUserFilesService tests', () => {
     }
 
     // Check API request was made as intended
-    expect(mockAxios.get).toHaveBeenCalledWith(`user/files`, { 
-      headers: {
-        'Authorization': token.tokenType + ' ' + token.accessToken,
-      }
+    expect(mockAxios.post).toHaveBeenCalledWith(`file`, {
+        'fileName': fileName,
+        'fileType': fileType
+    }, { 
+        headers: {
+            'authorization': token.tokenType + ' ' + token.accessToken,
+        }
     });
     
     // Check that the request was made to purge user data

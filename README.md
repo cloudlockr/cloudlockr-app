@@ -21,9 +21,9 @@ This repo contains the Android application code facilitating the CloudLockr devi
 
 ---
 
-### Running tests
+### Running Tests
 
-Execute `yarn test` to run the entire test suite (UI and service logic tests). Verbose results are enabled by default for clarity.
+Execute `yarn test` to run the entire test suite (UI and service logic tests). Verbose results are enabled by default for result clarity. The CI is currently configured to execute all tests for pull requests and pushes to master.
 
 ---
 

@@ -8,21 +8,20 @@ m.navigateAndSimpleReset = jest.fn();
 
 let testDispatch = jest.fn();
 
-afterEach(() => {
-  // cleaning up the mess left behind the previous test
-  mockAxios.reset();
-  testDispatch = jest.fn();
-  jest.restoreAllMocks();
-});
-
 describe('DeleteUserService tests', () => {
+  beforeEach(() => {
+    // cleaning up the mess left behind the previous test
+    mockAxios.reset();
+    testDispatch = jest.fn();
+  });
+  
   it('deletes user on server and clears local data', async () => {
     let execution = DeleteUserService(token, testDispatch);
     mockAxios.mockResponse({ status: 200, data: { message: 'success' } });
     await execution;
 
     // Check API request was made as intended
-    expect(mockAxios.delete).toHaveBeenCalledWith('/user', { 
+    expect(mockAxios.delete).toHaveBeenCalledWith('user', { 
       headers: {
         'Authorization': token.tokenType + ' ' + token.accessToken,
         'refreshToken': token.refreshToken
@@ -47,7 +46,7 @@ describe('DeleteUserService tests', () => {
     }
 
     // Check API request was made as intended
-    expect(mockAxios.delete).toHaveBeenCalledWith('/user', { 
+    expect(mockAxios.delete).toHaveBeenCalledWith('user', { 
       headers: {
         'Authorization': token.tokenType + ' ' + token.accessToken,
         'refreshToken': token.refreshToken
@@ -71,7 +70,7 @@ describe('DeleteUserService tests', () => {
     }
 
     // Check API request was made as intended
-    expect(mockAxios.delete).toHaveBeenCalledWith('/user', { 
+    expect(mockAxios.delete).toHaveBeenCalledWith('user', { 
       headers: {
         'Authorization': token.tokenType + ' ' + token.accessToken,
         'refreshToken': token.refreshToken

@@ -16,7 +16,7 @@ export default async (dispatch, token, fileId) => {
     const headers = {
         'Authorization': token.tokenType + ' ' + token.accessToken,
     }
-    await api.delete(`/file/${fileId}`, {
+    await api.delete(`file/${fileId}`, {
         headers: headers
     }).catch(err => error = err);
 

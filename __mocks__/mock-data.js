@@ -1,10 +1,12 @@
-export const {token, fileId, serverFormattedFiles, phoneFormattedFiles} = {
+export const {token, fileId, fileName, fileType, serverFormattedFiles, phoneFormattedFiles, email, password} = {
     token: {
       tokenType: '1234',
       accessToken: '5678',
       refreshToken: 'abcd'
     },
     fileId: 1,
+    fileName: 'test.png',
+    fileType: 'image/png',
     serverFormattedFiles: [ 
       {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -39,4 +41,6 @@ export const {token, fileId, serverFormattedFiles, phoneFormattedFiles} = {
         uploadDate: 'Jan 28, 2021'
       }
     ],
+    email: 'test@gmail.com',
+    password: 'password123',
 };
