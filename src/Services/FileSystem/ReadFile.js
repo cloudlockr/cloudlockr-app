@@ -1,9 +1,26 @@
+import { Config } from '@/Config'
+
+const RNFS = require('react-native-fs');
 
 export default async (fileUri) => {
-    // TODO: see the documetation here: https://www.npmjs.com/package/react-native-document-picker and look into react-fs library
-    // Make sure to return the file as an array of buffers broken up into the message size (which should be specified in the Config)
+    // Obtain the data from the file system in base 64
+    var strBlob = await RNFS.readFile(fileUri, 'base64');
+    var fullBlob = Buffer(strBlob, 'base64');
+    
+    // Split the data into a bunch of buffers according to max message size
+    var numSplits = Math.ceil(Buffer.byteLength(strBlob, 'base64') / Config.device.maxBlobSizeBytes);
+    var splitBlobs = [];
 
-    await new Promise(resolve => setTimeout(resolve, 500));
+    for (var i = 0; i < numSplits; i++) {
+        var startIdx = i * Config.device.maxBlobSizeBytes;
+        var endIdx = (i + 1) * Config.device.maxBlobSizeBytes;
 
-    return [Buffer('test1'), Buffer('test2')];
+        if (i + 1 == numSplits) {
+            splitBlobs.push(fullBlob.slice(startIdx));
+        } else {
+            splitBlobs.push(fullBlob.slice(startIdx, endIdx));
+        }
+    }
+
+    return splitBlobs;
 }

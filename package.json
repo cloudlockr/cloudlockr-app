@@ -27,6 +27,7 @@
     "react-native-bluetooth-classic": "^1.60.0-rc.13",
     "react-native-document-picker": "^5.0.1",
     "react-native-flipper": "^0.64.0",
+    "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-progress": "^4.1.2",

@@ -1,9 +1,9 @@
 import { Config } from '@/Config'
 import BasicRequestHandler from '../Communication/BasicRequestHandler'
-import { AddEncryptionComponent } from '@/Store/FileTransfer'
+import { AddEncryptionComponent, SetUploadDownloadProgress } from '@/Store/FileTransfer'
 
-export default UploadFile = async (dispatch, fileId, fileDataBufferArray, userEmail) => {
-    var totalPackets = fileDataBufferArray.length;
+export default UploadFile = async (dispatch, fileId, fileDataBlobArray, userEmail) => {
+    var totalPackets = fileDataBlobArray.length;
 
     var requestMessage = {
         "messageType": 3,
@@ -19,9 +19,11 @@ export default UploadFile = async (dispatch, fileId, fileDataBufferArray, userEm
     // Send each of the packets of data
     while (curPacketNum <= totalPackets) {
         requestMessage.packetNumber = curPacketNum;
-        requestMessage.fileData = fileDataBufferArray[curPacketNum - 1].toString();
+        requestMessage.fileData = fileDataBlobArray[curPacketNum - 1].toString();
 
         try {
+            dispatch(SetUploadDownloadProgress.action({ progress: curPacketNum / (totalPackets + 1), statusMessage: 'uploading file', timeRemainingMsg: 'unknown', indeterminate: false}));
+
             const responseData = await BasicRequestHandler(requestMessage);
             
             if (localEncryptionComponent === undefined)

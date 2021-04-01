@@ -6,11 +6,11 @@ export default async (dispatch, fileId, fileName, localEncrpytionComponent, user
     try {
         // Download file from DE1
         dispatch(SetUploadDownloadProgress.action({ progress: 0, statusMessage: 'Requesting file download', timeRemainingMsg: 'tbd', indeterminate: true}));
-        const fileData = await DownloadFileService(dispatch, fileId, localEncrpytionComponent, userEmail);
+        const fileBlob = await DownloadFileService(dispatch, fileId, localEncrpytionComponent, userEmail);
 
         // Process file data and save to device
         dispatch(SetUploadDownloadProgress.action({ progress: 0.95, statusMessage: 'Processing and saving file', timeRemainingMsg: 'almost done', indeterminate: false}));
-        await ProcessSaveFileService(fileData, fileName);
+        await ProcessSaveFileService(fileBlob, fileName);
 
         // Display the download complete message
         dispatch(SetUploadDownloadProgress.action({ progress: 1, statusMessage: 'File download successful', timeRemainingMsg: 'done', indeterminate: false}));

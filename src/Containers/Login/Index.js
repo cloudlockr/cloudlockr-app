@@ -1,8 +1,6 @@
 import { useTheme } from '@/Theme'
 import React, { useState } from 'react'
-import {
-    View,
-} from 'react-native'
+import { View, PermissionsAndroid, Alert } from 'react-native'
 import { Brand, InputField, HorizontalLine, Button, ErrorAlert } from '@/Components'
 import { useDispatch } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native'
@@ -19,6 +17,56 @@ const LoginContainer = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const checkPermissions = async () => {
+        try {
+            var writePermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+            var readPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+            if (writePermission && readPermission)
+                return
+
+            requestAlert();
+        } catch (err) {
+            ErrorAlert(err);
+        }
+    }
+
+    const requestPermissions = async () => {
+        try {
+            const permissionsGranted = await PermissionsAndroid.requestMultiple([PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE]);
+            console.log(permissionsGranted);
+
+            if (permissionsGranted["android.permission.WRITE_EXTERNAL_STORAGE"] !== PermissionsAndroid.RESULTS.GRANTED || permissionsGranted["android.permission.READ_EXTERNAL_STORAGE"] !== PermissionsAndroid.RESULTS.GRANTED) {
+                if (permissionsGranted["android.permission.WRITE_EXTERNAL_STORAGE"] === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN || permissionsGranted["android.permission.READ_EXTERNAL_STORAGE"] === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+                    Alert.alert(
+                        "Device data permissions are required to use CloudLockr",
+                        "You selected to never ask permissions again. Without device data access permission, CloudLockr's main functionality of data upload and download is not possible. " +
+                        "Please allow this permission in your phone's settings.",
+                        [
+                          { text: "Okay" }
+                        ],
+                        { cancelable: true }
+                      );
+                    return;
+                }
+                
+                requestAlert();
+            }
+        } catch (err) {
+            ErrorAlert(err);
+        }
+    }
+
+    const requestAlert = () => {
+        Alert.alert(
+            "Device data permissions are required to use CloudLockr",
+            "Data upload and download require CloudLockr to access your phone's storage",
+            [
+              { text: "Okay", onPress: requestPermissions }
+            ],
+            { cancelable: false }
+        );
+    }
+
     // Remove any stored credential data when the view loads from the store
     useFocusEffect(
         React.useCallback(() => {
@@ -26,6 +74,8 @@ const LoginContainer = () => {
             setPassword('');
             setSpinnerVisible(false);
             setLoginButtonEnabled(false);
+
+            checkPermissions();
 
             return () => {
                 // Nothing to do when screen is unfocused

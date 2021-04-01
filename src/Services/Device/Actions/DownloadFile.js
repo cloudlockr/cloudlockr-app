@@ -23,7 +23,7 @@ export default DownloadFile = async (dispatch, fileId, localEncrpytionComponent,
         "fileId": fileId
     };
 
-    var fileBufferArray = [];
+    var fileBlobs = [];
     
     // Gather all of the file blobs
     while (totalPackets !== packetsReceived || (packetsReceived === 0 && totalPackets === 0)) {
@@ -33,7 +33,7 @@ export default DownloadFile = async (dispatch, fileId, localEncrpytionComponent,
         if (Config.mocking.deviceConnection)
             receivedData = mockReceivedData(receivedData);
 
-        fileBufferArray.push(Buffer.from(receivedData.fileData));
+        fileBlobs.push(Buffer(receivedData.fileData, 'base64'));
         
         packetsReceived = receivedData.packetNumber;
         totalPackets = receivedData.totalPackets;
@@ -41,5 +41,5 @@ export default DownloadFile = async (dispatch, fileId, localEncrpytionComponent,
     }
 
     // Return one large concatinated buffer
-    return fileBufferArray.concat();
+    return Buffer.concat(fileBlobs);
 }
