@@ -1,1 +1,3 @@
-export default undefined;
+export default readFile = (fileName, base) => {
+  return jest.fn();
+};

@@ -1,5 +1,8 @@
-const RNFS = require('react-native-fs');
+const RNFS = require("react-native-fs");
 
 export default async (fileBlob, fileName) => {
-    await RNFS.writeFile(RNFS.DownloadDirectoryPath + '/' + fileName, fileBlob.toString(), 'base64');
-}
+  await RNFS.writeFile(
+    RNFS.DownloadDirectoryPath + "/" + fileName,
+    fileBlob.toString()
+  );
+};

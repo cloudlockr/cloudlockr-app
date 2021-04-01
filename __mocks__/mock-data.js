@@ -3,6 +3,9 @@ export const {
   fileId,
   fileName,
   fileType,
+  fileUri,
+  phoneReadFileData1,
+  phoneReadFileData2,
   serverFormattedFiles,
   phoneFormattedFiles,
   email,
@@ -22,6 +25,9 @@ export const {
   fileId: 1,
   fileName: "test.png",
   fileType: "image/png",
+  fileUri: "file:/test.png",
+  phoneReadFileData1: "11112222",
+  phoneReadFileData2: "1111222233",
   serverFormattedFiles: [
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
