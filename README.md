@@ -2,12 +2,13 @@
 
 ## Project Overview
 
-CloudLockr is an innovative data storage system, tieing your digital data to a physical location while providing secure remote backup storage. The 7 strong layers of protection CloudLockr offers ensures your data is never compromised or read by anyone else, including us. \\[0.1in]
-This repo contains the Android application code facilitating the CloudLockr device user interface. The codebase features custom bluetooth communication protocols, API integration, file reconstruction, and user management.
+CloudLockr is an innovative data storage system, tieing your digital data to a physical location while providing secure remote backup storage. The 7 strong layers of protection CloudLockr offers ensures your data is never compromised or read by anyone else, including us.
+
+This repo contains the Android application facilitating the CloudLockr device user interface. This codebase features custom bluetooth communication protocols, API integration, file reconstruction, and user management.
 
 #### Demo (note: lower FPS than actual):
 
-![Demo Gif](./.docs/demo.gif)
+<img src="./.docs/demo.gif" width="250">
 
 #### Screenshots
 
@@ -15,7 +16,7 @@ This repo contains the Android application code facilitating the CloudLockr devi
 | :-----------------------------: | :-----------------------------: | :-----------------------------: | :-----------------------------: |
 | ![Screenshot 1](./.docs/s1.png) | ![Screenshot 2](./.docs/s2.png) | ![Screenshot 3](./.docs/s3.png) | ![Screenshot 4](./.docs/s4.png) |
 
-#### Main Technolgies
+#### Main Technologies
 
 - React Native
 - Jest (testing)
