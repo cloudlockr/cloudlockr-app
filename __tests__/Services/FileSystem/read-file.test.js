@@ -46,9 +46,6 @@ describe("ReadFileService unit tests", () => {
 
     let result = await ReadFileService(fileUri);
 
-    console.log(result);
-    console.log(expected);
-
     // Expect the file data to be broken into three parts as the test config specifies a max size of 4 bytes per blob
     expect(result).toStrictEqual(expected);
   });
