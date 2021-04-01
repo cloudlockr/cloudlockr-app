@@ -9,6 +9,10 @@ export const {
   password,
   localEncrpytionComponent,
   fileDownloadMsg,
+  fileDownloadMsgString,
+  bluetoothDevice,
+  charMessage,
+  charMessageJson,
 } = {
   token: {
     tokenType: "1234",
@@ -60,6 +64,15 @@ export const {
     totalPackets: "3",
     fileData: "1234567",
   },
+  fileDownloadMsgString:
+    '{"packetNumber":"1","totalPackets":"3","fileData":"1234567"}\r',
+  bluetoothDevice: {
+    write: (data) => {},
+    read: () => "1",
+    available: () => charMessage.length,
+  },
+  charMessage: ["{", '"', "t", "e", "s", "t", '"', ":", '"', "1", '"', "}"],
+  charMessageJson: { test: "1" },
 };
 
 export const clone = (value) => {

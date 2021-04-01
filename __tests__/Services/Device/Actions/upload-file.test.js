@@ -11,7 +11,7 @@ import {
 jest.mock("../../../../src/Config");
 jest.mock("../../../../src/Services/Device/Communication/BasicRequestHandler");
 import BasicRequestHandler from "../../../../src/Services/Device/Communication/BasicRequestHandler";
-import { Config } from "@/Config";
+import { Config } from "../../../../src/Config";
 
 let testDispatch = jest.fn();
 
