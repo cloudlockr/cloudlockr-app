@@ -1,4 +1,4 @@
-# CloudLockr -- Android App
+# CloudLockr — React Native Android App
 
 ## Project Overview
 
