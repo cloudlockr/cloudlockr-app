@@ -47,7 +47,7 @@ export default async (dispatch, token) => {
     const headers = {
         'Authorization': token.tokenType + ' ' + token.accessToken,
     }
-    const response = await api.get(`/user/files`, {
+    const response = await api.get(`user/files`, {
         headers: headers
     }).catch(err => error = err);
 

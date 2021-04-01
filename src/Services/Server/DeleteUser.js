@@ -14,13 +14,13 @@ export default async (token, dispatch) => {
     // Request data
     var error = undefined;
     const headers = {
-        'authorization': token.tokenType + ' ' + token.accessToken,
+        'Authorization': token.tokenType + ' ' + token.accessToken,
         'refreshToken': token.refreshToken
     }
     await api.delete(`user`, {
         headers: headers
     }).catch(err => error = err);
-    
+
     // Check for errors
     var errorCheck = CheckHandleResponseErrors(error, dispatch);
     if (!errorCheck[0])

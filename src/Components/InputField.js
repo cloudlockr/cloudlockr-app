@@ -13,6 +13,7 @@ const InputField = (props) => {
   const hideInput = props.hideInput !== undefined ? props.hideInput : false;
   const finishEditingCallback = props.finishEditingCallback;
   const enabled = props.enabled !== undefined ? props.enabled : true;
+  const minLength = props.minLength !== undefined ? props.minLength : 0;
 
   // Store field value in Redux store so it can be accessed by other components by fieldId
   const finishEditing = () => {
@@ -25,13 +26,22 @@ const InputField = (props) => {
 
     setFinished(true);
 
-    if (value !== "") {
-      // Return value to parent via callback function
-      finishEditingCallback(value);
-    } else {
+    var isValid = value.length >= minLength;
+
+    if (value.length < minLength) {
+      onChangeText("Requires " + minLength + "+ Characters!");
+      setEdited(false);
+    } else if (value.length === 0) {
       // Restore the placeholders if no data was entered
       onChangeText(placeholder);
       setEdited(false);
+      return;
+    }
+
+    if (finishEditingCallback.length == 2) {
+      finishEditingCallback(value, isValid);
+    } else {
+      finishEditingCallback(value);
     }
   }
 

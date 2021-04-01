@@ -1,7 +1,8 @@
-export default async (fileData, fileName) => {
-    // TODO: need to properly implement in the future
+const RNFS = require("react-native-fs");
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    return '';
-}
+export default async (fileBlob, fileName) => {
+  await RNFS.writeFile(
+    RNFS.DownloadDirectoryPath + "/" + fileName,
+    fileBlob.toString()
+  );
+};
