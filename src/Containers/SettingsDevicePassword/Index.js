@@ -54,7 +54,13 @@ const SettingsDevicePasswordContainer = () => {
             setButtonEnabled(true);
     }
 
-    const passwordCallback = (enteredPassword) => {
+    const passwordCallback = (enteredPassword, isValid) => {
+        if (!isValid) {
+            setButtonEnabled(false);
+            setPassword('');
+            return;
+        }
+
         setPassword(enteredPassword);
         if (accessCode !== '' && currentPassword !== '')
             setButtonEnabled(true);
@@ -77,7 +83,7 @@ const SettingsDevicePasswordContainer = () => {
                     </View>
                     <View style={[Layout.column, Layout.alignItemsCenter, Layout.justifyContentBetween, {height: 180}]}>
                         <InputField placeholder={"current device master password"} hideInput finishEditingCallback={currentPasswordCallback} />
-                        <InputField placeholder={"new device master password"} hideInput finishEditingCallback={passwordCallback} />
+                        <InputField placeholder={"new device master password"} hideInput finishEditingCallback={passwordCallback} minLength={4} />
                         <InputField placeholder={"displayed device access code"} finishEditingCallback={accessCodeCallback} />
                     </View>
                 </View>
