@@ -12,7 +12,7 @@ describe("SetPasswordService unit tests", () => {
   let currentPassword = "currentPassword";
 
   let expectedRequest = {
-    messageType: 7,
+    type: 7,
     password: newPassword,
   };
 

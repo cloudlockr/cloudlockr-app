@@ -1,9 +1,9 @@
-import BasicRequestHandler from '../Communication/BasicRequestHandler';
+import BasicRequestHandler from "../Communication/BasicRequestHandler";
 
 export default async () => {
-    const requestMessage = {
-        "messageType": 1
-    };
+  const requestMessage = {
+    type: 1,
+  };
 
-    await BasicRequestHandler(requestMessage);
-}
+  await BasicRequestHandler(requestMessage);
+};

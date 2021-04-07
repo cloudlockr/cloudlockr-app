@@ -9,7 +9,7 @@ describe("ValidateDeviceAccessService unit tests", () => {
   let hexCode = "hexCode";
 
   let expectedRequest = {
-    messageType: 2,
+    type: 2,
     password: devicePassword,
     hex: hexCode,
   };

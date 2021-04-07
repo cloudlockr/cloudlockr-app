@@ -1,11 +1,11 @@
-import BasicRequestHandler from '../Communication/BasicRequestHandler';
+import BasicRequestHandler from "../Communication/BasicRequestHandler";
 
 export default async (hexCode, devicePassword) => {
-    const requestMessage = {
-        "messageType": 2,
-        "password": devicePassword,
-        "hex": hexCode
-    };
+  const requestMessage = {
+    type: 2,
+    password: devicePassword,
+    hex: hexCode,
+  };
 
-    await BasicRequestHandler(requestMessage);
-}
+  await BasicRequestHandler(requestMessage);
+};

@@ -6,7 +6,7 @@ import BasicRequestHandler from "../../../../src/Services/Device/Communication/B
 
 describe("GenerateHexCodeService unit tests", () => {
   let expectedRequest = {
-    messageType: 1,
+    type: 1,
   };
 
   it("successfully makes request", async () => {
