@@ -1,16 +1,13 @@
 import { Config } from "@/Config";
+import { SendFragment } from "@/Services/Device/Communication/SendData";
 
-// Fake data that covers all possible response message fields
-// TODO: could make this more advanced, giving proper responses to given inputs
+// Mock data that covers all possible response message fields
 const fakeData = {
   status: 1,
-
   localEncryptionComponent: "qwefgasdasip",
-
   packetNumber: 1,
   totalPackets: 10,
   fileData: "asdasdasjkdhnaskjdnas",
-
   networks: ["network1", "NETwork2", "netWORK8"],
 };
 
@@ -21,36 +18,39 @@ const readData = async (bluetoothDevice, available) => {
     data.push(await bluetoothDevice.read());
   }
 
-  // TODO: will likely have to do other processing on the data, espeically if we are recieving bytes as we expect normal text right now.
-  //       may also be in BASE-64 right now, so that may need to be parsed too. Have to see when we have real data to test with.
-  return JSON.parse(data.join(""));
+  return data.join("");
 };
 
-const checkForData = async (bluetoothDevice, secElapsed) => {
+const receiveFragment = async (bluetoothDevice) => {
+  var secElapsed = 0;
+
   try {
-    // Check if data is available and read if so
-    var available = await bluetoothDevice.available();
+    while (secElapsed < Config.device.connectionTimeout) {
+      // Check if data is available and read if so
+      var available = await bluetoothDevice.available();
 
-    if (available > 0) {
-      return await readData(bluetoothDevice, available);
+      if (available > 0) {
+        var data = await readData(bluetoothDevice, available);
+
+        // Send fragment confirmation to DE1 and return data
+        await SendFragment(
+          bluetoothDevice,
+          '{"status":2}' + Config.device.fragment.endOfAllFragments
+        );
+        return data;
+      }
+
+      // Wait before checking again to prevent unneeded busy looping
+      await new Promise((resolve) =>
+        setTimeout(resolve, Config.device.refreshRate * 1000)
+      );
+      secElapsed += Config.device.refreshRate;
     }
-
-    // Timeout if applicable
-    if (
-      secElapsed + Config.device.refreshRate >=
-      Config.device.connectionTimeout
-    )
-      throw "Device connection timeout. Waited too long for device response message.";
-
-    // Wait before checking again to prevent unneeded busy looping
-    setTimeout(
-      () =>
-        checkForData(bluetoothDevice, secElapsed + Config.device.refreshRate),
-      Config.device.refreshRate * 1000
-    );
   } catch (err) {
     throw err.toString();
   }
+
+  throw "Device connection timeout. Waited too long for fragment.";
 };
 
 // Poll for data, timeout if waiting too long
@@ -61,5 +61,23 @@ export default RecieveData = async (bluetoothDevice) => {
     return fakeData;
   }
 
-  return checkForData(bluetoothDevice, 0);
+  var fragments = [];
+
+  // Collect all of the reponse fragments
+  while (true) {
+    var newFragment = await receiveFragment(bluetoothDevice);
+    fragments.push(newFragment.slice(0, newFragment.length - 2));
+
+    var fragmentEnding = newFragment.slice(-2);
+    if (
+      fragmentEnding !== Config.device.fragment.endOfFragment &&
+      fragmentEnding !== Config.device.fragment.endOfAllFragments
+    )
+      throw "Device Error. Invalid fragment formatting.";
+
+    if (fragmentEnding === Config.device.fragment.endOfAllFragments) break;
+  }
+
+  // Return the reassambled JSON object
+  return JSON.parse(fragments.join(""));
 };

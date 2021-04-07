@@ -18,9 +18,15 @@ export default async () => {
     }
 
     // Try connecting to the device
+    var connected;
     try {
-        return await bondedDevice.connect();
+        connected = await bondedDevice.connect();
     } catch (err) {
         throw err.toString();
     }
+
+    if (connected)
+        return bondedDevice;
+    else
+        throw "Could not connect to device";
 }

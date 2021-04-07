@@ -1,4 +1,4 @@
-import SendData from "./SendData";
+import { SendData } from "./SendData";
 import ReceiveData from "./ReceiveData";
 import ConnectToDevice from "../Connection/ConnectToDevice";
 

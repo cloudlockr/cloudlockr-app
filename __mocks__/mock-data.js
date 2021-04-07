@@ -15,6 +15,7 @@ export const {
   fileDownloadMsgString,
   bluetoothDevice,
   charMessage,
+  charMessageBroken,
   charMessageJson,
 } = {
   token: {
@@ -77,8 +78,12 @@ export const {
     read: () => "1",
     available: () => charMessage.length,
   },
-  charMessage: ["{", '"', "t", "e", "s", "t", '"', ":", '"', "1", '"', "}"],
-  charMessageJson: { test: "1" },
+  charMessage: ["{", '"', "t", '"', ":", '"', "1", '"', "}", "\r", "\0"],
+  charMessageBroken: [
+    ["{", '"', "t", "\r", "\n"],
+    ['"', ":", '"', "1", '"', "}", "\r", "\0"],
+  ],
+  charMessageJson: { t: "1" },
 };
 
 export const clone = (value) => {
