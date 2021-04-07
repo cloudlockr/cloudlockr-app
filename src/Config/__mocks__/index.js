@@ -12,7 +12,7 @@ export const Config = {
     fragment: {
       dataLength: 14,
       endOfFragment: "\r\n",
-      endOfAllFragments: "\r\0",
+      endOfAllFragments: "\v\n",
     },
     expectedBluetoothName: "DE1_DEVICE", // Expected discoverable device name
     connectionTimeout: 1, // Max # of seconds to wait for response data

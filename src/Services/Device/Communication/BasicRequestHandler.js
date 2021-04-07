@@ -2,12 +2,15 @@ import { SendData } from "./SendData";
 import ReceiveData from "./ReceiveData";
 import ConnectToDevice from "../Connection/ConnectToDevice";
 
-export default BasicRequestHandler = async (requestMessage) => {
+export default BasicRequestHandler = async (
+  requestMessage,
+  shouldAck = false
+) => {
   const device = await ConnectToDevice();
 
   await SendData(device, requestMessage);
 
-  const response = await ReceiveData(device);
+  const response = await ReceiveData(device, shouldAck);
 
   if (
     response === undefined ||

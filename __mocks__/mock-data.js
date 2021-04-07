@@ -78,10 +78,10 @@ export const {
     read: () => "1",
     available: () => charMessage.length,
   },
-  charMessage: ["{", '"', "t", '"', ":", '"', "1", '"', "}", "\r", "\0"],
+  charMessage: ["{", '"', "t", '"', ":", '"', "1", '"', "}", "\v", "\n"],
   charMessageBroken: [
     ["{", '"', "t", "\r", "\n"],
-    ['"', ":", '"', "1", '"', "}", "\r", "\0"],
+    ['"', ":", '"', "1", '"', "}", "\v", "\n"],
   ],
   charMessageJson: { t: "1" },
 };

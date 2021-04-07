@@ -31,7 +31,7 @@ describe("ReceiveData unit tests", () => {
       return charMessage[curIdx];
     };
 
-    let result = await ReceiveData(device);
+    let result = await ReceiveData(device, false);
 
     expect(curIdx).toBe(charMessage.length - 1);
     expect(result).toStrictEqual(charMessageJson);
@@ -57,7 +57,7 @@ describe("ReceiveData unit tests", () => {
       return charMessageBroken[curFragment].length;
     };
 
-    let result = await ReceiveData(device);
+    let result = await ReceiveData(device, true);
 
     expect(curFragment).toBe(2);
     expect(curIdx).toBe(0);

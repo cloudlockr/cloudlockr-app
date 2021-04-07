@@ -44,7 +44,7 @@ export default DownloadFile = async (
       })
     );
 
-    var receivedData = await BasicRequestHandler(requestMessage);
+    var receivedData = await BasicRequestHandler(requestMessage, true);
     if (Config.mocking.deviceConnection)
       receivedData = mockReceivedData(receivedData);
 

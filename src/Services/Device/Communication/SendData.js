@@ -2,7 +2,7 @@ import { Config } from "@/Config";
 import RecieveData from "@/Services/Device/Communication/ReceiveData";
 
 const waitForAck = async (bleutoothDevice) => {
-  const ack = await RecieveData(bleutoothDevice);
+  const ack = await RecieveData(bleutoothDevice, false);
   return ack.status !== undefined && ack.status === 2;
 };
 

@@ -21,7 +21,7 @@ const readData = async (bluetoothDevice, available) => {
   return data.join("");
 };
 
-const receiveFragment = async (bluetoothDevice) => {
+const receiveFragment = async (bluetoothDevice, shouldAck) => {
   var secElapsed = 0;
 
   try {
@@ -33,10 +33,12 @@ const receiveFragment = async (bluetoothDevice) => {
         var data = await readData(bluetoothDevice, available);
 
         // Send fragment confirmation to DE1 and return data
-        await SendFragment(
-          bluetoothDevice,
-          '{"status":2}' + Config.device.fragment.endOfAllFragments
-        );
+        if (shouldAck)
+          await SendFragment(
+            bluetoothDevice,
+            '{"status":2}' + Config.device.fragment.endOfAllFragments
+          );
+
         return data;
       }
 
@@ -54,7 +56,7 @@ const receiveFragment = async (bluetoothDevice) => {
 };
 
 // Poll for data, timeout if waiting too long
-export default RecieveData = async (bluetoothDevice) => {
+export default RecieveData = async (bluetoothDevice, shouldAck = false) => {
   // Mock data (if selected)
   if (Config.mocking.deviceConnection) {
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -65,7 +67,7 @@ export default RecieveData = async (bluetoothDevice) => {
 
   // Collect all of the reponse fragments
   while (true) {
-    var newFragment = await receiveFragment(bluetoothDevice);
+    var newFragment = await receiveFragment(bluetoothDevice, shouldAck);
     fragments.push(newFragment.slice(0, newFragment.length - 2));
 
     var fragmentEnding = newFragment.slice(-2);
@@ -77,6 +79,8 @@ export default RecieveData = async (bluetoothDevice) => {
 
     if (fragmentEnding === Config.device.fragment.endOfAllFragments) break;
   }
+
+  console.log(JSON.stringify(fragments));
 
   // Return the reassambled JSON object
   return JSON.parse(fragments.join(""));
