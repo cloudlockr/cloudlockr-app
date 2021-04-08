@@ -6,7 +6,7 @@ CloudLockr is an innovative data storage system, tieing your digital data to a p
 
 This repo contains the Android application facilitating the CloudLockr device user interface. This codebase features custom bluetooth communication protocols, API integration, file reconstruction, and user management.
 
-#### Demo (note: lower FPS than actual):
+#### Demo (note: lower visual quality and FPS than actual):
 
 <img src="./.docs/demo.gif" width="250">
 
