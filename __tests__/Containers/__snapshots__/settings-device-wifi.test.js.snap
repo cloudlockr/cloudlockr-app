@@ -207,7 +207,7 @@ exports[`renders and matches snapshot 1`] = `
           ]
         }
       >
-        MyDevice — Wifi
+        Set Wifi Connection
       </Text>
     </View>
   </View>
@@ -376,7 +376,7 @@ exports[`renders and matches snapshot 1`] = `
             ]
           }
         >
-          enter password for:
+          Enter password for:
         </Text>
         <Text
           style={
@@ -452,7 +452,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
               underlineColorAndroid="transparent"
-              value="network password (if required)"
+              value="Network password (optional)"
             />
           </View>
         </View>
@@ -525,7 +525,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
             >
-              connect device to network
+              Connect device
             </Text>
           </View>
         </View>

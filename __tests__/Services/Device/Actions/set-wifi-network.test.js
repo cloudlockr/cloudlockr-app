@@ -9,7 +9,7 @@ describe("SetWifiNetworkService unit tests", () => {
   let networkPassword = "networkPassord";
 
   let expectedRequest = {
-    messageType: 6,
+    type: 6,
     networkName: networkName,
     networkPassword: networkPassword,
   };

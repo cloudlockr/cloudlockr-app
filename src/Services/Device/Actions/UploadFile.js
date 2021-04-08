@@ -14,7 +14,7 @@ export default UploadFile = async (
   var totalPackets = fileDataBlobArray.length;
 
   var requestMessage = {
-    messageType: 3,
+    type: 3,
     email: userEmail,
     fileId: fileId,
     totalPackets: totalPackets,

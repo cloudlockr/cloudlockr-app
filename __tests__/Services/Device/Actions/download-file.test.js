@@ -25,7 +25,7 @@ describe("DownloadFileService unit tests", () => {
     BasicRequestHandler.mockImplementation(async (message) => {
       if (requestNum === 1) {
         expect(message).toStrictEqual({
-          messageType: 4,
+          type: 4,
           localEncryptionComponent: localEncrpytionComponent,
           email: email,
           fileId: fileId,

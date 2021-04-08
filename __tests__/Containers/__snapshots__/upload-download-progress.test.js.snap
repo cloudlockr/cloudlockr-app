@@ -91,7 +91,7 @@ exports[`renders and matches snapshot 1`] = `
           ]
         }
       >
-        uploading
+        Uploading
          
       </Text>
       <Text
@@ -259,7 +259,7 @@ exports[`renders and matches snapshot 1`] = `
             ]
           }
         >
-          contiune
+          Contiune
         </Text>
       </View>
     </View>

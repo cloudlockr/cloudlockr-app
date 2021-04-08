@@ -275,7 +275,7 @@ exports[`renders and matches snapshot 1`] = `
             }
           }
         >
-          hello,
+          Hello,
         </Text>
         <Text
           style={
@@ -411,7 +411,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
             >
-              device password settings
+              Device password settings
             </Text>
           </View>
         </View>
@@ -478,7 +478,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
             >
-              device wifi settings
+              Device wifi settings
             </Text>
           </View>
         </View>
@@ -574,7 +574,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
             >
-              log out
+              Log out
             </Text>
           </View>
         </View>
@@ -670,7 +670,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
             >
-              delete account
+              Delete account
             </Text>
           </View>
         </View>

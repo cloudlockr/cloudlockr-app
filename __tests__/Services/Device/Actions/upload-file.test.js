@@ -25,7 +25,7 @@ describe("UploadFileService unit tests", () => {
     let requestNum = 1;
     BasicRequestHandler.mockImplementation(async (message) => {
       expect(message).toStrictEqual({
-        messageType: 3,
+        type: 3,
         email: email,
         fileId: fileId,
         totalPackets: Number(clone(fileDownloadMsg).totalPackets),
@@ -103,7 +103,7 @@ describe("UploadFileService unit tests", () => {
       }
 
       expect(message).toStrictEqual({
-        messageType: 3,
+        type: 3,
         email: email,
         fileId: fileId,
         totalPackets: Number(clone(fileDownloadMsg).totalPackets),

@@ -22,7 +22,7 @@ export default DownloadFile = async (
   totalPackets = 0;
 
   var requestMessage = {
-    messageType: 4,
+    type: 4,
     localEncryptionComponent: localEncrpytionComponent,
     email: userEmail,
     fileId: fileId,
@@ -44,7 +44,7 @@ export default DownloadFile = async (
       })
     );
 
-    var receivedData = await BasicRequestHandler(requestMessage);
+    var receivedData = await BasicRequestHandler(requestMessage, true);
     if (Config.mocking.deviceConnection)
       receivedData = mockReceivedData(receivedData);
 

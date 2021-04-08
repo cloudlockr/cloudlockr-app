@@ -1,11 +1,11 @@
-import BasicRequestHandler from '../Communication/BasicRequestHandler';
+import BasicRequestHandler from "../Communication/BasicRequestHandler";
 
 export default async (networkName, networkPassword) => {
-    const requestMessage = {
-        "messageType": 6,
-        "networkName": networkName,
-        "networkPassword": networkPassword
-    };
+  const requestMessage = {
+    type: 6,
+    networkName: networkName,
+    networkPassword: networkPassword,
+  };
 
-    await BasicRequestHandler(requestMessage);
-}
+  await BasicRequestHandler(requestMessage);
+};

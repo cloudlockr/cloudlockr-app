@@ -6,7 +6,7 @@ import BasicRequestHandler from "../../../../src/Services/Device/Communication/B
 
 describe("GetWifiNetworksService unit tests", () => {
   let expectedRequest = {
-    messageType: 5,
+    type: 5,
   };
 
   it("successfully makes request and returns transformed data", async () => {

@@ -6,7 +6,7 @@ jest.mock("../../../../src/Services/Device/Communication/ReceiveData");
 jest.mock("../../../../src/Services/Device/Connection/ConnectToDevice");
 import ConnectToDevice from "../../../../src/Services/Device/Connection/ConnectToDevice";
 import ReceiveData from "../../../../src/Services/Device/Communication/ReceiveData";
-import SendData from "../../../../src/Services/Device/Communication/SendData";
+import { SendData } from "../../../../src/Services/Device/Communication/SendData";
 
 describe("BasicRequestHandler unit tests", () => {
   const requestMessage = { messageType: 1 };
