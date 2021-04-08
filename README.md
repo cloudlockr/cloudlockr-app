@@ -49,3 +49,28 @@ This repo contains the Android application facilitating the CloudLockr device us
 #### Running Tests
 
 Execute `yarn test` to run the entire test suite (UI and service logic tests). Verbose results are enabled by default for result clarity.
+
+---
+
+## Technical Details
+
+#### Directory Structure
+
+Note that throughout the project `@/` is used in import statements and translates to `src` (to enhance code readability). Also note that `index.js` files are used throughout the project to simplify imports and provide a defined interface to a given directory. The general concept of the directory structure is to seperate logic from UI components, enhancing testability and modularity.
+
+- `__tests__` (Jest unit/integration/UI tests)
+- `src` (source code)
+  - `Assets` (resources used throughout code. Assets are imported in `Theme` and usable through there. Do not import assets directly from here in the UI)
+  - `Components`
+  - `Config` (constant application variables)
+  - `Containers` (top level containers for UI views)
+  - `Modals` (special containers for pop-up modals views)
+  - `Navigators` (app view navigation handling)
+  - `Services` (complex logic, any computations)
+    - `Device` (services related to device interaction)
+    - `FileSystem` (services related to local phone file system or file manipulation)
+    - `FileTransfer` (top-level services that faciliate complex file transfer processes)
+    - `Server` (services related to server interaction)
+    - Note that these files throw errors that the UI must catch (and show to the user if applicable)
+  - `Store` (Redux interaction, further broken up by Redux slice indicated by each sub-directory)
+  - `Theme` (options effecting style, including assets, fonts, and colours. Import `useTheme()` method in UI to access theme data)

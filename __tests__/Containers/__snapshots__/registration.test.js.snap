@@ -223,7 +223,7 @@ exports[`renders and matches snapshot 1`] = `
             ]
           }
         >
-          enter your details
+          Enter your details
         </Text>
       </View>
       <View
@@ -317,7 +317,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
               underlineColorAndroid="transparent"
-              value="email"
+              value="Email"
             />
           </View>
         </View>
@@ -413,7 +413,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
               underlineColorAndroid="transparent"
-              value="password"
+              value="Password"
             />
           </View>
         </View>
@@ -509,7 +509,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
               underlineColorAndroid="transparent"
-              value="re-enter password"
+              value="Re-enter password"
             />
           </View>
         </View>
@@ -573,7 +573,7 @@ exports[`renders and matches snapshot 1`] = `
                 ]
               }
             >
-              register
+              Register
             </Text>
           </View>
         </View>

@@ -296,7 +296,7 @@ exports[`renders and matches snapshot 1`] = `
               ]
             }
           >
-            continue
+            Continue
           </Text>
         </View>
       </View>
