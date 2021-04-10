@@ -207,7 +207,7 @@ exports[`renders and matches snapshot 1`] = `
           ]
         }
       >
-        Set Wifi Connection
+        Setup Wifi
       </Text>
     </View>
   </View>

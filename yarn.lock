@@ -6192,6 +6192,11 @@ react-native-fs@^2.16.6:
     base-64 "^0.1.0"
     utf8 "^3.0.0"
 
+react-native-geolocation-service@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-geolocation-service/-/react-native-geolocation-service-5.2.0.tgz#eeb1c70cf842e612d68bc3d8706c0fdd917efaf5"
+  integrity sha512-ai7xd6QbLl6WMyEbPfXSaXyYQ/L6CDcPjOZAJYboqwNPclAqxGkzJHJQyvBNy9J410EIrDJg0p9KyaciXmxyCw==
+
 react-native-gesture-handler@^1.8.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.9.0.tgz#e441b1c0277c3fd4ca3e5c58fdd681e2f0ceddf0"

@@ -25,7 +25,7 @@ This repo contains the Android application facilitating the CloudLockr device us
 - react-native-bluetooth-classic (bluetooth communication)
 - react-native-fs (file system interaction)
 - react-navigation (view navigation)
-- react-native-geolocation (device location)
+- react-native-geolocation-service (device location)
 
 ---
 
@@ -76,3 +76,8 @@ Note that throughout the project `@/` is used in import statements and translate
     - Note that these files throw errors that the UI must catch (and show to the user if applicable)
   - `Store` (Redux interaction, further broken up by Redux slice indicated by each sub-directory)
   - `Theme` (options effecting style, including assets, fonts, and colours. Import `useTheme()` method in UI to access theme data)
+
+#### Other Details
+
+- Conventional Commits
+  - This project follows the commit message style of "Conventional Commits" (conventionalcommits.org). All commits should conform to the standard specification.

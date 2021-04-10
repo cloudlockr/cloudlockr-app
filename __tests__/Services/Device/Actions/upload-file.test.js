@@ -5,6 +5,7 @@ import {
   email,
   fileDownloadMsg,
   clone,
+  location,
 } from "../../../../__mocks__/mock-data";
 
 // Mock request handler and config
@@ -31,6 +32,7 @@ describe("UploadFileService unit tests", () => {
         totalPackets: Number(clone(fileDownloadMsg).totalPackets),
         packetNumber: requestNum,
         fileData: Buffer(fileDownloadMsg.fileData, "base64").toString(),
+        location: location,
       });
 
       requestNum++;
@@ -49,7 +51,8 @@ describe("UploadFileService unit tests", () => {
         Buffer(fileDownloadMsg.fileData, "base64"),
         Buffer(fileDownloadMsg.fileData, "base64"),
       ],
-      email
+      email,
+      location
     );
 
     expect(requestNum).toBe(Number(fileDownloadMsg.totalPackets) + 1);
@@ -81,7 +84,8 @@ describe("UploadFileService unit tests", () => {
           Buffer(fileDownloadMsg.fileData, "base64"),
           Buffer(fileDownloadMsg.fileData, "base64"),
         ],
-        email
+        email,
+        location
       );
 
       // Should have failed by now
@@ -109,6 +113,7 @@ describe("UploadFileService unit tests", () => {
         totalPackets: Number(clone(fileDownloadMsg).totalPackets),
         packetNumber: requestNum - 1,
         fileData: Buffer(fileDownloadMsg.fileData, "base64").toString(),
+        location: location,
       });
 
       requestNum++;
@@ -127,7 +132,8 @@ describe("UploadFileService unit tests", () => {
         Buffer(fileDownloadMsg.fileData, "base64"),
         Buffer(fileDownloadMsg.fileData, "base64"),
       ],
-      email
+      email,
+      location
     );
 
     expect(requestNum).toBe(Number(fileDownloadMsg.totalPackets) + 2);
@@ -162,7 +168,8 @@ describe("UploadFileService unit tests", () => {
           Buffer(fileDownloadMsg.fileData, "base64"),
           Buffer(fileDownloadMsg.fileData, "base64"),
         ],
-        email
+        email,
+        location
       );
 
       // Should have failed by now

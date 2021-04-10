@@ -16,7 +16,8 @@ export default DownloadFile = async (
   dispatch,
   fileId,
   localEncrpytionComponent,
-  userEmail
+  userEmail,
+  location
 ) => {
   packetsReceived = 0;
   totalPackets = 0;
@@ -26,6 +27,7 @@ export default DownloadFile = async (
     localEncryptionComponent: localEncrpytionComponent,
     email: userEmail,
     fileId: fileId,
+    location: location,
   };
 
   var fileBlobs = [];

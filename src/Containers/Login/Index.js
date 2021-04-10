@@ -32,10 +32,19 @@ const LoginContainer = () => {
       var readPermission = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
       );
-      var locationPermission = await PermissionsAndroid.check(
+      var fineLocationPermission = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
       );
-      if (writePermission && readPermission && locationPermission) return;
+      var coarseLocationPermission = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION
+      );
+      if (
+        writePermission &&
+        readPermission &&
+        fineLocationPermission &&
+        coarseLocationPermission
+      )
+        return;
 
       requestAlert();
     } catch (err) {
@@ -49,6 +58,7 @@ const LoginContainer = () => {
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
       ]);
 
       if (
@@ -57,6 +67,8 @@ const LoginContainer = () => {
         permissionsGranted["android.permission.READ_EXTERNAL_STORAGE"] !==
           PermissionsAndroid.RESULTS.GRANTED ||
         permissionsGranted["android.permission.ACCESS_FINE_LOCATION"] !==
+          PermissionsAndroid.RESULTS.GRANTED ||
+        permissionsGranted["android.permission.ACCESS_COARSE_LOCATION"] !==
           PermissionsAndroid.RESULTS.GRANTED
       ) {
         if (
@@ -65,6 +77,8 @@ const LoginContainer = () => {
           permissionsGranted["android.permission.READ_EXTERNAL_STORAGE"] ===
             PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
           permissionsGranted["android.permission.ACCESS_FINE_LOCATION"] ===
+            PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
+          permissionsGranted["android.permission.ACCESS_COARSE_LOCATION"] ===
             PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
         ) {
           Alert.alert(

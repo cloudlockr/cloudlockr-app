@@ -2,6 +2,7 @@ import SetUploadDownloadProgress from "@/Store/FileTransfer/SetUploadDownloadPro
 import { PostNewFileService, DeleteUserFileService } from "@/Services/Server";
 import { ReadFileService } from "@/Services/FileSystem";
 import { UploadFileService } from "@/Services/Device";
+import { GetLocationSerivce } from "@/Services/External";
 
 export default async (
   dispatch,
@@ -14,6 +15,9 @@ export default async (
   var fileId = undefined;
 
   try {
+    // Get the user's current location
+    const location = await GetLocationSerivce();
+
     // Obtain file from filesystem
     dispatch(
       SetUploadDownloadProgress.action({
@@ -45,7 +49,13 @@ export default async (
         indeterminate: true,
       })
     );
-    await UploadFileService(dispatch, fileId, fileDataBlobArray, userEmail);
+    await UploadFileService(
+      dispatch,
+      fileId,
+      fileDataBlobArray,
+      userEmail,
+      location
+    );
 
     dispatch(
       SetUploadDownloadProgress.action({
@@ -65,8 +75,6 @@ export default async (
         indeterminate: false,
       })
     );
-
-    console.log(err);
 
     // Remove file if it has been created in the db
     if (fileId !== undefined) {
