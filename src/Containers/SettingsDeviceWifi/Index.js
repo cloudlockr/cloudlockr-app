@@ -50,7 +50,7 @@ const SettingsDeviceWifiContainer = () => {
         textStyle={{ color: Colors.white }}
       />
       <BasicHeader
-        title={"Set Wifi Connection"}
+        title={"Setup Wifi"}
         previousView={"SettingsDeviceConnection"}
       />
       <View style={[Layout.fill, Layout.justifyContentBetween]}>

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import ErrorAlert from "./ErrorAlert";
 import { useTheme } from "@/Theme";
-import { GetWifiNetworksService } from "@/Services/Device";
+import { GetWifiNetworksService } from "@/Services/External";
 
 const WifiList = (props) => {
   const { Layout, Gutters, Fonts, Common } = useTheme();
@@ -27,7 +27,7 @@ const WifiList = (props) => {
   const getData = async () => {
     setRefreshing(true);
 
-    var returnedNetworks = [];
+    var returnedNetworks;
     try {
       returnedNetworks = await GetWifiNetworksService();
     } catch (err) {
@@ -43,7 +43,7 @@ const WifiList = (props) => {
       onPress={onPress}
       style={[
         [Gutters.largeHPadding, Gutters.regularVPadding, Gutters.tinyxlBMargin],
-        selectedName == item.name
+        selectedName == item.SSID
           ? [Common.backgroundDarkGrey]
           : [Common.backgroundLightGrey],
       ]}
@@ -51,7 +51,7 @@ const WifiList = (props) => {
       <View
         style={[Layout.row, Layout.rowHCenter, Layout.justifyContentBetween]}
       >
-        <Text style={Fonts.listFileName}>{item.name}</Text>
+        <Text style={Fonts.listFileName}>{item.SSID}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -61,8 +61,8 @@ const WifiList = (props) => {
       <Item
         item={item}
         onPress={() => {
-          clickCallback(item.name);
-          setSelectedName(item.name);
+          clickCallback(item.SSID);
+          setSelectedName(item.SSID);
         }}
       />
     );
@@ -74,7 +74,7 @@ const WifiList = (props) => {
       <FlatList
         data={dataSource}
         renderItem={renderItem}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.SSID}
         enableEmptySections={true}
         persistentScrollbar={true}
         refreshControl={

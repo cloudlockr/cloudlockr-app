@@ -37,8 +37,8 @@ const DashboardContainer = () => {
     // Remind the user about setting the device password if its their first time seeing it
     if (showDeviceWarning) {
       Alert.alert(
-        "Reminder: Set Your Device Password",
-        "Your device password must be set every time you power on your device after it has been powered off. If you do not set the password, any uploaded data will be unrecoverable and downloading any existing data will result in invalid files.",
+        "Reminder: Set Your Device Password & Wifi Network",
+        "Your device password and wifi network must be set every time you power on your device after it has been powered off. If you do not set the password, any uploaded data will be unrecoverable and downloading any existing data will result in invalid files. Further, you cannot transmit data if your device is not connected to the internet.",
         [
           {
             text: "Okay",

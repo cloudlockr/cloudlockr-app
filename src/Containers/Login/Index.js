@@ -32,7 +32,10 @@ const LoginContainer = () => {
       var readPermission = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
       );
-      if (writePermission && readPermission) return;
+      var locationPermission = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+      );
+      if (writePermission && readPermission && locationPermission) return;
 
       requestAlert();
     } catch (err) {
@@ -45,23 +48,27 @@ const LoginContainer = () => {
       const permissionsGranted = await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       ]);
-      console.log(permissionsGranted);
 
       if (
         permissionsGranted["android.permission.WRITE_EXTERNAL_STORAGE"] !==
           PermissionsAndroid.RESULTS.GRANTED ||
         permissionsGranted["android.permission.READ_EXTERNAL_STORAGE"] !==
+          PermissionsAndroid.RESULTS.GRANTED ||
+        permissionsGranted["android.permission.ACCESS_FINE_LOCATION"] !==
           PermissionsAndroid.RESULTS.GRANTED
       ) {
         if (
           permissionsGranted["android.permission.WRITE_EXTERNAL_STORAGE"] ===
             PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
           permissionsGranted["android.permission.READ_EXTERNAL_STORAGE"] ===
+            PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN ||
+          permissionsGranted["android.permission.ACCESS_FINE_LOCATION"] ===
             PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN
         ) {
           Alert.alert(
-            "Device data permissions are required to use CloudLockr",
+            "Device data and location permissions are required",
             "You selected to never ask permissions again. Without device data access permission, CloudLockr's main functionality of data upload and download is not possible. " +
               "Please allow this permission in your phone's settings.",
             [{ text: "Okay" }],
@@ -79,7 +86,7 @@ const LoginContainer = () => {
 
   const requestAlert = () => {
     Alert.alert(
-      "Device data permissions are required to use CloudLockr",
+      "Device data and location permissions are required",
       "Data upload and download require CloudLockr to access your phone's storage",
       [{ text: "Okay", onPress: requestPermissions }],
       { cancelable: false }

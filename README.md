@@ -25,6 +25,7 @@ This repo contains the Android application facilitating the CloudLockr device us
 - react-native-bluetooth-classic (bluetooth communication)
 - react-native-fs (file system interaction)
 - react-navigation (view navigation)
+- react-native-geolocation (device location)
 
 ---
 
@@ -68,6 +69,7 @@ Note that throughout the project `@/` is used in import statements and translate
   - `Navigators` (app view navigation handling)
   - `Services` (complex logic, any computations)
     - `Device` (services related to device interaction)
+    - `External` (services using other external phone APIs)
     - `FileSystem` (services related to local phone file system or file manipulation)
     - `FileTransfer` (top-level services that faciliate complex file transfer processes)
     - `Server` (services related to server interaction)
