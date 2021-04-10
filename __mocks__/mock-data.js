@@ -20,6 +20,9 @@ export const {
   charMessageJson,
   allNetworks,
   allValidNetworks,
+  bondedDevices,
+  bondedDevicesNoDE1,
+  bondedDevice,
 } = {
   token: {
     tokenType: "1234",
@@ -124,6 +127,16 @@ export const {
       SSID: "valid2",
     },
   ],
+  bondedDevices: [
+    { name: "device1" },
+    { name: "device2" },
+    { name: "DE1_DEVICE" },
+  ],
+  bondedDevicesNoDE1: [{ name: "device1" }, { name: "device2" }],
+  bondedDevice: {
+    name: "DE1_DEVICE",
+    connect: jest.fn(() => true),
+  },
 };
 
 export const clone = (value) => {
