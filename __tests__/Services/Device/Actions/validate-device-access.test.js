@@ -16,7 +16,9 @@ describe("ValidateDeviceAccessService unit tests", () => {
 
   it("successfully makes request", async () => {
     BasicRequestHandler.mockImplementation(async (request) => {
-      expect(request).toStrictEqual(expectedRequest);
+      expect(JSON.stringify(request)).toStrictEqual(
+        JSON.stringify(expectedRequest)
+      );
     });
 
     await ValidateDeviceAccessService(hexCode, devicePassword);

@@ -9,17 +9,17 @@ export default UploadFile = async (
   dispatch,
   fileId,
   fileDataBlobArray,
-  userEmail,
   location
 ) => {
   var totalPackets = fileDataBlobArray.length;
 
   var requestMessage = {
     type: 3,
-    email: userEmail,
     fileId: fileId,
+    packetNumber: undefined,
     totalPackets: totalPackets,
     location: location,
+    fileData: undefined,
   };
 
   var curPacketNum = 1;

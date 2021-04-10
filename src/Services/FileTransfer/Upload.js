@@ -4,14 +4,7 @@ import { ReadFileService } from "@/Services/FileSystem";
 import { UploadFileService } from "@/Services/Device";
 import { GetLocationSerivce } from "@/Services/External";
 
-export default async (
-  dispatch,
-  fileUri,
-  fileName,
-  fileType,
-  token,
-  userEmail
-) => {
+export default async (dispatch, fileUri, fileName, fileType, token) => {
   var fileId = undefined;
 
   try {
@@ -49,13 +42,7 @@ export default async (
         indeterminate: true,
       })
     );
-    await UploadFileService(
-      dispatch,
-      fileId,
-      fileDataBlobArray,
-      userEmail,
-      location
-    );
+    await UploadFileService(dispatch, fileId, fileDataBlobArray, location);
 
     dispatch(
       SetUploadDownloadProgress.action({
