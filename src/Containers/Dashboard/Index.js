@@ -112,7 +112,13 @@ const DashboardContainer = () => {
       // Confirm access code with device
       setSpinnerMessage("validating device access");
       setSpinnerVisible(true);
-      await ValidateDeviceAccessService(accessCode, password);
+      try {
+        await ValidateDeviceAccessService(accessCode, password);
+      } catch (err) {
+        if (err.includes("recieved by device, but failed"))
+          throw "Invalid access code / password";
+        else throw err;
+      }
 
       // Execute actual request
       if (requestName === "delete") {
@@ -144,6 +150,10 @@ const DashboardContainer = () => {
         navigate("UploadDownloadProgress", {});
       }
     } catch (err) {
+      // Close the modals
+      downloadRBSheet.current.close();
+      uploadRBSheet.current.close();
+
       // Show toast for any errors
       setSpinnerVisible(false);
       showToast(false, err);
