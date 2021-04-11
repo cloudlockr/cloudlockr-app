@@ -31,10 +31,11 @@ This repo contains the Android application facilitating the CloudLockr device us
 
 ## Execution Details
 
-#### Project Requirements
+#### Project Setup Requirements
 
 - npm
 - yarn (latest)
+- https://reactnative.dev/docs/environment-setup
 
 #### How to Simulate on an Android Virtual Device (AVD)
 
