@@ -4,7 +4,7 @@
 
 CloudLockr is an innovative data storage system, tieing your digital data to a physical location while providing secure remote backup storage. The 7 strong layers of protection CloudLockr offers ensures your data is never compromised or read by anyone else, including us.
 
-This repo contains the Android application facilitating the CloudLockr device user interface. This codebase features custom bluetooth communication protocols, API integration, file reconstruction, and user management.
+This repo contains the Android application facilitating the CloudLockr device user interface. This codebase features custom bluetooth communication protocols, location services, API integration, file reconstruction, and user management.
 
 #### Demo (note: lower visual quality and FPS than actual):
 
