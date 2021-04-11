@@ -14,6 +14,7 @@ export const Config = {
       endOfFragment: "\r\n",
       endOfAllFragments: "\v\n",
     },
+    maxConnectionAttempts: 3,
     expectedBluetoothName: "hc01.com HC-05", // Expected discoverable device name
     connectionTimeout: 30, // Max # of seconds to wait for response data
     refreshRate: 0.5, // # of seconds to wait between response polling

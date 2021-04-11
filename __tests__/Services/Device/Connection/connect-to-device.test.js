@@ -7,6 +7,10 @@ jest.mock("../../../../src/Services/Device/Connection/CheckBonded");
 import CheckBonded from "../../../../src/Services/Device/Connection/CheckBonded";
 
 describe("CheckBondedService unit tests", () => {
+  beforeAll(() => {
+    jest.useRealTimers();
+  });
+
   it("connects to device successfully", async () => {
     CheckBonded.mockImplementation(async () => {
       return bondedDevice;
@@ -46,6 +50,25 @@ describe("CheckBondedService unit tests", () => {
       expect(true).toBe(false);
     } catch (err) {
       expect(err).toStrictEqual("error occured");
+    }
+  });
+
+  it("throws error if max connection attempts reached", async () => {
+    CheckBonded.mockImplementation(async () => {
+      var retDevice = clone(bondedDevice);
+      retDevice.connect = jest.fn(() => {
+        throw "timeout error";
+      });
+      return retDevice;
+    });
+
+    try {
+      await ConnectToDevice();
+
+      // Should have failed by now
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(err).toStrictEqual("Max connection attempts reached");
     }
   });
 });

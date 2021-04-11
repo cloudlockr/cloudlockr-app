@@ -14,6 +14,7 @@ export const Config = {
       endOfFragment: "\r\n",
       endOfAllFragments: "\v\n",
     },
+    maxConnectionAttempts: 2,
     expectedBluetoothName: "DE1_DEVICE", // Expected discoverable device name
     connectionTimeout: 1, // Max # of seconds to wait for response data
     refreshRate: 0.5, // # of seconds to wait between response polling
