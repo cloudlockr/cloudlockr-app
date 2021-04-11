@@ -10,6 +10,7 @@ export const {
   phoneFormattedFiles,
   email,
   password,
+  location,
   localEncrpytionComponent,
   fileDownloadMsg,
   fileDownloadMsgString,
@@ -17,6 +18,11 @@ export const {
   charMessage,
   charMessageBroken,
   charMessageJson,
+  allNetworks,
+  allValidNetworks,
+  bondedDevices,
+  bondedDevicesNoDE1,
+  bondedDevice,
 } = {
   token: {
     tokenType: "1234",
@@ -65,6 +71,7 @@ export const {
   ],
   email: "test@gmail.com",
   password: "password123",
+  location: "37.422|-122.084|5.285",
   localEncrpytionComponent: "12345",
   fileDownloadMsg: {
     packetNumber: "1",
@@ -84,6 +91,52 @@ export const {
     ['"', ":", '"', "1", '"', "}", "\v", "\n"],
   ],
   charMessageJson: { t: "1" },
+  allNetworks: [
+    {
+      capabilities: "[WPA-PSK]",
+      SSID: "valid1",
+    },
+    {
+      capabilities: "[WPA2-PSK]",
+      SSID: "valid2",
+    },
+    {
+      capabilities: "[WPA2-PSK]",
+      SSID: "valid2",
+    },
+    {
+      capabilities: "[WPA-PSK]",
+      SSID: "invalid-5g",
+    },
+    {
+      capabilities: "[WPA-PSK]",
+      SSID: "invalid-5G",
+    },
+    {
+      capabilities: "[WEP]",
+      SSID: "invalid-type",
+    },
+  ],
+  allValidNetworks: [
+    {
+      capabilities: "[WPA-PSK]",
+      SSID: "valid1",
+    },
+    {
+      capabilities: "[WPA2-PSK]",
+      SSID: "valid2",
+    },
+  ],
+  bondedDevices: [
+    { name: "device1" },
+    { name: "device2" },
+    { name: "DE1_DEVICE" },
+  ],
+  bondedDevicesNoDE1: [{ name: "device1" }, { name: "device2" }],
+  bondedDevice: {
+    name: "DE1_DEVICE",
+    connect: jest.fn(() => true),
+  },
 };
 
 export const clone = (value) => {

@@ -24,7 +24,6 @@ const UploadDownloadProgressContainer = () => {
   const transferInfo = useSelector((state) => state.fileTransfer).details;
   const user = useSelector((state) => state.user);
 
-  const userEmail = user.email;
   const userToken = user.token;
   const fileName =
     transferInfo.fileName !== undefined ? transferInfo.fileName : undefined;
@@ -72,19 +71,11 @@ const UploadDownloadProgressContainer = () => {
           dispatch,
           fileId,
           fileName,
-          fileLocalEncrpytionComponent,
-          userEmail
+          fileLocalEncrpytionComponent
         );
       } else {
         // Start upload process in the background
-        UploadService(
-          dispatch,
-          fileUri,
-          fileName,
-          fileType,
-          userToken,
-          userEmail
-        );
+        UploadService(dispatch, fileUri, fileName, fileType, userToken);
       }
 
       return () => {

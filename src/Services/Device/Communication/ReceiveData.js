@@ -8,7 +8,6 @@ const fakeData = {
   packetNumber: 1,
   totalPackets: 10,
   fileData: "asdasdasjkdhnaskjdnas",
-  networks: ["network1", "NETwork2", "netWORK8"],
 };
 
 const readData = async (bluetoothDevice, available) => {
@@ -79,8 +78,6 @@ export default RecieveData = async (bluetoothDevice, shouldAck = false) => {
 
     if (fragmentEnding === Config.device.fragment.endOfAllFragments) break;
   }
-
-  console.log(JSON.stringify(fragments));
 
   // Return the reassambled JSON object
   return JSON.parse(fragments.join(""));

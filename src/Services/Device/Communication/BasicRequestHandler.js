@@ -12,16 +12,20 @@ export default BasicRequestHandler = async (
 
   const response = await ReceiveData(device, shouldAck);
 
-  if (
-    response === undefined ||
-    response.status === undefined ||
-    !response.status
-  ) {
-    throw (
-      "Request with id " +
-      requestMessage.messageType +
-      " recieved by device, but failed."
-    );
+  // Check for response status code errors
+  if (response === undefined || response.status === undefined) {
+    throw "Received malformed response message from device";
+  } else if (response.status !== 1) {
+    switch (response.status) {
+      case 9:
+        throw "Password/wifi connection not set up yet.";
+      default:
+        throw (
+          "Request with id " +
+          requestMessage.messageType +
+          " recieved by device, but failed."
+        );
+    }
   }
 
   return response;

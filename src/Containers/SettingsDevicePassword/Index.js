@@ -61,7 +61,7 @@ const SettingsDevicePasswordContainer = () => {
         textStyle={{ color: Colors.white }}
       />
       <BasicHeader
-        title={"Set Password"}
+        title={"Setup Password"}
         previousView={"SettingsDeviceConnection"}
       />
       <View

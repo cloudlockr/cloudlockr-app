@@ -52,21 +52,6 @@ describe("BasicRequestHandler unit tests", () => {
     }
   });
 
-  it("throws error if response is not recieved", async () => {
-    ReceiveData.mockImplementation(() => {
-      return;
-    });
-
-    try {
-      await BasicRequestHandler(requestMessage);
-
-      // Should fail by now
-      expect(true).toBe(false);
-    } catch (err) {
-      expect(err).toBe("Request with id 1 recieved by device, but failed.");
-    }
-  });
-
   it("throws error if response has status of 0", async () => {
     ReceiveData.mockImplementation(async () => {
       return {
@@ -81,6 +66,53 @@ describe("BasicRequestHandler unit tests", () => {
       expect(true).toBe(false);
     } catch (err) {
       expect(err).toBe("Request with id 1 recieved by device, but failed.");
+    }
+  });
+
+  it("throws special error if response has status of 9", async () => {
+    ReceiveData.mockImplementation(async () => {
+      return {
+        status: 9,
+      };
+    });
+
+    try {
+      await BasicRequestHandler(requestMessage);
+
+      // Should fail by now
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(err).toBe("Password/wifi connection not set up yet.");
+    }
+  });
+
+  it("throws error if missing status response field", async () => {
+    ReceiveData.mockImplementation(async () => {
+      return {};
+    });
+
+    try {
+      await BasicRequestHandler(requestMessage);
+
+      // Should fail by now
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(err).toBe("Received malformed response message from device");
+    }
+  });
+
+  it("throws error if response is not recieved", async () => {
+    ReceiveData.mockImplementation(() => {
+      return;
+    });
+
+    try {
+      await BasicRequestHandler(requestMessage);
+
+      // Should fail by now
+      expect(true).toBe(false);
+    } catch (err) {
+      expect(err).toBe("Received malformed response message from device");
     }
   });
 });

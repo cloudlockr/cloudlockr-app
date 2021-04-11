@@ -1,15 +1,13 @@
 import SetUploadDownloadProgress from "@/Store/FileTransfer/SetUploadDownloadProgress";
 import { ProcessSaveFileService } from "@/Services/FileSystem";
 import { DownloadFileService } from "@/Services/Device";
+import { GetLocationSerivce } from "@/Services/External";
 
-export default async (
-  dispatch,
-  fileId,
-  fileName,
-  localEncrpytionComponent,
-  userEmail
-) => {
+export default async (dispatch, fileId, fileName, localEncrpytionComponent) => {
   try {
+    // Get the user's current location
+    const location = await GetLocationSerivce();
+
     // Download file from DE1
     dispatch(
       SetUploadDownloadProgress.action({
@@ -23,7 +21,7 @@ export default async (
       dispatch,
       fileId,
       localEncrpytionComponent,
-      userEmail
+      location
     );
 
     // Process file data and save to device

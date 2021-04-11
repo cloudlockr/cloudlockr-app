@@ -2,9 +2,9 @@ import { DownloadFileService } from "../../../../src/Services/Device";
 import {
   fileId,
   localEncrpytionComponent,
-  email,
   fileDownloadMsg,
   clone,
+  location,
 } from "../../../../__mocks__/mock-data";
 
 // Mock request handler and config
@@ -24,12 +24,14 @@ describe("DownloadFileService unit tests", () => {
     let requestNum = 1;
     BasicRequestHandler.mockImplementation(async (message) => {
       if (requestNum === 1) {
-        expect(message).toStrictEqual({
-          type: 4,
-          localEncryptionComponent: localEncrpytionComponent,
-          email: email,
-          fileId: fileId,
-        });
+        expect(JSON.stringify(message)).toStrictEqual(
+          JSON.stringify({
+            type: 4,
+            localEncryptionComponent: localEncrpytionComponent,
+            fileId: fileId,
+            location: location,
+          })
+        );
       } else {
         expect(message).toStrictEqual({ status: 1 });
       }
@@ -45,7 +47,7 @@ describe("DownloadFileService unit tests", () => {
       testDispatch,
       fileId,
       localEncrpytionComponent,
-      email
+      location
     );
 
     expect(requestNum).toBe(Number(fileDownloadMsg.totalPackets) + 1);
@@ -73,7 +75,7 @@ describe("DownloadFileService unit tests", () => {
         testDispatch,
         fileId,
         localEncrpytionComponent,
-        email
+        location
       );
 
       // Should have failed by now

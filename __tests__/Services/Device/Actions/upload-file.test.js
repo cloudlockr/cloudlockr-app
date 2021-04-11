@@ -2,9 +2,9 @@ import { UploadFileService } from "../../../../src/Services/Device";
 import {
   fileId,
   localEncrpytionComponent,
-  email,
   fileDownloadMsg,
   clone,
+  location,
 } from "../../../../__mocks__/mock-data";
 
 // Mock request handler and config
@@ -24,14 +24,16 @@ describe("UploadFileService unit tests", () => {
   it("uploads file successfully, updating upload progress", async () => {
     let requestNum = 1;
     BasicRequestHandler.mockImplementation(async (message) => {
-      expect(message).toStrictEqual({
-        type: 3,
-        email: email,
-        fileId: fileId,
-        totalPackets: Number(clone(fileDownloadMsg).totalPackets),
-        packetNumber: requestNum,
-        fileData: Buffer(fileDownloadMsg.fileData, "base64").toString(),
-      });
+      expect(JSON.stringify(message)).toStrictEqual(
+        JSON.stringify({
+          type: 3,
+          fileId: fileId,
+          packetNumber: requestNum,
+          totalPackets: Number(clone(fileDownloadMsg).totalPackets),
+          location: location,
+          fileData: Buffer(fileDownloadMsg.fileData, "base64").toString(),
+        })
+      );
 
       requestNum++;
 
@@ -49,7 +51,7 @@ describe("UploadFileService unit tests", () => {
         Buffer(fileDownloadMsg.fileData, "base64"),
         Buffer(fileDownloadMsg.fileData, "base64"),
       ],
-      email
+      location
     );
 
     expect(requestNum).toBe(Number(fileDownloadMsg.totalPackets) + 1);
@@ -81,7 +83,7 @@ describe("UploadFileService unit tests", () => {
           Buffer(fileDownloadMsg.fileData, "base64"),
           Buffer(fileDownloadMsg.fileData, "base64"),
         ],
-        email
+        location
       );
 
       // Should have failed by now
@@ -102,14 +104,16 @@ describe("UploadFileService unit tests", () => {
         throw "Request with id 3 failed";
       }
 
-      expect(message).toStrictEqual({
-        type: 3,
-        email: email,
-        fileId: fileId,
-        totalPackets: Number(clone(fileDownloadMsg).totalPackets),
-        packetNumber: requestNum - 1,
-        fileData: Buffer(fileDownloadMsg.fileData, "base64").toString(),
-      });
+      expect(JSON.stringify(message)).toStrictEqual(
+        JSON.stringify({
+          type: 3,
+          fileId: fileId,
+          packetNumber: requestNum - 1,
+          totalPackets: Number(clone(fileDownloadMsg).totalPackets),
+          location: location,
+          fileData: Buffer(fileDownloadMsg.fileData, "base64").toString(),
+        })
+      );
 
       requestNum++;
 
@@ -127,7 +131,7 @@ describe("UploadFileService unit tests", () => {
         Buffer(fileDownloadMsg.fileData, "base64"),
         Buffer(fileDownloadMsg.fileData, "base64"),
       ],
-      email
+      location
     );
 
     expect(requestNum).toBe(Number(fileDownloadMsg.totalPackets) + 2);
@@ -162,7 +166,7 @@ describe("UploadFileService unit tests", () => {
           Buffer(fileDownloadMsg.fileData, "base64"),
           Buffer(fileDownloadMsg.fileData, "base64"),
         ],
-        email
+        location
       );
 
       // Should have failed by now
