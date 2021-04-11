@@ -39,17 +39,26 @@ This repo contains the Android application facilitating the CloudLockr device us
 #### How to Simulate on an Android Virtual Device (AVD)
 
 1. Execute `yarn install` (if you have not already)
-2. Launch an AVD emulator (Pixel 3 API 29, Android 10.0) using Android Studio in the Android Virtual Device Manager window
+2. In a terminal window in the project root directory, execute `yarn start`
+   - This will start the React Native Metro server
+3. In a different terminal window also in the project root directory, execute `yarn android`
+   - This will launch an AVD (assuming you already have one configured and installed) and build and load the app onto it
+
+#### How to Simulate on a Real Android Device
+
+1. Execute `yarn install` (if you have not already)
+2. Connect your Android device to your computer
 3. In a terminal window in the project root directory, execute `yarn start`
    - This will start the React Native Metro server
 4. In a different terminal window also in the project root directory, execute `yarn android`
-   - This will load the app onto the running AVD emulator
-
-**Note:** All features related to bluetooth communcation within the app will likely not be usable as they require communicating through the phone's bluetooth hardware to the CloudLockr device. To test the app with mocked bluetooth connection, set `mocking.deviceConnection = true` in `src/Config/index.js`.
+   - This will build and load the app onto the phone
 
 #### Running Tests
 
 Execute `yarn test` to run the entire test suite (UI and service logic tests). Verbose results are enabled by default for result clarity.
+
+#### General Execution Notes
+- All features related to bluetooth communcation within the app require communicating through the phone's bluetooth hardware to the CloudLockr device. This will result in features not working as intended when simulating on an AVD as the bluetooth hardware is not present. However, this problem can be resolved by mocking the bluetooth connection when testing without a Cloudlockr device or using an AVD. To configure mocked bluetooth connection, set `mocking.deviceConnection = true` in `src/Config/index.js`, and follow the above simulation step.
 
 ---
 
