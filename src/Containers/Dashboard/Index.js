@@ -36,17 +36,7 @@ const DashboardContainer = () => {
 
     // Remind the user about setting the device password if its their first time seeing it
     if (showDeviceWarning) {
-      Alert.alert(
-        "Reminder: Set Your Device Password & Wifi Network",
-        "Your device password and wifi network must be set every time you power on your device after it has been powered off. If you do not set the password, any uploaded data will be unrecoverable and downloading any existing data will result in invalid files. Further, you cannot transmit data if your device is not connected to the internet.",
-        [
-          {
-            text: "Okay",
-            style: "cancel",
-          },
-        ],
-        { cancelable: true }
-      );
+      showDeviceWarningAlert();
 
       // Reset the reminder warning trigger
       dispatch(SetIntention.action({ id: "showDeviceWarning", value: false }));
@@ -60,12 +50,41 @@ const DashboardContainer = () => {
     };
   }, []);
 
+  const showDeviceWarningAlert = (title = "Reminder") => {
+    Alert.alert(
+      title + ": Set Your Device Password & Wifi Network",
+      "Your device password and wifi network must be set every time you power on your device after it has been powered off. If you do not set the password, any uploaded data will be unrecoverable and downloading any existing data will result in invalid files. Further, you cannot transmit data if your device is not connected to the internet.",
+      [
+        {
+          text: "Okay",
+          style: "cancel",
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const generateHexCode = async () => {
+    setSpinnerMessage("generating hex code");
+    setSpinnerVisible(true);
+    await GenerateHexCodeService();
+    setSpinnerVisible(false);
+  };
+
   const downloadCallback = async () => {
     try {
       // Show the download popup and generate a HEX code
+      await generateHexCode();
       downloadRBSheet.current.open();
-      await GenerateHexCodeService();
     } catch (err) {
+      setSpinnerVisible(false);
+      downloadRBSheet.current.close();
+
+      if (err === "Password/wifi connection not set up yet.") {
+        showDeviceWarningAlert("Error");
+        return;
+      }
+
       showToast(false, err);
     }
   };
@@ -73,9 +92,17 @@ const DashboardContainer = () => {
   const uploadCallback = async () => {
     try {
       // Show the upload popup and generate a HEX code
+      await generateHexCode();
       uploadRBSheet.current.open();
-      await GenerateHexCodeService();
     } catch (err) {
+      setSpinnerVisible(false);
+      uploadRBSheet.current.close();
+
+      if (err === "Password/wifi connection not set up yet.") {
+        showDeviceWarningAlert("Error");
+        return;
+      }
+
       showToast(false, err);
     }
   };

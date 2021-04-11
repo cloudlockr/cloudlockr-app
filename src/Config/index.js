@@ -10,7 +10,7 @@ export const Config = {
 
   device: {
     fragment: {
-      dataLength: 14,
+      dataLength: 500500,
       endOfFragment: "\r\n",
       endOfAllFragments: "\v\n",
     },
