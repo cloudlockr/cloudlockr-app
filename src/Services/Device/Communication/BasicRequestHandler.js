@@ -8,9 +8,16 @@ export default BasicRequestHandler = async (
 ) => {
   const device = await ConnectToDevice();
 
+  console.log("request: " + JSON.stringify(requestMessage));
+
   await SendData(device, requestMessage);
 
   const response = await ReceiveData(device, shouldAck);
+
+  console.log("response: " + JSON.stringify(response));
+
+  // Let the special file data response pass
+  if (response.fileData !== undefined) return response;
 
   // Check for response status code errors
   if (response === undefined || response.status === undefined) {

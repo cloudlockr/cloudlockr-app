@@ -48,7 +48,7 @@ export default DownloadFile = async (
     if (Config.mocking.deviceConnection)
       receivedData = mockReceivedData(receivedData);
 
-    fileBlobs.push(Buffer(receivedData.fileData, "base64"));
+    fileBlobs.push(Buffer(receivedData.fileData, "ascii"));
 
     packetsReceived = receivedData.packetNumber;
     totalPackets = receivedData.totalPackets;

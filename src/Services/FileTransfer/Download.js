@@ -5,6 +5,11 @@ import { GetLocationService } from "@/Services/External";
 
 export default async (dispatch, fileId, fileName, localEncryptionComponent) => {
   try {
+    // Check if the local encryption component exists
+    if (localEncryptionComponent === undefined) {
+      throw "Error: Data uploaded on different device";
+    }
+
     // Get the user's current location
     const location = await GetLocationService();
 

@@ -79,6 +79,8 @@ export default ReceiveData = async (bluetoothDevice, shouldAck = false) => {
     if (fragmentEnding === Config.device.fragment.endOfAllFragments) break;
   }
 
+  console.log(fragments);
+
   // Return the reassembled JSON object
   return JSON.parse(fragments.join(""));
 };

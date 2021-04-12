@@ -32,9 +32,13 @@ const DownloadDetail = (props) => {
   const downloadCallback = () => {
     // Save the updated file details so that the localEncryptionComponent is stored
     if (encryptionComponents !== undefined) {
-      var component = encryptionComponents[downloadInfo.id];
-      downloadInfo.localEncryptionComponent = component;
-      dispatch(SetDetails.action(downloadInfo));
+      var infoWithEncryptionComponent = {
+        fileName: downloadInfo.fileName,
+        id: downloadInfo.id,
+        uploadDate: downloadInfo.uploadDate,
+        localEncryptionComponent: encryptionComponents[downloadInfo.id],
+      };
+      dispatch(SetDetails.action(infoWithEncryptionComponent));
     }
 
     requestCallback("download", accessCode, password, downloadInfo.id);

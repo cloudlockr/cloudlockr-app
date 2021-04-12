@@ -23,13 +23,13 @@ const SettingsConfirmationContainer = () => {
         ]}
       >
         <Text style={[Fonts.listFileName, Fonts.textCenter]}>
-          configuration update successful!
+          Configuration update successful!
         </Text>
         <View
           style={[Layout.row, Layout.alignItemsCenter, Gutters.largexlTPadding]}
         >
           <Button
-            title={"okay"}
+            title={"Okay"}
             clickCallback={confirmCallback}
             color={Colors.secondaryGreen}
             style={Layout.fill}
