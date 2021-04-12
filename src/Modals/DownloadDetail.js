@@ -12,8 +12,8 @@ const DownloadDetail = (props) => {
   const requestCallback = props.requestCallback;
 
   var downloadInfo = useSelector((state) => state.fileTransfer).details;
-  var encrpytionComponents = useSelector((state) => state.fileTransfer)
-    .encrpytionComponents;
+  var encryptionComponents = useSelector((state) => state.fileTransfer)
+    .encryptionComponents;
 
   const [password, setPassword] = useState("");
   const [accessCode, setAccessCode] = useState("");
@@ -30,10 +30,10 @@ const DownloadDetail = (props) => {
   };
 
   const downloadCallback = () => {
-    // Save the updated file details so that the localEncrpytionComponent is stored
-    if (encrpytionComponents !== undefined) {
-      var component = encrpytionComponents[downloadInfo.id];
-      downloadInfo.localEncrpytionComponent = component;
+    // Save the updated file details so that the localEncryptionComponent is stored
+    if (encryptionComponents !== undefined) {
+      var component = encryptionComponents[downloadInfo.id];
+      downloadInfo.localEncryptionComponent = component;
       dispatch(SetDetails.action(downloadInfo));
     }
 

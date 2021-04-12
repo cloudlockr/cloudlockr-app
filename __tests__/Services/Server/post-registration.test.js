@@ -38,7 +38,7 @@ describe("PostRegistrationService unit tests", () => {
       }
     );
 
-    // Check two dispatchs were made to persist user data
+    // Check two dispatches were made to persist user data
     expect(testDispatch.mock.calls.length).toStrictEqual(2);
     expect(testDispatch.mock.calls[0][0]).toStrictEqual({
       payload: email,

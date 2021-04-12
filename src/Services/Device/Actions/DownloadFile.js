@@ -15,7 +15,7 @@ const mockReceivedData = (data) => {
 export default DownloadFile = async (
   dispatch,
   fileId,
-  localEncrpytionComponent,
+  localEncryptionComponent,
   location
 ) => {
   packetsReceived = 0;
@@ -23,7 +23,7 @@ export default DownloadFile = async (
 
   var requestMessage = {
     type: 4,
-    localEncryptionComponent: localEncrpytionComponent,
+    localEncryptionComponent: localEncryptionComponent,
     fileId: fileId,
     location: location,
   };
@@ -55,6 +55,6 @@ export default DownloadFile = async (
     requestMessage = { status: 1 };
   }
 
-  // Return one large concatinated buffer
+  // Return one large concatenated buffer
   return Buffer.concat(fileBlobs);
 };

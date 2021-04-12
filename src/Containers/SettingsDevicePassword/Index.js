@@ -12,7 +12,7 @@ const SettingsDevicePasswordContainer = () => {
   const [password, setPassword] = useState("");
   const [buttonEnabled, setButtonEnabled] = useState(false);
   const [spinnerVisible, setSpinnerVisible] = useState(false);
-  const [spinnerMessage, setSpinnerMessage] = useState("processing");
+  const [spinnerMessage, setSpinnerMessage] = useState("Processing Change");
 
   const confirmCallback = () => {
     // Show confirmation alert to ensure the user does not accidentally change password
@@ -38,7 +38,7 @@ const SettingsDevicePasswordContainer = () => {
       navigate("SettingsConfirmation", {});
     } catch (err) {
       setSpinnerVisible(false);
-      ErrorAlert("Error while updating configuration", err);
+      ErrorAlert("Error Updating Configuration", err);
     }
   };
 
@@ -101,7 +101,7 @@ const SettingsDevicePasswordContainer = () => {
             ]}
           >
             <InputField
-              placeholder={"new device password"}
+              placeholder={"Desired device password"}
               hideInput
               finishEditingCallback={passwordCallback}
               minLength={4}
@@ -138,7 +138,7 @@ const SettingsDevicePasswordContainer = () => {
           </View>
           <View style={[Layout.row, Layout.alignItemsCenter]}>
             <Button
-              title={"confirm configuration"}
+              title={"Confirm configuration"}
               clickCallback={confirmCallback}
               setEnabled={buttonEnabled}
               color={Colors.red}

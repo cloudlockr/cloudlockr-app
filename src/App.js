@@ -1,10 +1,10 @@
-import 'react-native-gesture-handler'
-import React from 'react'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/lib/integration/react'
-import { store, persistor } from '@/Store'
-import { ApplicationNavigator } from '@/Navigators'
-import Toast from 'react-native-toast-message'
+import "react-native-gesture-handler";
+import React from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import { store, persistor } from "@/Store";
+import { ApplicationNavigator } from "@/Navigators";
+import Toast from "react-native-toast-message";
 
 const App = () => (
   <Provider store={store}>
@@ -20,6 +20,6 @@ const App = () => (
       <Toast ref={(ref) => Toast.setRef(ref)} />
     </PersistGate>
   </Provider>
-)
+);
 
-export default App
+export default App;

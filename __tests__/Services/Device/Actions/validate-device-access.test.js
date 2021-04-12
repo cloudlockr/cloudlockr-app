@@ -1,6 +1,6 @@
 import { ValidateDeviceAccessService } from "../../../../src/Services/Device";
 
-// Mock send and recieve data functions
+// Mock send and receive data functions
 jest.mock("../../../../src/Services/Device/Communication/BasicRequestHandler");
 import BasicRequestHandler from "../../../../src/Services/Device/Communication/BasicRequestHandler";
 

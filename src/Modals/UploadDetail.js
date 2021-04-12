@@ -56,24 +56,24 @@ const UploadDetail = (props) => {
   };
 
   const uploadCallback = () => {
-    // Append file extention to fileName if not already user entered
-    var extention = fileMetadata.name.substring(
+    // Append file extension to fileName if not already user entered
+    var extension = fileMetadata.name.substring(
       fileMetadata.name.lastIndexOf(".")
     );
-    var fileNameExtentionIdx = fileName.lastIndexOf(extention);
+    var fileNameExtensionIdx = fileName.lastIndexOf(extension);
 
-    var fileNameWithExtention = fileName;
+    var fileNameWithExtension = fileName;
     if (
-      fileNameExtentionIdx === -1 ||
-      fileNameExtentionIdx !== fileName.length - extention.length
+      fileNameExtensionIdx === -1 ||
+      fileNameExtensionIdx !== fileName.length - extension.length
     ) {
-      fileNameWithExtention += extention;
+      fileNameWithExtension += extension;
     }
 
     // Store the data and return
     dispatch(
       SetDetails.action({
-        fileName: fileNameWithExtention,
+        fileName: fileNameWithExtension,
         fileMetadata: fileMetadata,
       })
     );

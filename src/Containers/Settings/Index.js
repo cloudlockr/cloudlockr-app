@@ -29,7 +29,7 @@ const SettingsContainer = () => {
           setDeviceConnected("Connected");
         } catch (err) {
           setDeviceConnected("Not Connected");
-          ErrorAlert("Could not check connection/bonding status", err);
+          ErrorAlert("Error Checking Connection Status", err);
         }
       };
 
@@ -60,7 +60,7 @@ const SettingsContainer = () => {
       navigateAndSimpleReset("Main");
     } catch (err) {
       setSpinnerVisible(false);
-      ErrorAlert("Error while logging out", err);
+      ErrorAlert("Error Logging Out", err);
     }
   };
 
@@ -88,7 +88,7 @@ const SettingsContainer = () => {
       navigateAndSimpleReset("Main");
     } catch (err) {
       setSpinnerVisible(false);
-      ErrorAlert("Error while deleting acccount", err);
+      ErrorAlert("Error Deleting Account", err);
     }
   };
 

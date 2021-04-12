@@ -4,10 +4,10 @@ import { SendFragment } from "@/Services/Device/Communication/SendData";
 // Mock data that covers all possible response message fields
 const fakeData = {
   status: 1,
-  localEncryptionComponent: "qwefgasdasip",
+  localEncryptionComponent: "1234",
   packetNumber: 1,
   totalPackets: 10,
-  fileData: "asdasdasjkdhnaskjdnas",
+  fileData: "abcd",
 };
 
 const readData = async (bluetoothDevice, available) => {
@@ -55,7 +55,7 @@ const receiveFragment = async (bluetoothDevice, shouldAck) => {
 };
 
 // Poll for data, timeout if waiting too long
-export default RecieveData = async (bluetoothDevice, shouldAck = false) => {
+export default ReceiveData = async (bluetoothDevice, shouldAck = false) => {
   // Mock data (if selected)
   if (Config.mocking.deviceConnection) {
     await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -64,7 +64,7 @@ export default RecieveData = async (bluetoothDevice, shouldAck = false) => {
 
   var fragments = [];
 
-  // Collect all of the reponse fragments
+  // Collect all of the response fragments
   while (true) {
     var newFragment = await receiveFragment(bluetoothDevice, shouldAck);
     fragments.push(newFragment.slice(0, newFragment.length - 2));
@@ -79,6 +79,6 @@ export default RecieveData = async (bluetoothDevice, shouldAck = false) => {
     if (fragmentEnding === Config.device.fragment.endOfAllFragments) break;
   }
 
-  // Return the reassambled JSON object
+  // Return the reassembled JSON object
   return JSON.parse(fragments.join(""));
 };

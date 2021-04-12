@@ -3,8 +3,8 @@
  *
  * Use it to define generic component styles (e.g. the default text styles, default button styles...).
  */
-import { StyleSheet } from 'react-native'
-import buttonStyles from './components/Buttons'
+import { StyleSheet } from "react-native";
+
 /**
  *
  * @param Theme can be spread like {Colors, NavigationColors, Gutters, Layout, Common, ...args}
@@ -46,18 +46,18 @@ export default function ({ Colors, ...args }) {
       },
       roundBox: {
         elevation: 10,
-        shadowColor: 'black',
+        shadowColor: "black",
         shadowRadius: 4,
         borderRadius: 8,
       },
       fullShadow: {
         elevation: 10,
-        shadowColor: 'black',
+        shadowColor: "black",
         shadowRadius: 4,
       },
       rounded: {
-        borderRadius: 8
-      }
+        borderRadius: 8,
+      },
     }),
-  }
+  };
 }

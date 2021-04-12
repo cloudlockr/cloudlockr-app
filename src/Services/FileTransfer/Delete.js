@@ -5,7 +5,7 @@ export default async (fileId, token, dispatch) => {
   // Request the file to be deleted on the server
   var response = await DeleteUserFileService(dispatch, token, fileId);
 
-  // Delete the local encrpytion component
+  // Delete the local encryption component
   dispatch(RemoveEncryptionComponent.action({ fileId: fileId }));
 
   return response;

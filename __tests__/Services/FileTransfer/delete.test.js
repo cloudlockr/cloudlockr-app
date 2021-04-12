@@ -20,7 +20,7 @@ describe("DeleteService integration tests", () => {
     mockAxios.mockResponse({ status: 200, data: { message: "success" } });
     let result = await execution;
 
-    expect(result).toStrictEqual("File was successfully deleted");
+    expect(result).toStrictEqual("File successfully deleted");
 
     // Check API request was made as intended
     expect(mockAxios.delete).toHaveBeenCalledWith(`file/${fileId}`, {

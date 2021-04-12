@@ -1,6 +1,6 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import { SettingsDevicePasswordContainer } from '@/Containers'
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { SettingsDevicePasswordContainer } from "@/Containers";
 
 const Stack = createStackNavigator();
 
@@ -8,9 +8,13 @@ const Stack = createStackNavigator();
 const SettingsDevicePasswordNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SettingsDevicePassword" component={SettingsDevicePasswordContainer} options={{headerShown: false}} />
+      <Stack.Screen
+        name="SettingsDevicePassword"
+        component={SettingsDevicePasswordContainer}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default SettingsDevicePasswordNavigator;

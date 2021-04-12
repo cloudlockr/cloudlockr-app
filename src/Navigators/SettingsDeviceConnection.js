@@ -1,6 +1,6 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import { SettingsDeviceConnectionContainer } from '@/Containers'
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { SettingsDeviceConnectionContainer } from "@/Containers";
 
 const Stack = createStackNavigator();
 
@@ -8,9 +8,13 @@ const Stack = createStackNavigator();
 const SettingsDeviceConnectionNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="SettingsDeviceConnection" component={SettingsDeviceConnectionContainer} options={{headerShown: false}} />
+      <Stack.Screen
+        name="SettingsDeviceConnection"
+        component={SettingsDeviceConnectionContainer}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default SettingsDeviceConnectionNavigator;

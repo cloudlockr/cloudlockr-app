@@ -1,7 +1,7 @@
 import { DownloadFileService } from "../../../../src/Services/Device";
 import {
   fileId,
-  localEncrpytionComponent,
+  localEncryptionComponent,
   fileDownloadMsg,
   clone,
   location,
@@ -27,7 +27,7 @@ describe("DownloadFileService unit tests", () => {
         expect(JSON.stringify(message)).toStrictEqual(
           JSON.stringify({
             type: 4,
-            localEncryptionComponent: localEncrpytionComponent,
+            localEncryptionComponent: localEncryptionComponent,
             fileId: fileId,
             location: location,
           })
@@ -46,7 +46,7 @@ describe("DownloadFileService unit tests", () => {
     let result = await DownloadFileService(
       testDispatch,
       fileId,
-      localEncrpytionComponent,
+      localEncryptionComponent,
       location
     );
 
@@ -67,21 +67,21 @@ describe("DownloadFileService unit tests", () => {
 
   it("does not catch error, passes it upwards", async () => {
     BasicRequestHandler.mockImplementation(async (message) => {
-      throw "error occured";
+      throw "error occurred";
     });
 
     try {
       await DownloadFileService(
         testDispatch,
         fileId,
-        localEncrpytionComponent,
+        localEncryptionComponent,
         location
       );
 
       // Should have failed by now
       expect(true).toBe(false);
     } catch (err) {
-      expect(err).toStrictEqual("error occured");
+      expect(err).toStrictEqual("error occurred");
     }
 
     // Check that only one message was sent

@@ -62,7 +62,7 @@ const RegisterContainer = () => {
       navigate("Dashboard", {});
     } catch (err) {
       setSpinnerVisible(false);
-      ErrorAlert("Error while registering", err);
+      ErrorAlert("Error Registering", err);
     }
   };
 

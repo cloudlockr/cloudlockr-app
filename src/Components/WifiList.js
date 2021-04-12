@@ -31,7 +31,7 @@ const WifiList = (props) => {
     try {
       returnedNetworks = await GetWifiNetworksService();
     } catch (err) {
-      ErrorAlert("Error fetching nearby networks", err);
+      ErrorAlert("Error Fetching Nearby Networks", err);
     }
 
     setRefreshing(false);

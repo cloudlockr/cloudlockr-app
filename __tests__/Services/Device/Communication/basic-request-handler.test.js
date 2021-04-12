@@ -65,7 +65,7 @@ describe("BasicRequestHandler unit tests", () => {
       // Should fail by now
       expect(true).toBe(false);
     } catch (err) {
-      expect(err).toBe("Request with id 1 recieved by device, but failed.");
+      expect(err).toBe("Request with id 1 received by device, but failed.");
     }
   });
 
@@ -101,7 +101,7 @@ describe("BasicRequestHandler unit tests", () => {
     }
   });
 
-  it("throws error if response is not recieved", async () => {
+  it("throws error if response is not received", async () => {
     ReceiveData.mockImplementation(() => {
       return;
     });

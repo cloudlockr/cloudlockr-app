@@ -1,7 +1,7 @@
 import { UploadFileService } from "../../../../src/Services/Device";
 import {
   fileId,
-  localEncrpytionComponent,
+  localEncryptionComponent,
   fileDownloadMsg,
   clone,
   location,
@@ -63,7 +63,7 @@ describe("UploadFileService unit tests", () => {
     expect(testDispatch.mock.calls[requestNum - 1][0]).toStrictEqual({
       payload: {
         fileId: fileId,
-        value: localEncrpytionComponent,
+        value: localEncryptionComponent,
       },
       type: "fileTransfer/addEncryptionComponent",
     });
@@ -71,7 +71,7 @@ describe("UploadFileService unit tests", () => {
 
   it("does not catch normal error, passes it upwards", async () => {
     BasicRequestHandler.mockImplementation(async (message) => {
-      throw "error occured";
+      throw "error occurred";
     });
 
     try {
@@ -89,14 +89,14 @@ describe("UploadFileService unit tests", () => {
       // Should have failed by now
       expect(true).toBe(false);
     } catch (err) {
-      expect(err).toStrictEqual("error occured");
+      expect(err).toStrictEqual("error occurred");
     }
 
     // Check that only one status update message was sent
     expect(testDispatch.mock.calls.length).toStrictEqual(1);
   });
 
-  it("retransmits packet if device returns status of 0, contiunes normally afterwards", async () => {
+  it("retransmits packet if device returns status of 0, continues normally afterwards", async () => {
     let requestNum = 1;
     BasicRequestHandler.mockImplementation(async (message) => {
       if (requestNum === 1) {
@@ -143,7 +143,7 @@ describe("UploadFileService unit tests", () => {
     expect(testDispatch.mock.calls[requestNum - 1][0]).toStrictEqual({
       payload: {
         fileId: fileId,
-        value: localEncrpytionComponent,
+        value: localEncryptionComponent,
       },
       type: "fileTransfer/addEncryptionComponent",
     });

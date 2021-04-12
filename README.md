@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-CloudLockr is an innovative data storage system, tieing your digital data to a physical location while providing secure remote backup storage. The 7 strong layers of protection CloudLockr offers ensures your data is never compromised or read by anyone else, including us.
+CloudLockr is an innovative data storage system, tieing your digital data to a physical location while providing secure remote backup storage. The five strong layers of protection CloudLockr offers ensures your data is never compromised or read by anyone else, including us.
 
 This repo contains the Android application facilitating the CloudLockr device user interface. This codebase features custom bluetooth communication protocols, location services, API integration, file reconstruction, and user management.
 
@@ -59,7 +59,8 @@ This repo contains the Android application facilitating the CloudLockr device us
 Execute `yarn test` to run the entire test suite (UI and service logic tests). Verbose results are enabled by default for result clarity.
 
 #### General Execution Notes
-- All features related to bluetooth communcation within the app require communicating through the phone's bluetooth hardware to the CloudLockr device. This will result in features not working as intended when simulating on an AVD as the bluetooth hardware is not present. However, this problem can be resolved by mocking the bluetooth connection when testing without a Cloudlockr device or using an AVD. To configure mocked bluetooth connection, set `mocking.deviceConnection = true` in `src/Config/index.js`, and follow the above simulation step.
+
+- All features related to bluetooth communication within the app require communicating through the phone's bluetooth hardware to the CloudLockr device. This will result in features not working as intended when simulating on an AVD as the bluetooth hardware is not present. However, this problem can be resolved by mocking the bluetooth connection when testing without a Cloudlockr device or using an AVD. To configure mocked bluetooth connection, set `mocking.deviceConnection = true` in `src/Config/index.js`, and follow the above simulation step.
 
 ---
 
@@ -67,7 +68,7 @@ Execute `yarn test` to run the entire test suite (UI and service logic tests). V
 
 #### Directory Structure
 
-Note that throughout the project `@/` is used in import statements and translates to `src` (to enhance code readability). Also note that `index.js` files are used throughout the project to simplify imports and provide a defined interface to a given directory. The general concept of the directory structure is to seperate logic from UI components, enhancing testability and modularity.
+Note that throughout the project `@/` is used in import statements and translates to `src` (to enhance code readability). Also note that `index.js` files are used throughout the project to simplify imports and provide a defined interface to a given directory. The general concept of the directory structure is to separate logic from UI components, enhancing testability and modularity.
 
 - `__tests__` (Jest unit/integration/UI tests)
 - `src` (source code)
@@ -81,7 +82,7 @@ Note that throughout the project `@/` is used in import statements and translate
     - `Device` (services related to device interaction)
     - `External` (services using other external phone APIs)
     - `FileSystem` (services related to local phone file system or file manipulation)
-    - `FileTransfer` (top-level services that faciliate complex file transfer processes)
+    - `FileTransfer` (top-level services that facilitate complex file transfer processes)
     - `Server` (services related to server interaction)
     - Note that these files throw errors that the UI must catch (and show to the user if applicable)
   - `Store` (Redux interaction, further broken up by Redux slice indicated by each sub-directory)
@@ -90,4 +91,4 @@ Note that throughout the project `@/` is used in import statements and translate
 #### Other Details
 
 - Conventional Commits
-  - This project follows the commit message style of "Conventional Commits" (conventionalcommits.org). All commits should conform to the standard specification.
+  - This project follows the commit message style of "Conventional Commits" (https://conventionalcommits.org). All commits should conform to the standard specification.

@@ -83,8 +83,8 @@ const LoginContainer = () => {
         ) {
           Alert.alert(
             "Device data and location permissions are required",
-            "You selected to never ask permissions again. Without device data access permission, CloudLockr's main functionality of data upload and download is not possible. " +
-              "Please allow this permission in your phone's settings.",
+            "You selected to never ask permissions again. Without device data access and location permissions, CloudLockr's main functionality of data upload and download is not possible. " +
+              "Please allow these permissions in your phone's settings.",
             [{ text: "Okay" }],
             { cancelable: true }
           );
@@ -101,7 +101,7 @@ const LoginContainer = () => {
   const requestAlert = () => {
     Alert.alert(
       "Device data and location permissions are required",
-      "Data upload and download require CloudLockr to access your phone's storage",
+      "Data upload and download require CloudLockr to access your phone's storage and location",
       [{ text: "Okay", onPress: requestPermissions }],
       { cancelable: false }
     );
@@ -144,7 +144,7 @@ const LoginContainer = () => {
       navigate("Dashboard", {});
     } catch (err) {
       setSpinnerVisible(false);
-      ErrorAlert("Error while logging in", err);
+      ErrorAlert("Error Logging In", err);
     }
   };
 

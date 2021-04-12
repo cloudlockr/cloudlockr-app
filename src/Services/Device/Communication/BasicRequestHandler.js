@@ -23,7 +23,7 @@ export default BasicRequestHandler = async (
         throw (
           "Request with id " +
           requestMessage.messageType +
-          " recieved by device, but failed."
+          " received by device, but failed."
         );
     }
   }
