@@ -219,7 +219,7 @@ exports[`renders and matches snapshot 1`] = `
               ]
             }
           >
-            okay
+            Okay
           </Text>
         </View>
       </View>

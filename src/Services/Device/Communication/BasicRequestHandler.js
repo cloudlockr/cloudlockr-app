@@ -14,10 +14,11 @@ export default BasicRequestHandler = async (
 
   const response = await ReceiveData(device, shouldAck);
 
-  console.log("response: " + JSON.stringify(response));
+  console.log("response: " + JSON.stringify(response) + "\n");
 
   // Let the special file data response pass
-  if (response.fileData !== undefined) return response;
+  if (response !== undefined && response.fileData !== undefined)
+    return response;
 
   // Check for response status code errors
   if (response === undefined || response.status === undefined) {

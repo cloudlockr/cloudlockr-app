@@ -52,9 +52,9 @@ describe("DownloadFileService unit tests", () => {
 
     expect(requestNum).toBe(Number(fileDownloadMsg.totalPackets) + 1);
 
-    let b1 = Buffer(fileDownloadMsg.fileData, "base64");
-    let b2 = Buffer(fileDownloadMsg.fileData, "base64");
-    let b3 = Buffer(fileDownloadMsg.fileData, "base64");
+    let b1 = Buffer(fileDownloadMsg.fileData, "ascii");
+    let b2 = Buffer(fileDownloadMsg.fileData, "ascii");
+    let b3 = Buffer(fileDownloadMsg.fileData, "ascii");
     let expected = Buffer.concat([b1, b2, b3]);
 
     expect(result).toStrictEqual(expected);

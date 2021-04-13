@@ -37,6 +37,19 @@ describe("BasicRequestHandler unit tests", () => {
     expect(response).toStrictEqual({ status: 1 });
   });
 
+  it("successfully makes request and receives special fileData response", async () => {
+    ReceiveData.mockImplementation(async (device) => {
+      expect(device).toBe(fakeDeviceInfo);
+      return {
+        fileData: "this is file data",
+      };
+    });
+
+    let response = await BasicRequestHandler(requestMessage);
+
+    expect(response).toStrictEqual({ fileData: "this is file data" });
+  });
+
   it("does not catch normal error, passes it upwards", async () => {
     ReceiveData.mockImplementation(() => {
       throw "configuration error";
