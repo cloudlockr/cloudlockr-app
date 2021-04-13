@@ -3,8 +3,10 @@ import { Config } from "@/Config";
 const RNFS = require("react-native-fs");
 
 export default async (fileUri) => {
-  // Obtain the data from the file system (in ascii)
-  var strBlob = await RNFS.readFile(fileUri, "ascii");
+  // Obtain the data from the file system (in base64)
+  var strBlob = await RNFS.readFile(fileUri, "base64");
+
+  console.log("File data: " + JSON.stringify(strBlob));
 
   if (strBlob.length === 0) throw "File contains no data.";
 

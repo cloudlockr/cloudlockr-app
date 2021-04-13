@@ -8,13 +8,18 @@ export default BasicRequestHandler = async (
 ) => {
   const device = await ConnectToDevice();
 
-  console.log("request: " + JSON.stringify(requestMessage));
+  console.log(
+    "Bluetooth Request: " + JSON.stringify(JSON.stringify(requestMessage))
+  );
 
   await SendData(device, requestMessage);
 
   const response = await ReceiveData(device, shouldAck);
 
-  console.log("response: " + JSON.stringify(response) + "\n");
+  console.log(
+    "Bluetooth Response: " + JSON.stringify(JSON.stringify(response))
+  );
+  console.log("\n");
 
   // Let the special file data response pass
   if (response !== undefined && response.fileData !== undefined)
