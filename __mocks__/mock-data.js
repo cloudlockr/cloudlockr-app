@@ -11,7 +11,7 @@ export const {
   email,
   password,
   location,
-  localEncrpytionComponent,
+  localEncryptionComponent,
   fileDownloadMsg,
   fileDownloadMsgString,
   bluetoothDevice,
@@ -72,7 +72,7 @@ export const {
   email: "test@gmail.com",
   password: "password123",
   location: "37.422|-122.084|5.285",
-  localEncrpytionComponent: "12345",
+  localEncryptionComponent: "12345",
   fileDownloadMsg: {
     packetNumber: "1",
     totalPackets: "3",

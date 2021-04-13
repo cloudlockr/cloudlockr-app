@@ -152,7 +152,7 @@ exports[`renders and matches snapshot 1`] = `
         ]
       }
     >
-      configuration update successful!
+      Configuration update successful!
     </Text>
     <View
       style={
@@ -219,7 +219,7 @@ exports[`renders and matches snapshot 1`] = `
               ]
             }
           >
-            okay
+            Okay
           </Text>
         </View>
       </View>

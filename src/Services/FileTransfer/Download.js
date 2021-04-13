@@ -1,12 +1,17 @@
 import SetUploadDownloadProgress from "@/Store/FileTransfer/SetUploadDownloadProgress";
 import { ProcessSaveFileService } from "@/Services/FileSystem";
 import { DownloadFileService } from "@/Services/Device";
-import { GetLocationSerivce } from "@/Services/External";
+import { GetLocationService } from "@/Services/External";
 
-export default async (dispatch, fileId, fileName, localEncrpytionComponent) => {
+export default async (dispatch, fileId, fileName, localEncryptionComponent) => {
   try {
+    // Check if the local encryption component exists
+    if (localEncryptionComponent === undefined) {
+      throw "Error: Data uploaded on different device";
+    }
+
     // Get the user's current location
-    const location = await GetLocationSerivce();
+    const location = await GetLocationService();
 
     // Download file from DE1
     dispatch(
@@ -20,7 +25,7 @@ export default async (dispatch, fileId, fileName, localEncrpytionComponent) => {
     const fileBlob = await DownloadFileService(
       dispatch,
       fileId,
-      localEncrpytionComponent,
+      localEncryptionComponent,
       location
     );
 

@@ -6,6 +6,8 @@ export default async (fileUri) => {
   // Obtain the data from the file system (in base64)
   var strBlob = await RNFS.readFile(fileUri, "base64");
 
+  console.log("File data: " + JSON.stringify(strBlob));
+
   if (strBlob.length === 0) throw "File contains no data.";
 
   var fullBlob = Buffer(strBlob);

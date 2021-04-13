@@ -104,7 +104,7 @@ exports[`renders and matches snapshot 1`] = `
               ]
             }
           >
-            processing
+            Processing Change
           </Text>
         </View>
       </View>

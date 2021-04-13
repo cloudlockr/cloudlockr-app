@@ -1,6 +1,6 @@
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import { DashboardContainer } from '@/Containers'
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { DashboardContainer } from "@/Containers";
 
 const Stack = createStackNavigator();
 
@@ -8,9 +8,13 @@ const Stack = createStackNavigator();
 const LoginNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Dashboard" component={DashboardContainer} options={{headerShown: false}} />
+      <Stack.Screen
+        name="Dashboard"
+        component={DashboardContainer}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
 export default LoginNavigator;

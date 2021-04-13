@@ -30,14 +30,14 @@ describe("CheckBondedService unit tests", () => {
       expect(true).toBe(false);
     } catch (err) {
       expect(err).toStrictEqual(
-        "Cannot connect to device as it is not connected to the phone. Please connect in the phone's Bluetooth settings."
+        "Cannot access device. Please connect in the phone's Bluetooth settings."
       );
     }
   });
 
   it("passes error upwards", async () => {
     RNBluetoothClassic.getBondedDevices.mockImplementation(async () => {
-      throw "error occured";
+      throw "error occurred";
     });
 
     try {
@@ -46,7 +46,7 @@ describe("CheckBondedService unit tests", () => {
       // Should have failed by now
       expect(true).toBe(false);
     } catch (err) {
-      expect(err).toStrictEqual("error occured");
+      expect(err).toStrictEqual("error occurred");
     }
   });
 });

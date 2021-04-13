@@ -26,7 +26,7 @@ const SettingsDeviceConnectionContainer = () => {
           setDeviceConnected("Connected");
         } catch (err) {
           setDeviceConnected("Not Connected");
-          ErrorAlert("Could not check connection/bonding status", err);
+          ErrorAlert("Error Checking Connection Status", err);
         }
       };
 
@@ -45,6 +45,7 @@ const SettingsDeviceConnectionContainer = () => {
     } else if (intentionId === 2) {
       navigate("SettingsDeviceWifi", {});
     } else {
+      // Should never reach here
       throw "Unknown intentionId!";
     }
   };

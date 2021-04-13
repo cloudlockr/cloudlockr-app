@@ -23,7 +23,7 @@ describe("ReceiveData unit tests", () => {
     jest.useRealTimers();
   });
 
-  it("successfully recieves single fragment message char-by-char and constructs JSON object", async () => {
+  it("successfully receives single fragment message char-by-char and constructs JSON object", async () => {
     let device = clone(bluetoothDevice);
     let curIdx = -1;
     device.read = async () => {
@@ -37,7 +37,7 @@ describe("ReceiveData unit tests", () => {
     expect(result).toStrictEqual(charMessageJson);
   });
 
-  it("successfully recieves multi-fragment message char-by-char and constructs JSON object", async () => {
+  it("successfully receives multi-fragment message char-by-char and constructs JSON object", async () => {
     let device = clone(bluetoothDevice);
     let curIdx = 0;
     let curFragment = 0;

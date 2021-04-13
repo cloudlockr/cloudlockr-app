@@ -40,7 +40,7 @@ describe("CheckBondedService unit tests", () => {
 
   it("passes error upwards", async () => {
     CheckBonded.mockImplementation(async () => {
-      throw "error occured";
+      throw "error occurred";
     });
 
     try {
@@ -49,7 +49,7 @@ describe("CheckBondedService unit tests", () => {
       // Should have failed by now
       expect(true).toBe(false);
     } catch (err) {
-      expect(err).toStrictEqual("error occured");
+      expect(err).toStrictEqual("error occurred");
     }
   });
 

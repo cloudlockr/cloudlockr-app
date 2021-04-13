@@ -8,9 +8,22 @@ export default BasicRequestHandler = async (
 ) => {
   const device = await ConnectToDevice();
 
+  console.log(
+    "Bluetooth Request: " + JSON.stringify(JSON.stringify(requestMessage))
+  );
+
   await SendData(device, requestMessage);
 
   const response = await ReceiveData(device, shouldAck);
+
+  console.log(
+    "Bluetooth Response: " + JSON.stringify(JSON.stringify(response))
+  );
+  console.log("\n");
+
+  // Let the special file data response pass
+  if (response !== undefined && response.fileData !== undefined)
+    return response;
 
   // Check for response status code errors
   if (response === undefined || response.status === undefined) {
@@ -23,7 +36,7 @@ export default BasicRequestHandler = async (
         throw (
           "Request with id " +
           requestMessage.messageType +
-          " recieved by device, but failed."
+          " received by device, but failed."
         );
     }
   }

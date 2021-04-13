@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
-import { View, TextInput, Image, Keyboard } from 'react-native'
-import { useTheme } from '@/Theme'
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useState } from "react";
+import { View, TextInput, Image, Keyboard } from "react-native";
+import { useTheme } from "@/Theme";
+import { useFocusEffect } from "@react-navigation/native";
 
 const InputField = (props) => {
   const { Layout, Gutters, Common, Fonts } = useTheme();
 
   const height = props.height !== undefined ? props.height : 50;
   const placeholder = props.placeholder;
-  const textInputStyle = props.useLightInput !== undefined && props.useLightInput ? Common.textInputLight : Common.textInputDark;
+  const textInputStyle =
+    props.useLightInput !== undefined && props.useLightInput
+      ? Common.textInputLight
+      : Common.textInputDark;
   const iconSrc = props.iconSrc;
   const hideInput = props.hideInput !== undefined ? props.hideInput : false;
   const finishEditingCallback = props.finishEditingCallback;
@@ -19,10 +22,9 @@ const InputField = (props) => {
   const finishEditing = () => {
     // Remove the keyboard listener
     Keyboard.removeAllListeners("keyboardDidHide");
-    
+
     // Check / set if the finished has already been processed
-    if (isFinished)
-      return;
+    if (isFinished) return;
 
     setFinished(true);
 
@@ -43,31 +45,31 @@ const InputField = (props) => {
     } else {
       finishEditingCallback(value);
     }
-  }
+  };
 
   const editField = (newValue) => {
     // Create a listener if the first edit on the text field
     if (!isEdited) {
       Keyboard.addListener("keyboardDidHide", _keyboardDidHide);
     }
-    
+
     onChangeText(newValue);
     setEdited(true);
     setFinished(false);
-  }
+  };
 
   const resetField = () => {
     onChangeText(placeholder);
     setEdited(false);
     setFinished(false);
-  }
+  };
 
   const _keyboardDidHide = () => {
     finishEditing();
   };
 
   const [value, onChangeText] = useState(placeholder);
-  const [isEdited, setEdited] = useState(false)
+  const [isEdited, setEdited] = useState(false);
   const [isFinished, setFinished] = useState(false);
 
   // Reset field values when view is unloaded
@@ -87,26 +89,30 @@ const InputField = (props) => {
 
   return (
     <View style={[Layout.row, Layout.alignItemsCenter, textInputStyle]}>
-      {iconSrc !== undefined && 
+      {iconSrc !== undefined && (
         <View style={[Gutters.tinyxlLMargin]}>
-          <Image style={{height: height - 18, width: height - 18}} source={iconSrc} resizeMode={'contain'} />
+          <Image
+            style={{ height: height - 18, width: height - 18 }}
+            source={iconSrc}
+            resizeMode={"contain"}
+          />
         </View>
-      }
-      <View style={[Layout.fill, Gutters.smallLPadding]} >
+      )}
+      <View style={[Layout.fill, Gutters.smallLPadding]}>
         <TextInput
-            onFocus= {() => editField('')}
-            onChangeText={text => editField(text)}
-            onEndEditing={() => finishEditing()}
-            value={value}
-            editable={enabled}
-            selectTextOnFocus
-            returnKeyType={'done'}
-            secureTextEntry={hideInput && isEdited}
-            style={[Fonts.inputField, {height: height}]}
+          onFocus={() => editField("")}
+          onChangeText={(text) => editField(text)}
+          onEndEditing={() => finishEditing()}
+          value={value}
+          editable={enabled}
+          selectTextOnFocus
+          returnKeyType={"done"}
+          secureTextEntry={hideInput && isEdited}
+          style={[Fonts.inputField, { height: height }]}
         />
       </View>
     </View>
-  )
-}
+  );
+};
 
 export default InputField;

@@ -1,67 +1,75 @@
-import React, { useEffect, useState } from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
-import { IndexStartupContainer } from '@/Containers'
-import { useSelector } from 'react-redux'
-import { NavigationContainer } from '@react-navigation/native'
-import { navigationRef } from '@/Navigators/Root'
-import { SafeAreaView, StatusBar } from 'react-native'
-import { useTheme } from '@/Theme'
-import { AppearanceProvider } from 'react-native-appearance'
-import { TransitionSpecs, HeaderStyleInterpolators } from '@react-navigation/stack';
+import React, { useEffect, useState } from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { IndexStartupContainer } from "@/Containers";
+import { useSelector } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { navigationRef } from "@/Navigators/Root";
+import { SafeAreaView, StatusBar } from "react-native";
+import { useTheme } from "@/Theme";
+import { AppearanceProvider } from "react-native-appearance";
+import {
+  TransitionSpecs,
+  HeaderStyleInterpolators,
+} from "@react-navigation/stack";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
-let LoginNavigator
-let DashboardNavigator
-let SettingsNavigator
-let SettingsDeviceConnectionNavigator
-let SettingsDevicePasswordNavigator
-let SettingsDeviceWifiNavigator
-let SettingsConfirmationNavigator
-let RegistrationNavigator
-let UploadDownloadProgressNavigator
+let LoginNavigator;
+let DashboardNavigator;
+let SettingsNavigator;
+let SettingsDeviceConnectionNavigator;
+let SettingsDevicePasswordNavigator;
+let SettingsDeviceWifiNavigator;
+let SettingsConfirmationNavigator;
+let RegistrationNavigator;
+let UploadDownloadProgressNavigator;
 
 // @refresh reset
 const ApplicationNavigator = () => {
-  const { Layout, darkMode, NavigationTheme } = useTheme()
-  const { colors } = NavigationTheme
-  const [isApplicationLoaded, setIsApplicationLoaded] = useState(false)
-  const applicationIsLoading = useSelector((state) => state.startup.loading)
+  const { Layout, darkMode, NavigationTheme } = useTheme();
+  const { colors } = NavigationTheme;
+  const [isApplicationLoaded, setIsApplicationLoaded] = useState(false);
+  const applicationIsLoading = useSelector((state) => state.startup.loading);
 
   useEffect(() => {
     if (LoginNavigator == null && !applicationIsLoading) {
-      LoginNavigator = require('@/Navigators/Login').default
-      DashboardNavigator = require('@/Navigators/Dashboard').default
-      SettingsNavigator = require('@/Navigators/Settings').default
-      SettingsDeviceConnectionNavigator = require('@/Navigators/SettingsDeviceConnection').default
-      SettingsDevicePasswordNavigator = require('@/Navigators/SettingsDevicePassword').default
-      RegistrationNavigator = require('@/Navigators/Registration').default
-      SettingsDeviceWifiNavigator = require('@/Navigators/SettingsDeviceWifi').default
-      SettingsConfirmationNavigator = require('@/Navigators/SettingsConfirmation').default
-      UploadDownloadProgressNavigator = require('@/Navigators/UploadDownloadProgress').default
-      setIsApplicationLoaded(true)
+      LoginNavigator = require("@/Navigators/Login").default;
+      DashboardNavigator = require("@/Navigators/Dashboard").default;
+      SettingsNavigator = require("@/Navigators/Settings").default;
+      SettingsDeviceConnectionNavigator = require("@/Navigators/SettingsDeviceConnection")
+        .default;
+      SettingsDevicePasswordNavigator = require("@/Navigators/SettingsDevicePassword")
+        .default;
+      RegistrationNavigator = require("@/Navigators/Registration").default;
+      SettingsDeviceWifiNavigator = require("@/Navigators/SettingsDeviceWifi")
+        .default;
+      SettingsConfirmationNavigator = require("@/Navigators/SettingsConfirmation")
+        .default;
+      UploadDownloadProgressNavigator = require("@/Navigators/UploadDownloadProgress")
+        .default;
+      setIsApplicationLoaded(true);
     }
-  }, [applicationIsLoading])
+  }, [applicationIsLoading]);
 
   // on destroy needed to be able to reset when app close in background (Android)
   useEffect(
     () => () => {
-      setIsApplicationLoaded(false)
-      LoginNavigator = null
-      DashboardNavigator = null
-      SettingsNavigator = null
-      SettingsDeviceConnectionNavigator = null
-      SettingsDevicePasswordNavigator = null
-      RegistrationNavigator = null
-      SettingsDeviceWifiNavigator = null
-      SettingsConfirmationNavigator = null
-      UploadDownloadProgressNavigator = null
+      setIsApplicationLoaded(false);
+      LoginNavigator = null;
+      DashboardNavigator = null;
+      SettingsNavigator = null;
+      SettingsDeviceConnectionNavigator = null;
+      SettingsDevicePasswordNavigator = null;
+      RegistrationNavigator = null;
+      SettingsDeviceWifiNavigator = null;
+      SettingsConfirmationNavigator = null;
+      UploadDownloadProgressNavigator = null;
     },
-    [],
-  )
+    []
+  );
 
   const customTransition1 = {
-    gestureDirection: 'horizontal',
+    gestureDirection: "horizontal",
     transitionSpec: {
       open: TransitionSpecs.TransitionIOSSpec,
       close: TransitionSpecs.TransitionIOSSpec,
@@ -95,10 +103,10 @@ const ApplicationNavigator = () => {
         },
       };
     },
-  }
+  };
 
   const customTransition2 = {
-    gestureDirection: 'vertical',
+    gestureDirection: "vertical",
     transitionSpec: {
       open: TransitionSpecs.TransitionIOSSpec,
       close: TransitionSpecs.TransitionIOSSpec,
@@ -132,16 +140,17 @@ const ApplicationNavigator = () => {
         },
       };
     },
-  }
+  };
 
   return (
     <AppearanceProvider>
       <SafeAreaView style={[Layout.fill, { backgroundColor: colors.card }]}>
         <NavigationContainer theme={NavigationTheme} ref={navigationRef}>
-          <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
-          <Stack.Navigator headerMode={'none'}>
+          <StatusBar barStyle={darkMode ? "light-content" : "dark-content"} />
+          <Stack.Navigator headerMode={"none"}>
             <Stack.Screen name="Startup" component={IndexStartupContainer} />
-            {isApplicationLoaded && LoginNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && LoginNavigator != null && (
+              <Stack.Screen
                 name="Main"
                 component={LoginNavigator}
                 options={{
@@ -149,7 +158,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && DashboardNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && DashboardNavigator != null && (
+              <Stack.Screen
                 name="Dashboard"
                 component={DashboardNavigator}
                 options={{
@@ -157,7 +167,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && SettingsNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && SettingsNavigator != null && (
+              <Stack.Screen
                 name="Settings"
                 component={SettingsNavigator}
                 options={{
@@ -165,7 +176,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && SettingsDeviceConnectionNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && SettingsDeviceConnectionNavigator != null && (
+              <Stack.Screen
                 name="SettingsDeviceConnection"
                 component={SettingsDeviceConnectionNavigator}
                 options={{
@@ -173,7 +185,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && SettingsDevicePasswordNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && SettingsDevicePasswordNavigator != null && (
+              <Stack.Screen
                 name="SettingsDevicePassword"
                 component={SettingsDevicePasswordNavigator}
                 options={{
@@ -181,7 +194,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && SettingsDeviceWifiNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && SettingsDeviceWifiNavigator != null && (
+              <Stack.Screen
                 name="SettingsDeviceWifi"
                 component={SettingsDeviceWifiNavigator}
                 options={{
@@ -189,7 +203,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && SettingsConfirmationNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && SettingsConfirmationNavigator != null && (
+              <Stack.Screen
                 name="SettingsConfirmation"
                 component={SettingsConfirmationNavigator}
                 options={{
@@ -197,7 +212,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && UploadDownloadProgressNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && UploadDownloadProgressNavigator != null && (
+              <Stack.Screen
                 name="UploadDownloadProgress"
                 component={UploadDownloadProgressNavigator}
                 options={{
@@ -205,7 +221,8 @@ const ApplicationNavigator = () => {
                 }}
               />
             )}
-            {isApplicationLoaded && RegistrationNavigator != null && (<Stack.Screen
+            {isApplicationLoaded && RegistrationNavigator != null && (
+              <Stack.Screen
                 name="Registration"
                 component={RegistrationNavigator}
                 options={{
@@ -217,7 +234,7 @@ const ApplicationNavigator = () => {
         </NavigationContainer>
       </SafeAreaView>
     </AppearanceProvider>
-  )
-}
+  );
+};
 
-export default ApplicationNavigator
+export default ApplicationNavigator;

@@ -1,4 +1,4 @@
-import { GetLocationSerivce } from "../../../src/Services/External";
+import { GetLocationService } from "../../../src/Services/External";
 
 // Mock the location API
 jest.mock("react-native-geolocation-service");
@@ -18,7 +18,7 @@ describe("GetLocationService unit tests", () => {
       }
     );
 
-    var response = await GetLocationSerivce();
+    var response = await GetLocationService();
 
     // Should return values as latitude|longitude|altitude with 3 decimal places of precision
     expect(response).toBe("1.123|2.123|3.123");
@@ -27,17 +27,17 @@ describe("GetLocationService unit tests", () => {
   it("passes error upwards", async () => {
     Geolocation.getCurrentPosition.mockImplementation(
       async (resolve, reject) => {
-        reject("error occured");
+        reject("error occurred");
       }
     );
 
     try {
-      await GetLocationSerivce();
+      await GetLocationService();
 
       // Should have failed by now
       expect(true).toBe(false);
     } catch (err) {
-      expect(err).toStrictEqual("error occured");
+      expect(err).toStrictEqual("error occurred");
     }
   });
 });

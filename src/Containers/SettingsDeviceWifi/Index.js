@@ -23,7 +23,7 @@ const SettingsDeviceWifiContainer = () => {
       navigate("SettingsConfirmation", {});
     } catch (err) {
       setSpinnerVisible(false);
-      ErrorAlert("Error while updating configuration", err);
+      ErrorAlert("Error Updating Configuration", err);
     }
   };
 
@@ -40,7 +40,7 @@ const SettingsDeviceWifiContainer = () => {
   const [password, setPassword] = useState("");
   const [confirmEnabled, setConfirmedEnabled] = useState(false);
   const [spinnerVisible, setSpinnerVisible] = useState(false);
-  const [spinnerMessage, setSpinnerMessage] = useState("processing");
+  const [spinnerMessage, setSpinnerMessage] = useState("Processing Change");
 
   return (
     <View style={[Layout.fill, Layout.column]}>

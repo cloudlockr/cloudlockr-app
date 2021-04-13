@@ -36,9 +36,9 @@ const UploadDownloadProgressContainer = () => {
     transferInfo.fileMetadata !== undefined
       ? transferInfo.fileMetadata.type
       : undefined;
-  const fileLocalEncrpytionComponent =
-    transferInfo.localEncrpytionComponent !== undefined
-      ? transferInfo.localEncrpytionComponent
+  const fileLocalEncryptionComponent =
+    transferInfo.localEncryptionComponent !== undefined
+      ? transferInfo.localEncryptionComponent
       : undefined;
 
   const doneCallback = () => {
@@ -71,7 +71,7 @@ const UploadDownloadProgressContainer = () => {
           dispatch,
           fileId,
           fileName,
-          fileLocalEncrpytionComponent
+          fileLocalEncryptionComponent
         );
       } else {
         // Start upload process in the background
@@ -169,7 +169,7 @@ const UploadDownloadProgressContainer = () => {
         ]}
       >
         <Button
-          title={"Contiune"}
+          title={"Continue"}
           clickCallback={doneCallback}
           setEnabled={doneEnabled}
           useLightStyle

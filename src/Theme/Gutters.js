@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
 /**
- * Generate Styles depending on MetricsSizes vars availabled at ./Theme/Variables
+ * Generate Styles depending on MetricsSizes vars available at ./Theme/Variables
  * Styles are like :
  * <size><direction><op>: {
  *    <op><direction>: <value>
@@ -70,7 +70,7 @@ export default function ({ MetricsSizes }) {
           paddingVertical: value,
         },
       }),
-      {},
+      {}
     ),
-  })
+  });
 }

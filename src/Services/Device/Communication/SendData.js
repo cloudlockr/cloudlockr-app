@@ -1,8 +1,8 @@
 import { Config } from "@/Config";
-import RecieveData from "@/Services/Device/Communication/ReceiveData";
+import ReceiveData from "@/Services/Device/Communication/ReceiveData";
 
-const waitForAck = async (bleutoothDevice) => {
-  const ack = await RecieveData(bleutoothDevice, false);
+const waitForAck = async (bluetoothDevice) => {
+  const ack = await ReceiveData(bluetoothDevice, false);
   return ack.status !== undefined && ack.status === 2;
 };
 

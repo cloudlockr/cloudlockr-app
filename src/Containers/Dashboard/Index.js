@@ -53,7 +53,7 @@ const DashboardContainer = () => {
   const showDeviceWarningAlert = (title = "Reminder") => {
     Alert.alert(
       title + ": Set Your Device Password & Wifi Network",
-      "Your device password and wifi network must be set every time you power on your device after it has been powered off. If you do not set the password, any uploaded data will be unrecoverable and downloading any existing data will result in invalid files. Further, you cannot transmit data if your device is not connected to the internet.",
+      "Your CloudLockr device password and wifi network must be set every time you power it on. If you do not set the password, any uploaded data will be unrecoverable, and downloading any existing data will result in invalid files. Additionally, you cannot transmit data if your device is not connected to the internet.",
       [
         {
           text: "Okay",
@@ -65,7 +65,7 @@ const DashboardContainer = () => {
   };
 
   const generateHexCode = async () => {
-    setSpinnerMessage("generating hex code");
+    setSpinnerMessage("Generating Hex Code");
     setSpinnerVisible(true);
     await GenerateHexCodeService();
     setSpinnerVisible(false);
@@ -110,12 +110,12 @@ const DashboardContainer = () => {
   const requestCallback = async (requestName, accessCode, password, fileId) => {
     try {
       // Confirm access code with device
-      setSpinnerMessage("validating device access");
+      setSpinnerMessage("Validating Device Access");
       setSpinnerVisible(true);
       try {
         await ValidateDeviceAccessService(accessCode, password);
       } catch (err) {
-        if (err.includes("recieved by device, but failed"))
+        if (err.includes("received by device, but failed"))
           throw "Invalid access code / password";
         else throw err;
       }
@@ -123,7 +123,7 @@ const DashboardContainer = () => {
       // Execute actual request
       if (requestName === "delete") {
         // Request the file to be deleted
-        setSpinnerMessage("deleting file");
+        setSpinnerMessage("Deleting File");
         const requestResult = await DeleteService(fileId, token, dispatch);
 
         downloadRBSheet.current.close();
@@ -162,7 +162,7 @@ const DashboardContainer = () => {
 
   const showToast = (wasSuccessful, message) => {
     if (!wasSuccessful) {
-      ErrorAlert("File transfer error", message);
+      ErrorAlert("File Transfer Error", message);
       return;
     }
 
